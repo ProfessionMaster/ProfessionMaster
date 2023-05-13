@@ -1,0 +1,8 @@
+## Interface: 30401
+## Title: Profession Master
+## Author: Bryan Morabito
+## Version: 0.0.1a
+## Notes: Profession leveling guide
+## SavedVariablesPerCharacter: PM
+Professions/Jewelcrafting.lua
+ProfessionMaster.lua
