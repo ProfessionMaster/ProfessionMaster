@@ -9,7 +9,6 @@ ProfessionMaster.current_vein = nil
 ProfessionMaster.current_route = nil
 
 if PM == nil then PM = { } end
-local LibDD = LibStub:GetLibrary("LibUIDropDownMenu-4.0", true)
 
 PM.professions = {
     -- to do
