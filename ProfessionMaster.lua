@@ -809,7 +809,7 @@ ProfessionMaster.generate_frame = function()
 
                             profession_frame.ore_selector = CreateFrame("Frame", nil, profession_frame, "UIDropDownMenuTemplate")
                             profession_frame.ore_selector:SetPoint("TOPLEFT", -8, -22)
-                            UIDropDownMenu_SetWidth(profession_frame.ore_selector, 96)
+                            UIDropDownMenu_SetWidth(profession_frame.ore_selector, 112)
                             UIDropDownMenu_Initialize(profession_frame.ore_selector, function(self, level, menu_list)
                                 local info = UIDropDownMenu_CreateInfo()
 
@@ -873,7 +873,7 @@ ProfessionMaster.generate_frame = function()
 
                             profession_frame.area_selector = CreateFrame("Frame", nil, profession_frame, "UIDropDownMenuTemplate")
                             profession_frame.area_selector:SetPoint("TOPRIGHT", 8, -22)
-                            UIDropDownMenu_SetWidth(profession_frame.area_selector, 96)
+                            UIDropDownMenu_SetWidth(profession_frame.area_selector, 112)
 
                             function profession_frame.area_selector:set_value(zone_id, name)
                                 profession_frame.selected_area = zone_id
@@ -1325,8 +1325,6 @@ ProfessionMaster.chat_handler = function(...)
 end
 
 ProfessionMaster.gathering_step = function()
-    -- todo continent/instance_id check
-
     if ProfessionMaster.current_profession == nil then
         return "No route selected"
     end
@@ -1339,6 +1337,14 @@ ProfessionMaster.gathering_step = function()
 
     if zone_id ~= ProfessionMaster.current_area then
         ProfessionMaster.en_route_since = GetServerTime()
+
+        local player_instance = C_Map.GetWorldPosFromMapPos(zone_id, { x = x, y = y })
+        local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 0, y = 0 })
+    
+        if player_instance ~= target_instance then
+            return "Travel to " .. GetInstanceInfo(target_instance)
+        end
+
         return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name
     end
 
@@ -1402,6 +1408,23 @@ ProfessionMaster.gathering_step = function()
     end
 
     return "Step " .. ProfessionMaster.current_step .. ": " .. msg
+end
+
+ProfessionMaster.correct_instance = function()
+    if ProfessionMaster.current_profession == nil then
+        return
+    end
+
+    local zone_id = C_Map.GetBestMapForUnit("Player")
+
+    local player_instance = C_Map.GetWorldPosFromMapPos(zone_id, C_Map.GetPlayerMapPosition(zone_id, "player"))
+    local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 0, y = 0 })
+
+    if player_instance ~= target_instance then
+        return
+    end
+
+    return true
 end
 
 ProfessionMaster.get_step_distance_number = function()
@@ -1485,8 +1508,14 @@ ProfessionMaster.update_step_frame = function()
 
     ProfessionMaster.step_frame:Show()
 
-    ProfessionMaster.step_frame.inner_frame:SetPoint("CENTER", sin(angle) * 14, cos(angle) * 14)
-    ProfessionMaster.step_frame.text:SetText("|cFFFFFFFF" .. msg .. "\n" .. ProfessionMaster.get_step_distance())
+    if ProfessionMaster.correct_instance() then
+        ProfessionMaster.step_frame.inner_frame:Show()
+        ProfessionMaster.step_frame.inner_frame:SetPoint("CENTER", sin(angle) * 14, cos(angle) * 14)
+        ProfessionMaster.step_frame.text:SetText("|cFFFFFFFF" .. msg .. "\n" .. ProfessionMaster.get_step_distance())
+    else
+        ProfessionMaster.step_frame.inner_frame:Hide()
+        ProfessionMaster.step_frame.text:SetText("|cFFFFFFFF" .. msg)
+    end
 end
 
 ProfessionMaster.start_route = function(profession_name, vein, zone, route)
