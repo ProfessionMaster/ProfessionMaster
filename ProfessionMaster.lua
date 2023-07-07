@@ -6,7 +6,7 @@
 
 ProfessionMaster = { }
 
-ProfessionMaster.acceptable_time = 15
+ProfessionMaster.acceptable_time = 5
 
 ProfessionMaster.verbose = true -- Disable in production
 
@@ -1026,7 +1026,7 @@ ProfessionMaster.request_route_usage = function(vein_id)
                     for key, profession in pairs(ProfessionMaster.gathering_professions) do
                         if profession.list and profession.list.nodes[vein_id] then
                             ProfessionMaster.print_verbose("Run the following command to start the route:")
-                            ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. ", " .. best_route .. ")")
+                            ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. best_route .. ")")
                         end
                     end
                 end,
@@ -1044,8 +1044,7 @@ ProfessionMaster.process_route_request = function(args)
 
     if ProfessionMaster.current_vein == args[1] and ProfessionMaster.acceptable_time_difference(
         server_time,
-        args[2],
-        args[3]
+        args[2]
     ) then
         ProfessionMaster.enqueue({
             condition = function() return true end,
@@ -1055,7 +1054,7 @@ ProfessionMaster.process_route_request = function(args)
                         args[1],
                         C_Map.GetBestMapForUnit("Player"),
                         ProfessionMaster.current_route,
-                        GetGameTime(),
+                        GetServerTime(),
                         (GetItemCount(ProfessionMaster.current_profession.list.nodes[ProfessionMaster.current_vein].main_item) - ProfessionMaster.starting_ores) * 300 / (GetServerTime() - ProfessionMaster.en_route_since)
                     }),
                     "CHANNEL",
@@ -1125,7 +1124,7 @@ ProfessionMaster.chat_handler = function(...)
     local _args = { ... }
     local _, channel_name = string.split(" ", _args[6])
     
-    if channel_name ~= "PMGatheringRoutesData" or _args[4]:gsub("-.+", "") == UnitName("Player") then return end
+    if channel_name ~= "PMGatheringRoutesData" --[[ or _args[4]:gsub("-.+", "") == UnitName("Player") ]] then return end
 
     local op, args = ProfessionMaster.decode(_args[3])
 
@@ -1376,4 +1375,4 @@ end
 
 ProfessionMaster.init()
 
--- /run ProfessionMaster.start_route("mining", 1731, 1411, 1)
+-- /run ProfessionMaster.start_route("mining", 1731, 1411, 1); ProfessionMaster.starting_ores = 0
