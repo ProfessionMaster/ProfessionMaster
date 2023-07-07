@@ -152,17 +152,19 @@ ProfessionMaster.auction_house_is_ready = function()
     return false
 end
 
-ProfessionMaster.dequeue = function()
+ProfessionMaster.dequeue = function(hw_input)
     if #ProfessionMaster.queue == 0 then return end
 
     for index, query in pairs(ProfessionMaster.queue) do
-        if query.condition() then
-            query.execute()
-            table.remove(ProfessionMaster.queue, index)
-            ProfessionMaster.dequeue()
-            return
-        elseif query.allow_skipping ~= true then
-            return
+        if not query.requires_hw_input or hw_input then
+            if query.condition() then
+                query.execute()
+                table.remove(ProfessionMaster.queue, index)
+                ProfessionMaster.dequeue()
+                return
+            elseif query.allow_skipping ~= true then
+                return
+            end
         end
     end
 end
@@ -824,6 +826,10 @@ ProfessionMaster.init = function()
 
         ProfessionMaster.update_step_frame()
     end)
+    queuehelper:SetScript("OnKeyDown", function()
+        ProfessionMaster.ah_source = false
+        ProfessionMaster.dequeue(true)
+    end)
     queuehelper:SetPropagateKeyboardInput(true)
     
     GameTooltip:HookScript("OnTooltipSetItem", ProfessionMaster.setup_tooltip)
@@ -993,7 +999,8 @@ ProfessionMaster.request_route_usage = function(vein_id)
                 end,
                 allow_skipping = true
             })
-        end
+        end,
+        requires_hw_input = true
     })
 end
 
@@ -1022,7 +1029,8 @@ ProfessionMaster.process_route_request = function(args)
                     nil,
                     GetChannelName("PMGatheringRoutesData")
                 )
-            end
+            end,
+            requires_hw_input = true
         }, true)
     end
 end
