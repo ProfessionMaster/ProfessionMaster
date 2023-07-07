@@ -973,10 +973,10 @@ ProfessionMaster.request_route_usage = function(vein_id)
 
                     for zone, data in pairs(ProfessionMaster.requested_routes) do
                         for route, route_data in pairs(data) do
-                            if route_ores == -1 or route_ores < route_data.ores then
+                            if route_ores == -1 or route_ores < route_data.ores / route_data.users then
                                 best_area = zone
                                 best_route = route
-                                route_ores = route_data.ores
+                                route_ores = route_data.ores / route_data.users
                             end
                         end
                     end
