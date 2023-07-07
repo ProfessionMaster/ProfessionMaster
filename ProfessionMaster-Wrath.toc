@@ -6,6 +6,11 @@
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMCustomRoutes
 
+libs/LibStub.lua
+libs/CallbackHandler-1.0.lua
+libs/LibDataBroker-1.1.lua
+libs/LibDBIcon-1.0.lua
+
 Professions/Jewelcrafting.lua
 Professions/Mining.lua
 ProfessionMaster.lua

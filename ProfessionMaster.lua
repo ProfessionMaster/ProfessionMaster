@@ -659,6 +659,21 @@ ProfessionMaster.generate_frame = function()
         self:StopMovingOrSizing()
     end)
 
+    frame.close = frame.close or CreateFrame("Button", "PMFrameClose", frame, "UIPanelButtonTemplate")
+    frame.close:SetPoint("TOPRIGHT", -4, -4)
+    frame.close:SetWidth(20)
+    frame.close:SetHeight(20)
+    frame.close:SetScript("OnClick", function()
+        ProfessionMaster.hide()
+    end)
+
+    frame.close.inner = frame.close.inner or CreateFrame("Button", "PMFrameCloseInner", frame.close)
+    frame.close.inner:SetNormalTexture("Interface/Buttons/UI-StopButton")
+    frame.close.inner:SetPoint("CENTER")
+    frame.close.inner:SetWidth(12)
+    frame.close.inner:SetHeight(12)
+    frame.close.inner:EnableMouse(false)
+
     --[[local br = CreateFrame("Button", nil, frame)
     br:EnableMouse("true")
     br:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
@@ -805,6 +820,24 @@ ProfessionMaster.generate_frame = function()
     step_frame.inner_frame.tex:AddMaskTexture(step_frame.inner_frame.mask)
 
     ProfessionMaster.step_frame = step_frame
+
+    -- minimap button
+
+    local minimap_button = LibStub("LibDataBroker-1.1"):NewDataObject("ProfessionMaster", {
+        type = "data source",
+        text = "Profession Master",
+        icon = "Interface/Icons/Inv_misc_coin_02", -- temporary icon until I make a custom one
+        OnClick = function(self, btn)
+            ProfessionMaster.toggle()
+        end,
+        OnTooltipShow = function(tooltip)
+            if not tooltip or not tooltip.AddLine then return end
+            tooltip:AddLine("Toggle Profession Master frame")
+        end,
+    })
+
+    local icon = LibStub("LibDBIcon-1.0", true)
+    icon:Register("ProfessionMaster", minimap_button, PM)
 end
 
 ProfessionMaster.init = function()
@@ -1322,6 +1355,22 @@ ProfessionMaster.stop_creating_route = function()
     if ProfessionMaster.new_route then
         table.insert(PMCustomRoutes, ProfessionMaster.new_route)
         ProfessionMaster.new_route = nil
+    end
+end
+
+ProfessionMaster.hide = function()
+    ProfessionMaster.main_frame:Hide()
+end
+
+ProfessionMaster.show = function()
+    ProfessionMaster.main_frame:Show()
+end
+
+ProfessionMaster.toggle = function()
+    if ProfessionMaster.main_frame:IsVisible() then
+        ProfessionMaster.hide()
+    else
+        ProfessionMaster.show()
     end
 end
 
