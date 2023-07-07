@@ -452,7 +452,7 @@ _G["MINING"] = {
                     { x = 0.894, y = 0.676 },
                     { x = 0.895, y = 0.677 }
                 },
-                [14] = {
+                [1411] = {
                     { x = 0.356, y = 0.354 },
                     { x = 0.356, y = 0.355 },
                     { x = 0.360, y = 0.264 },
@@ -1844,6 +1844,24 @@ _G["MINING"] = {
                             { x = 42.9, y = 44.9, cave = false, node = true  },
                             { x = 43.2, y = 38.7, cave = false, node = true  },
                             { x = 41.3, y = 35.7, cave = true,  node = true  }
+                        }
+                    }
+                },
+                [1411] = {
+                    {
+                        nodes = 11,
+                        route = {
+                            { x = 41.4, y = 17.8, cave = false, node = true  },
+                            { x = 42.8, y = 19.7, cave = false, node = true  },
+                            { x = 43.9, y = 23.2, cave = false, node = true  },
+                            { x = 50.0, y = 26.4, cave = false, node = true  },
+                            { x = 51.8, y = 25.0, cave = false, node = true  },
+                            { x = 52.2, y = 23.8, cave = false, node = true  },
+                            { x = 52.3, y = 21.8, cave = false, node = true  },
+                            { x = 49.7, y = 20.9, cave = false, node = true  },
+                            { x = 49.6, y = 19.1, cave = false, node = true  },
+                            { x = 50.7, y = 17.2, cave = false, node = true  },
+                            { x = 49.8, y = 16.8, cave = false, node = true  }
                         }
                     }
                 }

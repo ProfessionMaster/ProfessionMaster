@@ -19,9 +19,9 @@ ProfessionMaster.current_step = 0
 ProfessionMaster.en_route_since = nil
 ProfessionMaster.starting_ores = nil
 
-if PM == nil then PM = { } end
+PM = PM or { }
 
-PM.professions = {
+ProfessionMaster.professions = {
     -- to do
     alchemy = {
         list = nil,
@@ -53,7 +53,7 @@ PM.professions = {
     },
 }
 
-PM.gathering_professions = {
+ProfessionMaster.gathering_professions = {
     mining = {
         list = _G["MINING"],
         name = "Mining"
@@ -458,7 +458,7 @@ ProfessionMaster.init_auction_frames = function()
 
     local i = 0
 
-    for _, profession in pairs(PM.professions) do
+    for _, profession in pairs(ProfessionMaster.professions) do
         local button = CreateFrame(
             "Button",
             "ProfessionMaster" .. profession.name .. "Button",
@@ -539,13 +539,13 @@ end
 ProfessionMaster.get_item_professions = function(item_id)
     local professions, gathering_professions = { }, { }
 
-    for _, profession in pairs(PM.professions) do
+    for _, profession in pairs(ProfessionMaster.professions) do
         if profession.list ~= nil and profession.list.items[item_id] ~= nil then
             table.insert(professions, profession)
         end
     end
 
-    for _, profession in pairs(PM.gathering_professions) do
+    for _, profession in pairs(ProfessionMaster.gathering_professions) do
         if profession.list ~= nil then
             for _, node in pairs(profession.list.nodes) do
                 if node.items[item_id] ~= nil then
@@ -693,20 +693,20 @@ ProfessionMaster.generate_frame = function()
 
     for index = 1, GetNumSkillLines() do
         local name, _, _, level = GetSkillLineInfo(index)
-        if PM.professions[name:gsub("%s+", ""):lower()] ~= nil or PM.gathering_professions[name:gsub("%s+", ""):lower()] ~= nil then
+        if ProfessionMaster.professions[name:gsub("%s+", ""):lower()] ~= nil or ProfessionMaster.gathering_professions[name:gsub("%s+", ""):lower()] ~= nil then
             local button = buttons[index] or CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
             button:SetPoint(alignment, frame, alignment, xoff, -40)
             button:SetText(name)
             button:SetSize(128, 24)
 
-            if PM.professions[name:gsub("%s+", ""):lower()] ~= nil then
-                if PM.professions[name:gsub("%s+", ""):lower()].list ~= nil then
+            if ProfessionMaster.professions[name:gsub("%s+", ""):lower()] ~= nil then
+                if ProfessionMaster.professions[name:gsub("%s+", ""):lower()].list ~= nil then
                     button:SetScript("OnClick", function()
                         -- todo
                     end)
                 end
             else
-                if PM.gathering_professions[name:gsub("%s+", ""):lower()].list ~= nil then
+                if ProfessionMaster.gathering_professions[name:gsub("%s+", ""):lower()].list ~= nil then
                     button:SetScript("OnClick", function()
                         -- todo
                         --[[
@@ -984,7 +984,7 @@ ProfessionMaster.request_route_usage = function(vein_id)
 
                     ProfessionMaster.print_verbose("Best route: " .. best_route .. " area (average ores / 5 mins: " .. route_ores .. ")")
 
-                    for key, profession in pairs(PM.gathering_professions) do
+                    for key, profession in pairs(ProfessionMaster.gathering_professions) do
                         if profession.list and profession.list.nodes[vein_id] then
                             ProfessionMaster.print_verbose("Run the following command to start the route:")
                             ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. ", " .. best_route .. ")")
@@ -1145,9 +1145,9 @@ ProfessionMaster.gathering_step = function()
 
     local materials = "materials"
 
-    if ProfessionMaster.current_profession.name == PM.gathering_professions.mining.name then
+    if ProfessionMaster.current_profession.name == ProfessionMaster.gathering_professions.mining.name then
         materials = "ores"
-    elseif ProfessionMaster.current_profession.name == PM.gathering_professions.herbalism.name then
+    elseif ProfessionMaster.current_profession.name == ProfessionMaster.gathering_professions.herbalism.name then
         materials = "herbs"
     end
 
@@ -1261,7 +1261,7 @@ ProfessionMaster.update_step_frame = function()
 end
 
 ProfessionMaster.start_route = function(profession_name, vein, zone, route)
-    ProfessionMaster.current_profession = PM.gathering_professions[profession_name]
+    ProfessionMaster.current_profession = ProfessionMaster.gathering_professions[profession_name]
     ProfessionMaster.current_vein = vein
     ProfessionMaster.current_area = zone
     ProfessionMaster.current_route = route
@@ -1319,4 +1319,4 @@ end
 
 ProfessionMaster.init()
 
--- /run ProfessionMaster.start_route("mining", 1731, 1426, 1)
+-- /run ProfessionMaster.start_route("mining", 1731, 1411, 1)
