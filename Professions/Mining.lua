@@ -11,6 +11,7 @@ _G["MINING"] = {
     nodes = {
         [1731] = {
             name = "Copper Vein",
+            main_item = 2770,
             items = {
                 [2770] = {
                     odds = 1.000,
@@ -39,7 +40,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1] = {
+                [1426] = {
                     { x = 0.209, y = 0.514 },
                     { x = 0.209, y = 0.515 },
                     { x = 0.212, y = 0.546 },
@@ -207,7 +208,7 @@ _G["MINING"] = {
                     { x = 0.824, y = 0.557 },
                     { x = 0.825, y = 0.393 },
                     { x = 0.846, y = 0.537 }
-                },
+                }, -- todo change
                 [10] = {
                     { x = 0.058, y = 0.444 },
                     { x = 0.058, y = 0.446 },
@@ -1809,6 +1810,42 @@ _G["MINING"] = {
                     { x = 0.782, y = 0.927 },
                     { x = 0.846, y = 0.835 },
                     { x = 0.847, y = 0.834 }
+                }
+            },
+            routes = {
+                [1426] = {
+                    {
+                        nodes = 27,
+                        route = {
+                            { x = 44.1, y = 29.1, cave = false, node = true  },
+                            { x = 41.3, y = 29.0, cave = false, node = true  },
+                            { x = 38.7, y = 29.9, cave = false, node = true  },
+                            { x = 33.6, y = 30.8, cave = false, node = true  },
+                            { x = 30.7, y = 33.9, cave = false, node = true  },
+                            { x = 27.2, y = 34.8, cave = false, node = true  },
+                            { x = 29.7, y = 40.7, cave = false, node = true  },
+                            { x = 26.8, y = 44.6, cave = false, node = true  },
+                            { x = 27.6, y = 46.5, cave = false, node = true  },
+                            { x = 27.1, y = 49.0, cave = false, node = true  },
+                            { x = 25.0, y = 51.5, cave = true,  node = true  },
+                            { x = 28.6, y = 58.8, cave = false, node = true  },
+                            { x = 32.0, y = 59.0, cave = false, node = true  },
+                            { x = 36.0, y = 63.6, cave = false, node = true  },
+                            { x = 39.0, y = 65.0, cave = false, node = true  },
+                            { x = 39.8, y = 68.1, cave = false, node = true  },
+                            { x = 43.5, y = 67.6, cave = false, node = true  },
+                            { x = 42.8, y = 63.5, cave = false, node = true  },
+                            { x = 43.1, y = 61.2, cave = false, node = true  },
+                            { x = 45.2, y = 58.9, cave = false, node = true  },
+                            { x = 44.3, y = 53.9, cave = false, node = true  },
+                            { x = 42.8, y = 51.5, cave = false, node = true  },
+                            { x = 43.8, y = 49.8, cave = false, node = true  },
+                            { x = 43.1, y = 48.4, cave = false, node = true  },
+                            { x = 42.9, y = 44.9, cave = false, node = true  },
+                            { x = 43.2, y = 38.7, cave = false, node = true  },
+                            { x = 41.3, y = 35.7, cave = true,  node = true  }
+                        }
+                    }
                 }
             }
         }
