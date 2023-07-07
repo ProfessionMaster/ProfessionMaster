@@ -1021,7 +1021,7 @@ ProfessionMaster.request_route_usage = function(vein_id)
                         return
                     end
 
-                    ProfessionMaster.print_verbose("Best route: " .. best_route .. " area (average ores / 5 mins: " .. route_ores .. ")")
+                    ProfessionMaster.print_verbose("Best route: " .. best_route .. " area: " .. C_Map.GetMapInfo(best_area).name .. " (average ores / 5 mins: " .. route_ores .. ")")
 
                     for key, profession in pairs(ProfessionMaster.gathering_professions) do
                         if profession.list and profession.list.nodes[vein_id] then
@@ -1029,6 +1029,8 @@ ProfessionMaster.request_route_usage = function(vein_id)
                             ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. best_route .. ")")
                         end
                     end
+
+                    ProfessionMaster.requested_routes_time = nil
                 end,
                 allow_skipping = true
             })
@@ -1068,6 +1070,8 @@ ProfessionMaster.process_route_request = function(args)
 end
 
 ProfessionMaster.process_route_reply = function(args)
+    if ProfessionMaster.requested_routes_time == nil then return end
+    
     if ProfessionMaster.current_vein == args[1] and ProfessionMaster.acceptable_time_difference(
         args[4],
         ProfessionMaster.requested_routes_time
@@ -1124,7 +1128,7 @@ ProfessionMaster.chat_handler = function(...)
     local _args = { ... }
     local _, channel_name = string.split(" ", _args[6])
     
-    if channel_name ~= "PMGatheringRoutesData" --[[ or _args[4]:gsub("-.+", "") == UnitName("Player") ]] then return end
+    if channel_name ~= "PMGatheringRoutesData" or _args[4]:gsub("-.+", "") == UnitName("Player") then return end
 
     local op, args = ProfessionMaster.decode(_args[3])
 
