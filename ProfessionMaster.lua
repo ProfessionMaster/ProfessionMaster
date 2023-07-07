@@ -2,11 +2,9 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
--- todo: if a route has 0 users its good!!!
-
 ProfessionMaster = { }
 
-ProfessionMaster.acceptable_time = 8
+ProfessionMaster.acceptable_time = 5
 
 ProfessionMaster.verbose = true -- Disable in production
 
@@ -1163,6 +1161,34 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
             ProfessionMaster.best_area = nil
             ProfessionMaster.requested_routes = { }
 
+            for _, profession in pairs(ProfessionMaster.gathering_professions) do
+                if profession.list and profession.list.nodes[vein_id] then
+                    if zone_id == 0 then
+                        for cur_zone_id, _ in pairs(profession.list.nodes[vein_id].routes) do
+                            if ProfessionMaster.requested_routes[cur_zone_id] == nil then
+                                ProfessionMaster.requested_routes[cur_zone_id] = { }
+                            end
+
+                            for cur_route_id, _ in ipairs(profession.list.nodes[vein_id].routes[cur_zone_id]) do
+                                if ProfessionMaster.requested_routes[cur_zone_id][cur_route_id] == nil then
+                                    ProfessionMaster.requested_routes[cur_zone_id][cur_route_id] = { users = 0, ores = 0 }
+                                end
+                            end
+                        end
+                    elseif profession.list.nodes[vein_id].routes[zone_id] then
+                        if ProfessionMaster.requested_routes[zone_id] == nil then
+                            ProfessionMaster.requested_routes[zone_id] = { }
+                        end
+
+                        for cur_route_id, _ in ipairs(profession.list.nodes[vein_id].routes[zone_id]) do
+                            if ProfessionMaster.requested_routes[zone_id][cur_route_id] == nil then
+                                ProfessionMaster.requested_routes[zone_id][cur_route_id] = { users = 0, ores = 0 }
+                            end
+                        end
+                    end
+                end
+            end
+
             SendChatMessage(
                 ProfessionMaster.encode(ProfessionMaster.operations["request"], { vein_id, zone_id, GetServerTime() }),
                 "CHANNEL",
@@ -1182,13 +1208,15 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
                 execute = function()
                     local best_area = nil
                     local best_route = -1
+                    local best_users = -1
                     local route_ores = -1
 
                     for zone, data in pairs(ProfessionMaster.requested_routes) do
                         for route, route_data in pairs(data) do
-                            if route_ores == -1 or route_ores < route_data.ores / route_data.users then
+                            if route_ores == -1 or ((route_data.users == 0 or route_ores < route_data.ores / route_data.users) and best_users > 0) then
                                 best_area = zone
                                 best_route = route
+                                best_users = route_data.users
                                 route_ores = route_data.ores / route_data.users
                             end
                         end
@@ -1201,7 +1229,11 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
                         return
                     end
 
-                    ProfessionMaster.print_verbose("Best route: " .. best_route .. " area: " .. C_Map.GetMapInfo(best_area).name .. " (average ores / 5 mins: " .. route_ores .. ")")
+                    if best_users == 0 then
+                        ProfessionMaster.print_verbose("Best route: " .. C_Map.GetMapInfo(best_area).name .. " (" .. best_route .. "): currently empty!")
+                    else
+                        ProfessionMaster.print_verbose("Best route: " .. C_Map.GetMapInfo(best_area).name .. " (" .. best_route .. "): average ores: " .. route_ores .. "/5 mins - players: " .. best_users)
+                    end
 
                     for key, profession in pairs(ProfessionMaster.gathering_professions) do
                         if profession.list and profession.list.nodes[vein_id] then
@@ -1313,7 +1345,7 @@ ProfessionMaster.chat_handler = function(...)
     local _args = { ... }
     local _, channel_name = string.split(" ", _args[6])
     
-    if channel_name ~= "PMGatheringRoutesData" or _args[4]:gsub("-.+", "") == UnitName("Player") then return end
+    if channel_name ~= "PMGatheringRoutesData" --[[ or _args[4]:gsub("-.+", "") == UnitName("Player") ]] then return end
 
     local op, args = ProfessionMaster.decode(_args[3])
 
@@ -1339,10 +1371,10 @@ ProfessionMaster.gathering_step = function()
         ProfessionMaster.en_route_since = GetServerTime()
 
         local player_instance = C_Map.GetWorldPosFromMapPos(zone_id, { x = x, y = y })
-        local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 0, y = 0 })
+        local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 50, y = 50 })
     
         if player_instance ~= target_instance then
-            return "Travel to " .. GetInstanceInfo(target_instance)
+            return "Travel to " .. GetRealZoneText(target_instance)
         end
 
         return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name
@@ -1390,6 +1422,11 @@ ProfessionMaster.gathering_step = function()
 
     if distance and distance < 10 then
         ProfessionMaster.current_step = ProfessionMaster.current_step + 1
+
+        if ProfessionMaster.current_step > #route.route then
+            ProfessionMaster.current_step = 1
+        end
+
         step_x, step_y = route.route[ProfessionMaster.current_step].x, route.route[ProfessionMaster.current_step].y
     end
 
@@ -1418,7 +1455,7 @@ ProfessionMaster.correct_instance = function()
     local zone_id = C_Map.GetBestMapForUnit("Player")
 
     local player_instance = C_Map.GetWorldPosFromMapPos(zone_id, C_Map.GetPlayerMapPosition(zone_id, "player"))
-    local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 0, y = 0 })
+    local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 50, y = 50 })
 
     if player_instance ~= target_instance then
         return
@@ -1592,5 +1629,3 @@ ProfessionMaster.toggle = function()
 end
 
 ProfessionMaster.init()
-
--- /run ProfessionMaster.start_route("mining", 1731, 1411, 1); ProfessionMaster.starting_ores = 0
