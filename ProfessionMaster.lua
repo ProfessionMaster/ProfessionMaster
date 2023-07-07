@@ -2,15 +2,26 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
+-- todo: swap hours, minutes with GetServerTime()
+
 ProfessionMaster = { }
+
+ProfessionMaster.acceptable_time = 15
+
+ProfessionMaster.verbose = true -- Disable in production
+
+ProfessionMaster.current_profession = nil
+ProfessionMaster.current_vein = nil
+ProfessionMaster.current_area = nil
+ProfessionMaster.current_route = nil
+ProfessionMaster.current_step = 0
+
+ProfessionMaster.en_route_since = nil
+ProfessionMaster.starting_ores = nil
 
 if PM == nil then PM = { } end
 
 PM.professions = {
-    jewelcrafting = {
-        list = _G["JC"],
-        name = "Jewelcrafting"
-    },
     -- to do
     alchemy = {
         list = nil,
@@ -42,12 +53,34 @@ PM.professions = {
     },
 }
 
+PM.gathering_professions = {
+    mining = {
+        list = _G["MINING"],
+        name = "Mining"
+    },
+    -- to do
+    herbalism = {
+        list = nil,
+        name = "Herbalism"
+    },
+    skinning = {
+        list = nil,
+        name = "Skinning"
+    }
+}
+
 if PM.items == nil then PM.items = { } end
 
 ProfessionMaster.queue = { }
 
 ProfessionMaster.print = function(msg)
 	DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8000Profession Master|r: " .. msg)
+end
+
+ProfessionMaster.print_verbose = function(msg)
+    if ProfessionMaster.verbose then
+        ProfessionMaster.print(msg)
+    end
 end
 
 ProfessionMaster.format_price = function(price)
@@ -112,25 +145,32 @@ ProfessionMaster.get_skill_up_chance = function(recipe, skill_level)
 end
 
 ProfessionMaster.auction_house_is_ready = function()
-    return CanSendAuctionQuery()
+    if ProfessionMaster.ah_source and CanSendAuctionQuery() then
+        ProfessionMaster.ah_source = false
+        return true
+    end
+    return false
 end
 
 ProfessionMaster.dequeue = function()
     if #ProfessionMaster.queue == 0 then return end
 
-    local index, query = pairs(ProfessionMaster.queue)(ProfessionMaster.queue)
-
-    if query.condition() then
-        query.execute()
-        table.remove(ProfessionMaster.queue, index)
-        ProfessionMaster.dequeue()
+    for index, query in pairs(ProfessionMaster.queue) do
+        if query.condition() then
+            query.execute()
+            table.remove(ProfessionMaster.queue, index)
+            ProfessionMaster.dequeue()
+            return
+        elseif query.allow_skipping ~= true then
+            return
+        end
     end
 end
 
-ProfessionMaster.enqueue = function(query)
+ProfessionMaster.enqueue = function(query, never_auto_dequeue)
     table.insert(ProfessionMaster.queue, query)
 
-    if #ProfessionMaster.queue == 1 then
+    if #ProfessionMaster.queue == 1 and (never_auto_dequeue == nil or never_auto_dequeue == false) then
         ProfessionMaster.dequeue()
     end
 end
@@ -335,7 +375,7 @@ ProfessionMaster.get_best_recipe = function(profession, level)
     end
 
     -- todo: check which recipes will be needed for later steps and factor that into the choice!!!
-    -- todo: add options (prioritize guaranteed skill ups, no recipes from world drops, no recipes from vendors)
+    -- todo: add options (prioritize guaranteed skill ups, no recipes from world drops, no recipes from vendors, no recipes that aren't trained yet)
 
     local best_recipe       = nil
     local best_recipe_price = 0
@@ -353,17 +393,29 @@ ProfessionMaster.get_best_recipe = function(profession, level)
         end
     end
 
-    -- debug
-    if best_recipe ~= nil then
-        ProfessionMaster.print_recipe(profession, best_recipe, "Best recipe for level " .. level .. ":", level)
-    else
-        ProfessionMaster.print("|cFFFF0000No recipe found for level " .. level .. ".|r")
+
+    if verbose then
+        if best_recipe ~= nil then
+            ProfessionMaster.print_recipe(profession, best_recipe, "Best recipe for level " .. level .. ":", level)
+        else
+            ProfessionMaster.print("|cFFFF0000No recipe found for level " .. level .. ".|r")
+        end
     end
 
     return best_recipe
 end
 
-ProfessionMaster.init_frames = function()
+ProfessionMaster.init_frames = function(event)
+    if event == "AUCTION_HOUSE_SHOW" then
+        ProfessionMaster.init_auction_frames()
+    elseif event == "TRADE_SKILL_SHOW" then
+        ProfessionMaster.init_profession_frames()
+    elseif event == "LEARNED_SPELL_IN_TAB" or event == "PLAYER_ENTERING_WORLD" then
+        ProfessionMaster.generate_frame()
+    end
+end
+
+ProfessionMaster.init_auction_frames = function()
     if ProfessionMaster.frame ~= nil then return end
     local tab_index = AuctionFrame.numTabs + 1
 
@@ -386,7 +438,10 @@ ProfessionMaster.init_frames = function()
 
     frame:SetPoint("TOPLEFT", AuctionFrame, "TOPLEFT", 12, -50)
     frame:SetPoint("BOTTOMRIGHT", AuctionFrame, "BOTTOMRIGHT", 0, 8)
-    frame:SetScript("OnEvent", ProfessionMaster.dequeue)
+    frame:SetScript("OnEvent", function()
+        ProfessionMaster.ah_source = true
+        ProfessionMaster.dequeue()
+    end)
     frame:Hide()
 
     local title = frame:CreateFontString(nil, nil, "GameFontNormal")
@@ -397,6 +452,10 @@ ProfessionMaster.init_frames = function()
     scan_text:SetText("Scan best recipes for professions")
     scan_text:SetPoint("TOPLEFT", frame, "TOPLEFT", 24, -32)
 
+    local scan_text = frame:CreateFontString(nil, nil, "GameFontNormal")
+    scan_text:SetText("Fetch best recipe for professions at current level")
+    scan_text:SetPoint("TOPLEFT", frame, "TOP", 0, -32)
+
     local i = 0
 
     for _, profession in pairs(PM.professions) do
@@ -406,12 +465,36 @@ ProfessionMaster.init_frames = function()
             frame,
             "UIPanelButtonTemplate"
         )
+
         button:SetText(profession.name)
         button:SetPoint("TOPLEFT", frame, "TOPLEFT", 24, -48 - 28 * i)
         button:SetSize(128, 24)
         button:SetScript("OnClick", function()
             ProfessionMaster.fetch_recipes(profession)
         end)
+        
+        local fetch_button = CreateFrame(
+            "Button",
+            "ProfessionMaster" .. profession.name .. "Button",
+            frame,
+            "UIPanelButtonTemplate"
+        )
+
+        fetch_button:SetText(profession.name)
+        fetch_button:SetPoint("TOPLEFT", frame, "TOP", 0, -48 - 28 * i)
+        fetch_button:SetSize(128, 24)
+        fetch_button:SetScript("OnClick", function()
+            for index = 1, GetNumSkillLines() do
+                local name, _, _, level = GetSkillLineInfo(index)
+                if name == profession.name then
+                    ProfessionMaster.print_best_recipe(profession, level)
+                    return
+                end
+            end
+
+            ProfessionMaster.print("You do not have this profession!")
+        end)
+
         i = i + 1
     end
 
@@ -441,24 +524,799 @@ ProfessionMaster.init_frames = function()
     ProfessionMaster.frame = frame
 end
 
+ProfessionMaster.init_profession_frames = function()
+    if not ProfessionMaster.profession_frame and TradeSkillFrame then
+        local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame)
+
+        local title = frame:CreateFontString(nil, nil, "GameFontNormal")
+        title:SetText("Profession Master")
+        title:SetPoint("TOP", frame, "TOP")
+
+        ProfessionMaster.profession_frame = frame
+    end
+end
+
+ProfessionMaster.get_item_professions = function(item_id)
+    local professions, gathering_professions = { }, { }
+
+    for _, profession in pairs(PM.professions) do
+        if profession.list ~= nil and profession.list.items[item_id] ~= nil then
+            table.insert(professions, profession)
+        end
+    end
+
+    for _, profession in pairs(PM.gathering_professions) do
+        if profession.list ~= nil then
+            for _, node in pairs(profession.list.nodes) do
+                if node.items[item_id] ~= nil then
+                    table.insert(gathering_professions, profession)
+                    break
+                end
+            end
+        end
+    end
+
+    return professions, gathering_professions
+end
+
 ProfessionMaster.setup_tooltip = function(tooltip)
     local name, link = tooltip:GetItem()
 	if not name then return end
 	local item_id = select(1, GetItemInfoInstant(name))
 
-    -- tooltip:AddLine("Test")
+    local professions, gathering_professions = ProfessionMaster.get_item_professions(item_id)
+
+    if #professions > 0 or #gathering_professions > 0 then
+        local str = ""
+
+        for _, profession in ipairs(professions) do
+            str = str .. profession.name .. ", "
+        end
+
+        for _, profession in ipairs(gathering_professions) do
+            str = str .. profession.name .. ", "
+        end
+
+        str = str:sub(1, #str - 2)
+
+        tooltip:AddDoubleLine("Profession Master:", str)
+        tooltip:AddLine(" ")
+        tooltip:AddLine("|cFFFFFFFFSources:")
+        
+        for _, profession in ipairs(professions) do
+            -- todo
+        end
+        
+        for _, profession in ipairs(gathering_professions) do
+            for _, node in pairs(profession.list.nodes) do
+                if node.items[item_id] ~= nil then
+                    tooltip:AddLine("|cFFFFFFFF" .. node.name)
+                end
+            end
+        end
+
+        local best_source = "|cFFFF0000Unknown"
+        local best_price = -1
+
+        if PM.items[item_id] then
+            if PM.items[item_id].found_best_source then
+                if PM.items[item_id].best_source == "auction house" then
+                    best_source = "Auction house"
+                elseif PM.items[item_id].best_source == "vendor" then
+                    best_soure = "Vendor"
+                else
+                    best_source = "|cFFFFFFFF" .. PM.items[item_id].best_source.name
+                end
+            end
+
+            best_price = PM.items[item_id].price
+        end
+
+        tooltip:AddLine(" ")
+
+        if best_price ~= -1 then tooltip:AddDoubleLine("|cFFFFFFFFBest price:", ProfessionMaster.format_price(best_price)) end
+        tooltip:AddDoubleLine("|cFFFFFFFFBest source:", best_source)
+
+        tooltip:AddLine(" ")
+    end
 end
 
 ProfessionMaster.slash_command = function(msg)
     local _, _, cmd, args = string.find(msg, "%s?(%w+)%s?(.*)")
 end
 
-SLASH_PROFESSIONMASTER1, SLASH_PROFESSIONMASTER2 = "/pm", "/professionmaster"
+ProfessionMaster.join_channel = function()
+    JoinChannelByName("PMGatheringRoutesData")
+    if GetChannelName("PMGatheringRoutesData") == 0 then
+        ProfessionMaster.print("Failed to join gathering routes data channel")
+    end
+end
 
-SlashCmdList["PROFESSIONMASTER"] = ProfessionMaster.slash_command;
+ProfessionMaster.generate_frame = function()
+    local frame = ProfessionMaster.main_frame or CreateFrame("Frame", "PMFrame", UIParent)
 
-local helper = CreateFrame("Frame", nil, UIParent)
-helper:SetScript("OnEvent", ProfessionMaster.init_frames)
-helper:RegisterEvent("AUCTION_HOUSE_SHOW")
+    frame:SetWidth(280)
+    frame:SetHeight(72)
+    frame:RegisterForDrag("LeftButton")
+    frame:SetPoint("BOTTOMRIGHT", -16, 90)
+    frame:SetClampedToScreen(true)
 
-GameTooltip:HookScript("OnTooltipSetItem", ProfessionMaster.setup_tooltip)
+    frame:SetMovable(true)
+    frame:EnableMouse(true)
+    frame:RegisterForDrag("LeftButton")
+
+    frame.tex = frame:CreateTexture()
+    frame.tex:SetAllPoints(frame)
+    frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
+    frame.tex:SetColorTexture(0.04, 0.08, 0.13, 0.75)
+    
+    frame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+    frame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+    end)
+
+    --[[local br = CreateFrame("Button", nil, frame)
+    br:EnableMouse("true")
+    br:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -2, 2)
+    br:SetSize(12, 12)
+    br:SetNormalTexture("Interface/ChatFrame/UI-ChatIM-SizeGrabber-Down")
+    br:SetHighlightTexture("Interface/ChatFrame/UI-ChatIM-SizeGrabber-Highlight")
+    br:SetPushedTexture("Interface/ChatFrame/UI-ChatIM-SizeGrabber-Up")
+
+    br:SetScript("OnMouseDown", function(self)
+        self:GetParent():StartSizing("BOTTOMRIGHT") 
+    end)
+    br:SetScript("OnMouseUp", function(self)
+        self:GetParent():StopMovingOrSizing("BOTTOMRIGHT")
+    end)]]
+    
+    local title = frame.title or frame:CreateFontString(nil, nil, "GameFontNormal")
+    title:SetText("Profession Master")
+    title:SetPoint("TOP", frame, "TOP", 0, -4)
+    title:SetTextColor(1, 1, 1)
+
+    frame.title = title
+
+    local your_professions = frame.your_professions or frame:CreateFontString(nil, nil, "GameFontNormal")
+    your_professions:SetText("Your professions:")
+    your_professions:SetPoint("TOPLEFT", frame, "TOPLEFT", 8, -24)
+    your_professions:SetTextColor(1, 1, 1)
+
+    frame.your_professions = your_professions
+
+    local alignment = "TOPLEFT"
+    local xoff = 8
+
+    local buttons = frame.buttons or {}
+
+    for index = 1, GetNumSkillLines() do
+        local name, _, _, level = GetSkillLineInfo(index)
+        if PM.professions[name:gsub("%s+", ""):lower()] ~= nil or PM.gathering_professions[name:gsub("%s+", ""):lower()] ~= nil then
+            local button = buttons[index] or CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
+            button:SetPoint(alignment, frame, alignment, xoff, -40)
+            button:SetText(name)
+            button:SetSize(128, 24)
+
+            if PM.professions[name:gsub("%s+", ""):lower()] ~= nil then
+                if PM.professions[name:gsub("%s+", ""):lower()].list ~= nil then
+                    button:SetScript("OnClick", function()
+                        -- todo
+                    end)
+                end
+            else
+                if PM.gathering_professions[name:gsub("%s+", ""):lower()].list ~= nil then
+                    button:SetScript("OnClick", function()
+                        -- todo
+                        --[[
+                        if frame.selected_frame ~= name then
+                            if frame.secondary_frame == nil then
+                                frame.secondary_frame = CreateFrame("Frame", nil, frame)
+
+                                frame.secondary_frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 4)
+                                frame.secondary_frame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 4)
+
+                                frame.secondary_frame.tex = frame.secondary_frame:CreateTexture()
+                                frame.secondary_frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
+                                if (select(4, GetBuildInfo())) < 11404 then
+                                    frame.secondary_frame.tex:SetColorTexture(1.0, 1.0, 1.0, 0.75)
+                                    frame.secondary_frame.tex:SetGradient("VERTICAL", 0.04, 0.08, 0.13, 0.09, 0.16, 0.23)
+                                else
+                                    frame.secondary_frame.tex:SetGradient("VERTICAL", CreateColor(0.04, 0.08, 0.13, 0.75), CreateColor(0.09, 0.16, 0.23, 0.75))
+                                end
+                            end
+
+                            frame.secondary_frame:SetSize(280, 280)
+                            frame.secondary_frame.tex:SetAllPoints(frame.secondary_frame)
+
+                            frame.secondary_frame.map_frame = frame.secondary_frame.map_frame or CreateFrame("Frame", nil, frame.secondary_frame)
+                            frame.secondary_frame.map_frame:SetPoint("CENTER", frame.secondary_frame, "CENTER")
+                            frame.secondary_frame.map_frame:SetSize(272, 272)
+                            frame.secondary_frame.map_frame.tex = frame.secondary_frame.map_frame.tex or frame.secondary_frame.map_frame:CreateTexture()
+                            frame.secondary_frame.map_frame.tex:SetTexture(C_Map.GetMapArtID(C_Map.GetBestMapForUnit("player"))) -- todo just use custom maps or they wont show up and will be incomplete anyway
+                            frame.secondary_frame.map_frame.tex:SetAllPoints(frame.secondary_frame.map_frame)
+                        end
+                        ]]
+                        -- temporary for testing!!!
+                        ProfessionMaster.request_route_usage(1731)
+                    end)
+                end
+            end
+
+            alignment = "TOPRIGHT"
+            xoff = -8
+
+            buttons[index] = button
+        end
+    end
+
+    frame.buttons = buttons
+    
+    frame:Show()
+
+    ProfessionMaster.main_frame = frame
+
+    local step_frame = ProfessionMaster.step_frame or CreateFrame("Frame", "PMStepFrame", UIParent)
+
+    step_frame:SetWidth(48)
+    step_frame:SetHeight(48)
+    step_frame:RegisterForDrag("LeftButton")
+    step_frame:SetPoint("TOP", 0, -16)
+    step_frame:SetClampedToScreen(true)
+
+    step_frame:SetMovable(true)
+    step_frame:EnableMouse(true)
+    step_frame:RegisterForDrag("LeftButton")
+
+    step_frame.text = step_frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    step_frame.text:SetJustifyH("CENTER")
+    step_frame.text:SetText("")
+    step_frame.text:SetPoint("TOP", step_frame, "BOTTOM", 0, -8)
+
+
+    step_frame.tex = step_frame:CreateTexture()
+    step_frame.tex:SetAllPoints(step_frame)
+    step_frame.tex:SetColorTexture(0.04, 0.08, 0.13, 0.75)
+
+    step_frame.mask = step_frame:CreateMaskTexture()
+    step_frame.mask:SetAllPoints(step_frame.tex)
+    step_frame.mask:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    step_frame.tex:AddMaskTexture(step_frame.mask)
+
+    step_frame:Hide()
+
+    step_frame.inner_frame = step_frame.inner_frame or CreateFrame("Frame", nil, step_frame)
+    
+    step_frame.inner_frame:SetWidth(8)
+    step_frame.inner_frame:SetHeight(8)
+    step_frame.inner_frame:SetMovable(false)
+    step_frame.inner_frame:SetPoint("CENTER", 0, 0)
+
+    step_frame.inner_frame.tex = step_frame.inner_frame:CreateTexture()
+    step_frame.inner_frame.tex:SetAllPoints(step_frame.inner_frame)
+    step_frame.inner_frame.tex:SetColorTexture(0.31, 0.61, 0.85, 1.00)
+
+    step_frame.inner_frame.mask = step_frame:CreateMaskTexture()
+    step_frame.inner_frame.mask:SetAllPoints(step_frame.inner_frame.tex)
+    step_frame.inner_frame.mask:SetTexture("Interface/CharacterFrame/TempPortraitAlphaMask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+    step_frame.inner_frame.tex:AddMaskTexture(step_frame.inner_frame.mask)
+
+    ProfessionMaster.step_frame = step_frame
+end
+
+ProfessionMaster.init = function()
+    local helper = CreateFrame("Frame", nil, UIParent)
+    helper:SetScript("OnEvent", ProfessionMaster.init_frames)
+    helper:RegisterEvent("AUCTION_HOUSE_SHOW")
+    helper:RegisterEvent("TRADE_SKILL_SHOW")
+    helper:RegisterEvent("LEARNED_SPELL_IN_TAB")
+    helper:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+    local queuehelper = CreateFrame("Frame", "QueueHelper", UIParent)
+    queuehelper:SetScript("OnUpdate", function()
+        if not ProfessionMaster.main_frame then
+            ProfessionMaster.generate_frame()
+        end
+
+        ProfessionMaster.ah_source = false
+        ProfessionMaster.dequeue()
+
+        ProfessionMaster.update_step_frame()
+    end)
+    queuehelper:SetPropagateKeyboardInput(true)
+    
+    GameTooltip:HookScript("OnTooltipSetItem", ProfessionMaster.setup_tooltip)
+
+    SLASH_PROFESSIONMASTER1, SLASH_PROFESSIONMASTER2 = "/pm", "/professionmaster"
+    SlashCmdList["PROFESSIONMASTER"] = ProfessionMaster.slash_command
+
+    local chat_helper = CreateFrame("Frame", nil, UIParent)
+    chat_helper:SetScript("OnEvent", ProfessionMaster.chat_handler)
+    chat_helper:RegisterEvent("CHAT_MSG_CHANNEL")
+end
+
+local hex_digits = {
+    [0x0] = '0', [0x1] = '1', [0x2] = '2', [0x3] = '3',
+    [0x4] = '4', [0x5] = '5', [0x6] = '6', [0x7] = '7',
+    [0x8] = '8', [0x9] = '9', [0xa] = 'a', [0xb] = 'b',
+    [0xc] = 'c', [0xd] = 'd', [0xe] = 'e', [0xf] = 'f'
+}
+
+function from_hex(hex)
+    for num, val in pairs(hex_digits) do
+        if val == hex then
+            return num
+        end
+    end
+
+    return nil
+end
+
+ProfessionMaster.encode = function(op, args)
+    if op == nil or op.id == nil or op.size == nil then
+        ProfessionMaster.print_verbose("|cFFFF0000Encoding error: invalid operation")
+        return ""
+    end
+
+    if #op.size ~= #args then
+        ProfessionMaster.print_verbose("|cFFFF0000Encoding error: invalid argument count for operation " .. op.id)
+        return ""
+    end
+
+    local buffer = { bit.band(op.id, 0x0F), bit.band(bit.rshift(op.id, 4), 0x0F) }
+
+    for i, arg in ipairs(args) do
+        for j = 0, (op.size[i] * 2) - 1 do
+            table.insert(buffer, bit.band(bit.rshift(arg, j * 4), 0x0F))
+        end
+    end
+
+    local str = ""
+
+    for i, val in ipairs(buffer) do
+        str = str .. hex_digits[val]
+    end
+
+    return str
+end
+
+ProfessionMaster.decode = function(str)
+    if #str < 2 then
+        ProfessionMaster.print_verbose("|cFFFF0000Decoding error: invalid operation")
+        return nil, nil
+    end
+
+    local op = ProfessionMaster.operation_lookup(bit.bor(from_hex(str:sub(1, 1)), bit.lshift(from_hex(str:sub(2, 2)), 0x0F)))
+    
+    if op == nil then
+        ProfessionMaster.print_verbose("|cFFFF0000Decoding error: invalid operation")
+        return nil, nil
+    end
+    
+    local reqsize = 0
+    for _, size in ipairs(op.size) do
+        reqsize = reqsize + size
+    end
+
+    if (str:len() - 2) / 2 ~= reqsize then
+        ProfessionMaster.print_verbose("|cFFFF0000Decoding error: invalid size for operation " .. op.id)
+        return nil, nil
+    end
+
+    local pos = 3
+    local args = {}
+
+    for _, size in ipairs(op.size) do
+        local arg = 0
+
+        for i = pos, pos + (size * 2) - 1 do
+            arg = bit.bor(arg, bit.lshift(from_hex(str:sub(i, i)), ((i - pos) * 4)))
+        end
+
+        pos = pos + (size * 2)
+
+        table.insert(args, arg)
+    end
+
+    return op, args
+end
+
+ProfessionMaster.operation_lookup = function(id)
+    for _, data in pairs(ProfessionMaster.operations) do
+        if data.id == id then
+            return data
+        end
+    end
+
+    return nil
+end
+
+ProfessionMaster.request_route_usage = function(vein_id)
+    if GetChannelName("PMGatheringRoutesData") == 0 then
+        ProfessionMaster.join_channel()
+    end
+
+    ProfessionMaster.enqueue({
+        condition = function() return true end,
+        execute = function()
+            ProfessionMaster.requested_routes_time = GetServerTime()
+            ProfessionMaster.requested_vein_id = vein_id
+            ProfessionMaster.requested_routes = { }
+
+            SendChatMessage(
+                ProfessionMaster.encode(ProfessionMaster.operations["request"], { vein_id, GetServerTime() }),
+                "CHANNEL",
+                nil,
+                GetChannelName("PMGatheringRoutesData")
+            )
+
+            ProfessionMaster.enqueue({
+                condition = function()
+                    local server_time = GetServerTime()
+
+                    return not ProfessionMaster.acceptable_time_difference(
+                        ProfessionMaster.requested_routes_time,
+                        server_time
+                    )
+                end,
+                execute = function()
+                    local best_area = nil
+                    local best_route = -1
+                    local route_ores = -1
+
+                    for zone, data in pairs(ProfessionMaster.requested_routes) do
+                        for route, route_data in pairs(data) do
+                            if route_ores == -1 or route_ores < route_data.ores then
+                                best_area = zone
+                                best_route = route
+                                route_ores = route_data.ores
+                            end
+                        end
+                    end
+
+                    if route_users == -1 then route_users = 0 end
+
+                    if best_route == -1 then
+                        ProfessionMaster.print_verbose("No routes currently used! Pick any of the available routes")
+                        return
+                    end
+
+                    ProfessionMaster.print_verbose("Best route: " .. best_route .. " area (average ores / 5 mins: " .. route_ores .. ")")
+
+                    for key, profession in pairs(PM.gathering_professions) do
+                        if profession.list and profession.list.nodes[vein_id] then
+                            ProfessionMaster.print_verbose("Run the following command to start the route:")
+                            ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. ", " .. best_route .. ")")
+                        end
+                    end
+                end,
+                allow_skipping = true
+            })
+        end
+    })
+end
+
+ProfessionMaster.process_route_request = function(args)
+    if ProfessionMaster.current_step == 0 then return end
+
+    local server_time = GetServerTime()
+
+    if ProfessionMaster.current_vein == args[1] and ProfessionMaster.acceptable_time_difference(
+        server_time,
+        args[2],
+        args[3]
+    ) then
+        ProfessionMaster.enqueue({
+            condition = function() return true end,
+            execute = function()
+                SendChatMessage(
+                    ProfessionMaster.encode(ProfessionMaster.operations["route"], {
+                        args[1],
+                        C_Map.GetBestMapForUnit("Player"),
+                        ProfessionMaster.current_route,
+                        GetGameTime(),
+                        (GetItemCount(ProfessionMaster.current_profession.list.nodes[ProfessionMaster.current_vein].main_item) - ProfessionMaster.starting_ores) * 300 / (GetServerTime() - ProfessionMaster.en_route_since)
+                    }),
+                    "CHANNEL",
+                    nil,
+                    GetChannelName("PMGatheringRoutesData")
+                )
+            end
+        }, true)
+    end
+end
+
+ProfessionMaster.process_route_reply = function(args)
+    if ProfessionMaster.current_vein == args[1] and ProfessionMaster.acceptable_time_difference(
+        args[4],
+        ProfessionMaster.requested_routes_time
+    ) then
+        if ProfessionMaster.requested_routes[args[2]] == nil then
+            ProfessionMaster.requested_routes[args[2]] = { }
+        end
+
+        if ProfessionMaster.requested_routes[args[2]][args[3]] == nil then
+            ProfessionMaster.requested_routes[args[2]][args[3]] = { users = 1, ores = args[5] }
+        else
+            ProfessionMaster.requested_routes[args[2]][args[3]].users = ProfessionMaster.requested_routes[args[2]][args[3]].users + 1
+            ProfessionMaster.requested_routes[args[2]][args[3]].ores = ProfessionMaster.requested_routes[args[2]][args[3]].ores + args[5]
+        end
+    end
+end
+
+ProfessionMaster.acceptable_time_difference = function(t1, t2)
+    local diff = t2 - t1
+    return diff > -ProfessionMaster.acceptable_time and diff < ProfessionMaster.acceptable_time
+end
+
+ProfessionMaster.process_ah_price = function(args)
+    if PM.items[args[1]] == nil then
+        PM.items[args[1]] = {
+            item              = nil, -- todo
+            found_best_source = true, -- for now
+            best_source       = "auction house",
+            vendor_price      = args[3],
+            auction_price     = args[2],
+            price             = args[2]
+        }
+    else
+        PM.items[args[1]].auction_price = args[2]
+        PM.items[args[1]].price = args[2] -- todo: hmmmm will be wrong often, so reset the best source!
+        PM.items[args[1]].best_source = "auction house"
+        PM.items[args[1]].found_best_source = true -- for now
+    end
+end
+
+ProfessionMaster.operations = {
+    request  = { id = 0, handler = ProfessionMaster.process_route_request, size = { 4, 4          } },
+    route    = { id = 1, handler = ProfessionMaster.process_route_reply,   size = { 4, 4, 1, 4, 4 } },
+    ah_price = { id = 2, handler = ProfessionMaster.process_ah_price,      size = { 4, 4, 4       } },
+    source   = { id = 3, handler = function() return end,                  size = {               } }  -- todo
+}
+
+ProfessionMaster.chat_handler = function(...)
+    if GetChannelName("PMGatheringRoutesData") == 0 then
+        ProfessionMaster.join_channel()
+        return
+    end
+
+    local _args = { ... }
+    local _, channel_name = string.split(" ", _args[6])
+    
+    if channel_name ~= "PMGatheringRoutesData" or _args[4]:gsub("-.+", "") == UnitName("Player") then return end
+
+    local op, args = ProfessionMaster.decode(_args[3])
+
+    if op == nil or args == nil then
+        return
+    end
+
+    op.handler(args)
+end
+
+ProfessionMaster.gathering_step = function()
+    -- todo continent/instance_id check
+
+    if ProfessionMaster.current_profession == nil then
+        return "No route selected"
+    end
+
+    local zone_id = C_Map.GetBestMapForUnit("Player")
+    local x, y = C_Map.GetPlayerMapPosition(zone_id, "player"):GetXY()
+
+    x = floor(x * 1000) / 10
+    y = floor(y * 1000) / 10
+
+    if zone_id ~= ProfessionMaster.current_area then
+        ProfessionMaster.en_route_since = GetServerTime()
+        return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name
+    end
+
+    local profession = ProfessionMaster.current_profession
+    local vein = profession.list.nodes[ProfessionMaster.current_vein]
+    local area = vein.routes[ProfessionMaster.current_area]
+    local route = area[ProfessionMaster.current_route]
+
+    if ProfessionMaster.current_step < 1 then
+        local best_step = 0
+        local best_distance = 0
+
+        for id, values in ipairs(route.route) do
+            ProfessionMaster.current_step = id
+            local distance = ProfessionMaster.get_step_distance_number()
+
+            if best_step == 0 or distance < best_distance then
+                best_step = id
+                best_distance = distance
+            end
+        end
+
+        ProfessionMaster.current_step = best_step
+    end
+
+    if ProfessionMaster.current_step > #route.route then
+        ProfessionMaster.current_step = 1
+    end
+
+    local step_x, step_y = route.route[ProfessionMaster.current_step].x, route.route[ProfessionMaster.current_step].y
+    local is_cave = route.route[ProfessionMaster.current_step].cave
+    local is_node = route.route[ProfessionMaster.current_step].node
+
+    local materials = "materials"
+
+    if ProfessionMaster.current_profession.name == PM.gathering_professions.mining.name then
+        materials = "ores"
+    elseif ProfessionMaster.current_profession.name == PM.gathering_professions.herbalism.name then
+        materials = "herbs"
+    end
+
+    local distance = ProfessionMaster.get_step_distance_number()
+
+    if distance and distance < 10 then
+        ProfessionMaster.current_step = ProfessionMaster.current_step + 1
+        step_x, step_y = route.route[ProfessionMaster.current_step].x, route.route[ProfessionMaster.current_step].y
+    end
+
+    local msg = "Travel here"
+
+    if is_node then
+        msg = "Check for " .. materials
+    end
+    
+    if is_cave then
+        msg = "Explore cave for " .. materials
+    end
+
+    if route.route[ProfessionMaster.current_step].msg then
+        msg = route.route[ProfessionMaster.current_step].msg
+    end
+
+    return "Step " .. ProfessionMaster.current_step .. ": " .. msg
+end
+
+ProfessionMaster.get_step_distance_number = function()
+    if ProfessionMaster.current_profession == nil then
+        return nil
+    end
+
+    local profession = ProfessionMaster.current_profession
+    local vein = profession.list.nodes[ProfessionMaster.current_vein]
+    local area = vein.routes[ProfessionMaster.current_area]
+    local route = area[ProfessionMaster.current_route]
+
+    local step = ProfessionMaster.current_step
+
+    if ProfessionMaster.current_step < 1 or ProfessionMaster.current_step > #route.route then
+        step = 1
+    end
+
+    local zone_id = C_Map.GetBestMapForUnit("Player")
+    local instance_id, pos = C_Map.GetWorldPosFromMapPos(zone_id, C_Map.GetPlayerMapPosition(zone_id, "player"))
+
+    local step_x, step_y = route.route[step].x, route.route[step].y
+
+    local step_instance_id, step_pos = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = step_x / 100, y = step_y / 100 })
+
+    local dx = pos.x - step_pos.x
+    local dy = pos.y - step_pos.y
+
+    local distance = floor(sqrt(dy * dy + dx * dx))
+    
+    return distance
+end
+
+ProfessionMaster.get_step_distance = function()
+    return ProfessionMaster.get_step_distance_number() .. " yards"
+end
+
+ProfessionMaster.get_step_direction = function()
+    if ProfessionMaster.current_profession == nil then
+        return nil
+    end
+
+    local profession = ProfessionMaster.current_profession
+    local vein = profession.list.nodes[ProfessionMaster.current_vein]
+    local area = vein.routes[ProfessionMaster.current_area]
+    local route = area[ProfessionMaster.current_route]
+
+    local step = ProfessionMaster.current_step
+
+    if ProfessionMaster.current_step < 1 or ProfessionMaster.current_step > #route.route then
+        step = 1
+    end
+
+    local zone_id = C_Map.GetBestMapForUnit("Player")
+    local instance_id, pos = C_Map.GetWorldPosFromMapPos(zone_id, C_Map.GetPlayerMapPosition(zone_id, "player"))
+
+    local step_x, step_y = route.route[step].x, route.route[step].y
+
+    local step_instance_id, step_pos = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = step_x / 100, y = step_y / 100 })
+
+    local dx = step_pos.x - pos.x
+    local dy = step_pos.y - pos.y
+
+    if dx == 0 then return 0 end
+
+    local angle = GetPlayerFacing() - atan(dy / dx) * math.pi / 180
+
+    if dx < 0 then return angle - math.pi end
+
+    return angle
+end
+
+ProfessionMaster.update_step_frame = function()
+    if ProfessionMaster.current_profession == nil then
+        ProfessionMaster.step_frame:Hide()
+        return
+    end
+
+    local msg = ProfessionMaster.gathering_step()
+    local angle = ProfessionMaster.get_step_direction() * 180 / math.pi
+
+    ProfessionMaster.step_frame:Show()
+
+    ProfessionMaster.step_frame.inner_frame:SetPoint("CENTER", sin(angle) * 14, cos(angle) * 14)
+    ProfessionMaster.step_frame.text:SetText("|cFFFFFFFF" .. msg .. "\n" .. ProfessionMaster.get_step_distance())
+end
+
+ProfessionMaster.start_route = function(profession_name, vein, zone, route)
+    ProfessionMaster.current_profession = PM.gathering_professions[profession_name]
+    ProfessionMaster.current_vein = vein
+    ProfessionMaster.current_area = zone
+    ProfessionMaster.current_route = route
+    ProfessionMaster.current_step = 0
+    ProfessionMaster.en_route_since = GetServerTime()
+    ProfessionMaster.starting_ores = GetItemCount(ProfessionMaster.current_profession.list.nodes[ProfessionMaster.current_vein].main_item)
+end
+
+ProfessionMaster.stop_route = function()
+    ProfessionMaster.current_profession = nil
+    ProfessionMaster.current_vein = nil
+    ProfessionMaster.current_area = nil
+    ProfessionMaster.current_route = nil
+    ProfessionMaster.current_step = 0
+    ProfessionMaster.en_route_since = nil
+    ProfessionMaster.starting_ores = nil
+end
+
+PMCustomRoutes = PMCustomRoutes or { }
+
+ProfessionMaster.new_route = nil
+
+ProfessionMaster.start_creating_route = function(profession_name, vein, zone, route_id)
+    ProfessionMaster.new_route = {
+        profession = profession_name,
+        vein = vein,
+        zone = zone,
+        id = route_id,
+        steps = { },
+        nodes = 0
+    }
+end
+
+ProfessionMaster.add_step = function(node, cave, msg)
+    if ProfessionMaster.new_route then
+        local zone_id = C_Map.GetBestMapForUnit("Player")
+        local pos = C_Map.GetPlayerMapPosition(zone_id, "player")
+    
+        table.insert(ProfessionMaster.new_route.steps, {
+            x = pos.x,
+            y = pos.y,
+            node = node,
+            cave = cave,
+            msg = msg
+        })
+    end
+end
+
+ProfessionMaster.stop_creating_route = function()
+    if ProfessionMaster.new_route then
+        table.insert(PMCustomRoutes, ProfessionMaster.new_route)
+        ProfessionMaster.new_route = nil
+    end
+end
+
+ProfessionMaster.init()
+
+-- /run ProfessionMaster.start_route("mining", 1731, 1426, 1)

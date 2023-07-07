@@ -1,4 +1,4 @@
-## Interface: 11403
+## Interface: 30402
 ## Title: Profession Master
 ## Author: Bryan Morabito
 ## Version: 0.0.2a
@@ -6,5 +6,6 @@
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMCustomRoutes
 
+Professions/Jewelcrafting.lua
 Professions/Mining.lua
 ProfessionMaster.lua
