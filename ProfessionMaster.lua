@@ -2,11 +2,11 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
--- todo: swap hours, minutes with GetServerTime()
+-- todo: if a route has 0 users its good!!!
 
 ProfessionMaster = { }
 
-ProfessionMaster.acceptable_time = 5
+ProfessionMaster.acceptable_time = 8
 
 ProfessionMaster.verbose = true -- Disable in production
 
@@ -706,60 +706,231 @@ ProfessionMaster.generate_frame = function()
     local alignment = "TOPLEFT"
     local xoff = 8
 
-    local buttons = frame.buttons or {}
+    local buttons = frame.buttons or { }
+    frame.profession_frames = frame.profession_frames or { }
 
     for index = 1, GetNumSkillLines() do
         local name, _, _, level = GetSkillLineInfo(index)
         if ProfessionMaster.professions[name:gsub("%s+", ""):lower()] ~= nil or ProfessionMaster.gathering_professions[name:gsub("%s+", ""):lower()] ~= nil then
+            local profession = ProfessionMaster.professions[name:gsub("%s+", ""):lower()] or ProfessionMaster.gathering_professions[name:gsub("%s+", ""):lower()]
+
             local button = buttons[index] or CreateFrame("Button", nil, frame, "UIPanelButtonTemplate")
             button:SetPoint(alignment, frame, alignment, xoff, -40)
             button:SetText(name)
             button:SetSize(128, 24)
 
-            if ProfessionMaster.professions[name:gsub("%s+", ""):lower()] ~= nil then
-                if ProfessionMaster.professions[name:gsub("%s+", ""):lower()].list ~= nil then
-                    button:SetScript("OnClick", function()
-                        -- todo
-                    end)
-                end
-            else
-                if ProfessionMaster.gathering_professions[name:gsub("%s+", ""):lower()].list ~= nil then
-                    button:SetScript("OnClick", function()
-                        -- todo
-                        --[[
-                        if frame.selected_frame ~= name then
-                            if frame.secondary_frame == nil then
-                                frame.secondary_frame = CreateFrame("Frame", nil, frame)
+            button:SetScript("OnClick", function()
+                local profession_frame = frame.profession_frames[name]
+                
+                if not profession_frame then
+                    profession_frame = CreateFrame("Frame", nil, frame)
+                    profession_frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 4)
+                    profession_frame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 4)
 
-                                frame.secondary_frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 4)
-                                frame.secondary_frame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 4)
+                    profession_frame.tex = profession_frame:CreateTexture()
+                    profession_frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
+                    if (select(4, GetBuildInfo())) < 11404 then
+                        profession_frame.tex:SetColorTexture(1.0, 1.0, 1.0, 0.75)
+                        profession_frame.tex:SetGradient("VERTICAL", 0.04, 0.08, 0.13, 0.09, 0.16, 0.23)
+                    else
+                        profession_frame.tex:SetGradient("VERTICAL", CreateColor(0.04, 0.08, 0.13, 0.75), CreateColor(0.09, 0.16, 0.23, 0.75))
+                    end
 
-                                frame.secondary_frame.tex = frame.secondary_frame:CreateTexture()
-                                frame.secondary_frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
-                                if (select(4, GetBuildInfo())) < 11404 then
-                                    frame.secondary_frame.tex:SetColorTexture(1.0, 1.0, 1.0, 0.75)
-                                    frame.secondary_frame.tex:SetGradient("VERTICAL", 0.04, 0.08, 0.13, 0.09, 0.16, 0.23)
-                                else
-                                    frame.secondary_frame.tex:SetGradient("VERTICAL", CreateColor(0.04, 0.08, 0.13, 0.75), CreateColor(0.09, 0.16, 0.23, 0.75))
+                    profession_frame:SetHeight(24)
+                    profession_frame.tex:SetAllPoints(profession_frame)
+
+                    if frame.visible_frame then
+                        frame.visible_frame:Hide()
+                    end
+
+                    frame.visible_frame = profession_frame
+
+                    profession_frame.title = profession_frame:CreateFontString(nil, nil, "GameFontNormal")
+                    profession_frame.title:SetJustifyH("CENTER")
+                    profession_frame.title:SetText(name)
+                    profession_frame.title:SetPoint("TOP", 0, -8)
+
+                    if not profession.list then
+                        profession_frame:SetHeight(44)
+
+                        -- todo: Free content
+
+                        profession_frame.title = profession_frame:CreateFontString(nil, nil, "GameFontNormal")
+                        profession_frame.title:SetJustifyH("CENTER")
+                        profession_frame.title:SetText("|cFFFF0000You do not own a guide for this profession!")
+                        profession_frame.title:SetPoint("BOTTOM", 0, 8)
+                    else
+                        if profession.name == "Mining" then -- temporary, should be all gathering later
+                            profession_frame.sub_frame = CreateFrame("Frame", nil, profession_frame)
+                            profession_frame.sub_frame:Hide()
+
+                            profession_frame.sub_frame:SetPoint("TOPLEFT", 0, -60)
+                            profession_frame.sub_frame:SetPoint("TOPRIGHT", 0, -60)
+
+                            profession_frame.sub_frame:SetHeight(96)
+
+                            profession_frame.sub_frame.query_button = CreateFrame("Button", nil, profession_frame.sub_frame, "UIPanelButtonTemplate")
+                            profession_frame.sub_frame.query_button:SetText("Find best route")
+                            profession_frame.sub_frame.query_button:SetPoint("TOPLEFT", 8, -4)
+                            profession_frame.sub_frame.query_button:SetWidth(264)
+                            profession_frame.sub_frame.query_button:SetScript("OnClick", function()
+                                if profession_frame.selected_vein == nil then return end
+
+                                ProfessionMaster.request_route_usage(profession_frame.selected_vein, profession_frame.selected_area)
+                            end)
+
+                            profession_frame.sub_frame.optimal_route = CreateFrame("Button", nil, profession_frame.sub_frame, "UIPanelButtonTemplate")
+                            profession_frame.sub_frame.optimal_route:SetText("Use best route")
+                            profession_frame.sub_frame.optimal_route:SetPoint("LEFT", 8, 0)
+                            profession_frame.sub_frame.optimal_route:SetWidth(128)
+                            profession_frame.sub_frame.optimal_route:SetScript("OnClick", function()
+                                if profession_frame.selected_vein == nil or ProfessionMaster.best_area == nil or ProfessionMaster.best_route == nil then return end
+
+                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, ProfessionMaster.best_area, ProfessionMaster.best_route)
+
+                                UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, C_Map.GetMapInfo(ProfessionMaster.best_area).name .. " (" .. ProfessionMaster.best_route .. ")")
+
+                                profession_frame.sub_frame.stop_button:Enable()
+                            end)
+                            
+                            profession_frame.sub_frame.manual_route = CreateFrame("Frame", nil, profession_frame.sub_frame, "UIDropDownMenuTemplate")
+                            profession_frame.sub_frame.manual_route:SetPoint("RIGHT", 8, -2)
+                            UIDropDownMenu_SetWidth(profession_frame.sub_frame.manual_route, 112)
+
+                            profession_frame.sub_frame.stop_button = CreateFrame("Button", nil, profession_frame.sub_frame, "UIPanelButtonTemplate")
+                            profession_frame.sub_frame.stop_button:SetText("Stop route")
+                            profession_frame.sub_frame.stop_button:SetPoint("BOTTOMLEFT", 8, 4)
+                            profession_frame.sub_frame.stop_button:SetWidth(264)
+                            profession_frame.sub_frame.stop_button:SetScript("OnClick", function()
+                                ProfessionMaster.stop_route()
+                                profession_frame.sub_frame.stop_button:Disable()
+                                UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, "Choose a route")
+                            end)
+
+                            profession_frame.ore_selector = CreateFrame("Frame", nil, profession_frame, "UIDropDownMenuTemplate")
+                            profession_frame.ore_selector:SetPoint("TOPLEFT", -8, -22)
+                            UIDropDownMenu_SetWidth(profession_frame.ore_selector, 96)
+                            UIDropDownMenu_Initialize(profession_frame.ore_selector, function(self, level, menu_list)
+                                local info = UIDropDownMenu_CreateInfo()
+
+                                for vein_id, node in pairs(profession.list.nodes) do
+                                    info.text, info.arg1, info.arg2, info.func, info.checked = node.name, vein_id, node.name, self.set_value, vein_id == profession_frame.selected_vein
+                                    UIDropDownMenu_AddButton(info)
                                 end
+                            end)
+
+                            function profession_frame.ore_selector:set_value(vein_id, name)
+                                profession_frame.selected_vein = vein_id
+                                profession_frame.selected_area = 0
+
+                                UIDropDownMenu_SetText(profession_frame.ore_selector, name)
+                                CloseDropDownMenus()
+                                
+                                profession_frame:SetHeight(64 + profession_frame.sub_frame:GetHeight())
+                                profession_frame.area_selector:Show()
+                                profession_frame.sub_frame:Show()
+
+                                UIDropDownMenu_Initialize(profession_frame.area_selector, function(self, level, menu_list)
+                                    local info = UIDropDownMenu_CreateInfo()
+    
+                                    info.text, info.arg1, info.arg2, info.func, info.checked = "Any zone", 0, "Any zone", self.set_value, 0 == profession_frame.selected_area
+                                    UIDropDownMenu_AddButton(info)
+
+                                    for zone_id, _ in pairs(profession.list.nodes[profession_frame.selected_vein].routes) do
+                                        info.text, info.arg1, info.arg2, info.func, info.checked = C_Map.GetMapInfo(zone_id).name, zone_id, C_Map.GetMapInfo(zone_id).name, self.set_value, zone_id == profession_frame.selected_area
+                                        UIDropDownMenu_AddButton(info)
+                                    end
+                                end)
+
+                                UIDropDownMenu_Initialize(profession_frame.sub_frame.manual_route, function(self, level, menu_list)
+                                    local routes = profession.list.nodes[profession_frame.selected_vein].routes
+                                    if not level or level == 1 then
+                                        local info = UIDropDownMenu_CreateInfo()
+
+                                        for zone_id, _ in pairs(routes) do
+                                            info.text, info.hasArrow, info.menuList, info.checked = C_Map.GetMapInfo(zone_id).name, true, zone_id, ProfessionMaster.current_area == zone_id
+                                            UIDropDownMenu_AddButton(info)
+                                        end
+                                    elseif menu_list then
+                                        local info = UIDropDownMenu_CreateInfo()
+
+                                        for route_id, _ in ipairs(routes[menu_list]) do
+                                            info.text, info.arg1, info.arg2, info.func, info.checked = route_id, route_id, menu_list, self.set_value, ProfessionMaster.current_area == menu_list and ProfessionMaster.current_route == route_id
+                                            UIDropDownMenu_AddButton(info, level)
+                                        end
+                                    end
+                                end)
                             end
 
-                            frame.secondary_frame:SetSize(280, 280)
-                            frame.secondary_frame.tex:SetAllPoints(frame.secondary_frame)
+                            function profession_frame.sub_frame.manual_route:set_value(route_id, zone_id)
+                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, zone_id, route_id)   
 
-                            frame.secondary_frame.map_frame = frame.secondary_frame.map_frame or CreateFrame("Frame", nil, frame.secondary_frame)
-                            frame.secondary_frame.map_frame:SetPoint("CENTER", frame.secondary_frame, "CENTER")
-                            frame.secondary_frame.map_frame:SetSize(272, 272)
-                            frame.secondary_frame.map_frame.tex = frame.secondary_frame.map_frame.tex or frame.secondary_frame.map_frame:CreateTexture()
-                            frame.secondary_frame.map_frame.tex:SetTexture(C_Map.GetMapArtID(C_Map.GetBestMapForUnit("player"))) -- todo just use custom maps or they wont show up and will be incomplete anyway
-                            frame.secondary_frame.map_frame.tex:SetAllPoints(frame.secondary_frame.map_frame)
+                                UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, C_Map.GetMapInfo(zone_id).name .. " (" .. route_id .. ")")
+
+                                profession_frame.sub_frame.stop_button:Enable()
+                                CloseDropDownMenus()
+                            end
+
+                            profession_frame.area_selector = CreateFrame("Frame", nil, profession_frame, "UIDropDownMenuTemplate")
+                            profession_frame.area_selector:SetPoint("TOPRIGHT", 8, -22)
+                            UIDropDownMenu_SetWidth(profession_frame.area_selector, 96)
+
+                            function profession_frame.area_selector:set_value(zone_id, name)
+                                profession_frame.selected_area = zone_id
+                                UIDropDownMenu_SetText(profession_frame.area_selector, name)
+                                CloseDropDownMenus()
+                            end
+
+                            profession_frame.reset = function()
+                                profession_frame:SetHeight(56)
+
+                                UIDropDownMenu_SetText(profession_frame.ore_selector, "Select a node")
+                                UIDropDownMenu_SetText(profession_frame.area_selector, "Any zone")
+                                UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, "Choose a route")
+
+                                profession_frame.selected_vein = nil
+                                profession_frame.selected_area = 0
+                                profession_frame.area_selector:Hide()
+                                profession_frame.sub_frame:Hide()
+                                profession_frame.sub_frame.optimal_route:Disable()
+
+                                ProfessionMaster.best_route = nil
+                                ProfessionMaster.best_area = nil 
+                                
+                                if not ProfessionMaster.current_profession then
+                                    profession_frame.sub_frame.stop_button:Disable()
+                                else
+                                    profession_frame.sub_frame.stop_button:Enable()
+                                end
+                            end
                         end
-                        ]]
-                        -- temporary for testing!!!
-                        ProfessionMaster.request_route_usage(1731)
-                    end)
+                    end
+
+                    if profession_frame.reset then
+                        profession_frame.reset()
+                    end
+
+                    frame.profession_frames[name] = profession_frame
+                else
+                    if profession_frame:IsVisible() then
+                        profession_frame:Hide()
+
+                        frame.visible_frame = nil
+                    else
+                        if frame.visible_frame then
+                            frame.visible_frame:Hide()
+                        end
+
+                        if profession_frame.reset then
+                            profession_frame.reset()
+                        end
+
+                        profession_frame:Show()
+
+                        frame.visible_frame = profession_frame
+                    end
                 end
-            end
+            end)
 
             alignment = "TOPRIGHT"
             xoff = -8
@@ -971,20 +1142,29 @@ ProfessionMaster.operation_lookup = function(id)
     return nil
 end
 
-ProfessionMaster.request_route_usage = function(vein_id)
+ProfessionMaster.request_route_usage = function(vein_id, zone_id)
+    if not zone_id then zone_id = 0 end
+
     if GetChannelName("PMGatheringRoutesData") == 0 then
         ProfessionMaster.join_channel()
     end
 
+    ProfessionMaster.print("Requesting best farming route... Please press any keyboard button to send the request.")
+
     ProfessionMaster.enqueue({
         condition = function() return true end,
         execute = function()
+            ProfessionMaster.print("Request sent! Please wait a few seconds while we fetch all the latest data.")
+
             ProfessionMaster.requested_routes_time = GetServerTime()
             ProfessionMaster.requested_vein_id = vein_id
+            ProfessionMaster.requested_zone_id = zone_id
+            ProfessionMaster.best_route = nil
+            ProfessionMaster.best_area = nil
             ProfessionMaster.requested_routes = { }
 
             SendChatMessage(
-                ProfessionMaster.encode(ProfessionMaster.operations["request"], { vein_id, GetServerTime() }),
+                ProfessionMaster.encode(ProfessionMaster.operations["request"], { vein_id, zone_id, GetServerTime() }),
                 "CHANNEL",
                 nil,
                 GetChannelName("PMGatheringRoutesData")
@@ -1025,10 +1205,14 @@ ProfessionMaster.request_route_usage = function(vein_id)
 
                     for key, profession in pairs(ProfessionMaster.gathering_professions) do
                         if profession.list and profession.list.nodes[vein_id] then
-                            ProfessionMaster.print_verbose("Run the following command to start the route:")
-                            ProfessionMaster.print_verbose("|cFFFF8000/run ProfessionMaster.start_route(\"" .. key .. "\", " .. vein_id .. ", " .. best_area .. ", " .. best_route .. ")")
+                            if ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame.optimal_route then
+                                ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame.optimal_route:Enable()
+                            end
                         end
                     end
+
+                    ProfessionMaster.best_route = best_route
+                    ProfessionMaster.best_area = best_area
 
                     ProfessionMaster.requested_routes_time = nil
                 end,
@@ -1041,12 +1225,13 @@ end
 
 ProfessionMaster.process_route_request = function(args)
     if ProfessionMaster.current_step == 0 then return end
+    if args[2] ~= 0 and args[2] ~= ProfessionMaster.current_area then return end
 
     local server_time = GetServerTime()
 
     if ProfessionMaster.current_vein == args[1] and ProfessionMaster.acceptable_time_difference(
         server_time,
-        args[2]
+        args[3]
     ) then
         ProfessionMaster.enqueue({
             condition = function() return true end,
@@ -1113,7 +1298,7 @@ ProfessionMaster.process_ah_price = function(args)
 end
 
 ProfessionMaster.operations = {
-    request  = { id = 0, handler = ProfessionMaster.process_route_request, size = { 4, 4          } },
+    request  = { id = 0, handler = ProfessionMaster.process_route_request, size = { 4, 4, 4       } },
     route    = { id = 1, handler = ProfessionMaster.process_route_reply,   size = { 4, 4, 1, 4, 4 } },
     ah_price = { id = 2, handler = ProfessionMaster.process_ah_price,      size = { 4, 4, 4       } },
     source   = { id = 3, handler = function() return end,                  size = {               } }  -- todo
