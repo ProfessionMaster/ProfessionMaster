@@ -39,18 +39,6 @@ class Source {
     RAID
 }
 ```
-                name = "Savage Titanium Ring",
-                spell_id = 58492,
-                levels = { 420, 440, 460 },
-                taught_by_trainer = false,
-                source = "Vendor",
-                min_product = 1,
-                max_product = 1,
-                materials = {
-                    { item_id = 41163, amount = 4 },
-                    { item_id = 36860, amount = 4 }
-                },
-                tools = { }
 
 ```mermaid
 classDiagram

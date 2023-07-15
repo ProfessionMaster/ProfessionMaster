@@ -13,6 +13,7 @@ ProfessionMaster.current_vein = nil
 ProfessionMaster.current_area = nil
 ProfessionMaster.current_route = nil
 ProfessionMaster.current_step = 0
+ProfessionMaster.current_other_nodes = false
 
 ProfessionMaster.en_route_since = nil
 ProfessionMaster.starting_ores = nil
@@ -20,6 +21,10 @@ ProfessionMaster.starting_ores = nil
 PM = PM or { }
 
 ProfessionMaster.professions = {
+    jewelcrafting = {
+        list = _G["jewelcrafting"],
+        name = "Jewelcrafting"
+    },
     -- to do
     alchemy = {
         list = nil,
@@ -632,8 +637,47 @@ ProfessionMaster.join_channel = function()
     end
 end
 
+ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounded_bl, rounded_tl)
+    local str = function(rounded)
+        if rounded then return "Rounded" end
+        return ""
+    end
+
+    frame.frames = {
+        { f = CreateFrame("Frame", nil, frame), a = "TOPRIGHT",    w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTopRight"    .. str(rounded_tr) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMRIGHT", w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottomRight" .. str(rounded_br) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMLEFT",  w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottomLeft"  .. str(rounded_bl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOPLEFT",     w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTopLeft"     .. str(rounded_tl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOP",         w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTop.blp"                                  },
+        { f = CreateFrame("Frame", nil, frame), a = "RIGHT",       w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameRight.blp"                                },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOM",      w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottom.blp"                               },
+        { f = CreateFrame("Frame", nil, frame), a = "LEFT",        w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameLeft.blp"                                 },
+        { f = CreateFrame("Frame", nil, frame), a = "CENTER",      w = function() return frame:GetWidth() - 16 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameCenter.blp"                               }
+    }
+
+    for _, data in ipairs(frame.frames) do
+        data.f:SetSize(data.w(), data.h())
+        data.f:SetPoint(data.a)
+        data.f:SetDepth(0)
+        data.f:SetFrameStrata("LOW")
+        data.tex = data.f:CreateTexture()
+        data.tex:SetAllPoints(data.f)
+        data.tex:SetTexture(data.t)
+    end
+
+    frame:SetScript("OnSizeChanged", function()
+        for _, data in ipairs(frame.frames) do
+            data.f:SetSize(data.w(), data.h())
+        end
+    end)
+end
+
 ProfessionMaster.generate_frame = function()
-    local frame = ProfessionMaster.main_frame or CreateFrame("Frame", "PMFrame", UIParent)
+    local frame = ProfessionMaster.main_frame or (function()
+        local f = CreateFrame("Frame", "PMFrame", UIParent)
+        ProfessionMaster.set_background(f, false, true, true, false)
+        return f
+    end)()
 
     frame:SetWidth(280)
     frame:SetHeight(72)
@@ -644,11 +688,6 @@ ProfessionMaster.generate_frame = function()
     frame:SetMovable(true)
     frame:EnableMouse(true)
     frame:RegisterForDrag("LeftButton")
-
-    frame.tex = frame:CreateTexture()
-    frame.tex:SetAllPoints(frame)
-    frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
-    frame.tex:SetColorTexture(0.04, 0.08, 0.13, 0.75)
     
     frame:SetScript("OnDragStart", function(self)
         self:StartMoving()
@@ -724,18 +763,9 @@ ProfessionMaster.generate_frame = function()
                     profession_frame = CreateFrame("Frame", nil, frame)
                     profession_frame:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 4)
                     profession_frame:SetPoint("BOTTOMRIGHT", frame, "TOPRIGHT", 0, 4)
-
-                    profession_frame.tex = profession_frame:CreateTexture()
-                    profession_frame.tex:SetTexture("Interface/Buttons/WHITE8x8")
-                    if (select(4, GetBuildInfo())) < 11404 then
-                        profession_frame.tex:SetColorTexture(1.0, 1.0, 1.0, 0.75)
-                        profession_frame.tex:SetGradient("VERTICAL", 0.04, 0.08, 0.13, 0.09, 0.16, 0.23)
-                    else
-                        profession_frame.tex:SetGradient("VERTICAL", CreateColor(0.04, 0.08, 0.13, 0.75), CreateColor(0.09, 0.16, 0.23, 0.75))
-                    end
-
                     profession_frame:SetHeight(24)
-                    profession_frame.tex:SetAllPoints(profession_frame)
+
+                    ProfessionMaster.set_background(profession_frame, true, false, false, true);
 
                     if frame.visible_frame then
                         frame.visible_frame:Hide()
@@ -747,6 +777,7 @@ ProfessionMaster.generate_frame = function()
                     profession_frame.title:SetJustifyH("CENTER")
                     profession_frame.title:SetText(name)
                     profession_frame.title:SetPoint("TOP", 0, -8)
+                    profession_frame.title:SetTextColor(1, 1, 1)
 
                     if not profession.list then
                         profession_frame:SetHeight(44)
@@ -784,7 +815,7 @@ ProfessionMaster.generate_frame = function()
                             profession_frame.sub_frame.optimal_route:SetScript("OnClick", function()
                                 if profession_frame.selected_vein == nil or ProfessionMaster.best_area == nil or ProfessionMaster.best_route == nil then return end
 
-                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, ProfessionMaster.best_area, ProfessionMaster.best_route)
+                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, ProfessionMaster.best_area, ProfessionMaster.best_route, profession_frame.current_other_nodes)
 
                                 UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, C_Map.GetMapInfo(ProfessionMaster.best_area).name .. " (" .. ProfessionMaster.best_route .. ")")
 
@@ -834,9 +865,12 @@ ProfessionMaster.generate_frame = function()
                                     info.text, info.arg1, info.arg2, info.func, info.checked = "Any zone", 0, "Any zone", self.set_value, 0 == profession_frame.selected_area
                                     UIDropDownMenu_AddButton(info)
 
-                                    for zone_id, _ in pairs(profession.list.nodes[profession_frame.selected_vein].routes) do
-                                        info.text, info.arg1, info.arg2, info.func, info.checked = C_Map.GetMapInfo(zone_id).name, zone_id, C_Map.GetMapInfo(zone_id).name, self.set_value, zone_id == profession_frame.selected_area
-                                        UIDropDownMenu_AddButton(info)
+                                    -- todo: sort by level
+                                    for zone_id, routes in pairs(profession.list.nodes[profession_frame.selected_vein].routes) do
+                                        if #routes > 0 then
+                                            info.text, info.arg1, info.arg2, info.func, info.checked = C_Map.GetMapInfo(zone_id).name, zone_id, C_Map.GetMapInfo(zone_id).name, self.set_value, zone_id == profession_frame.selected_area
+                                            UIDropDownMenu_AddButton(info)
+                                        end
                                     end
                                 end)
 
@@ -846,8 +880,10 @@ ProfessionMaster.generate_frame = function()
                                         local info = UIDropDownMenu_CreateInfo()
 
                                         for zone_id, _ in pairs(routes) do
-                                            info.text, info.hasArrow, info.menuList, info.checked = C_Map.GetMapInfo(zone_id).name, true, zone_id, ProfessionMaster.current_area == zone_id
-                                            UIDropDownMenu_AddButton(info)
+                                            if #routes[zone_id] > 0 then
+                                                info.text, info.hasArrow, info.menuList, info.checked = C_Map.GetMapInfo(zone_id).name, true, zone_id, ProfessionMaster.current_area == zone_id
+                                                UIDropDownMenu_AddButton(info)
+                                            end
                                         end
                                     elseif menu_list then
                                         local info = UIDropDownMenu_CreateInfo()
@@ -861,7 +897,7 @@ ProfessionMaster.generate_frame = function()
                             end
 
                             function profession_frame.sub_frame.manual_route:set_value(route_id, zone_id)
-                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, zone_id, route_id)   
+                                ProfessionMaster.start_route("mining", profession_frame.selected_vein, zone_id, route_id, profession_frame.current_other_nodes)
 
                                 UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, C_Map.GetMapInfo(zone_id).name .. " (" .. route_id .. ")")
 
@@ -995,7 +1031,7 @@ ProfessionMaster.generate_frame = function()
     local minimap_button = LibStub("LibDataBroker-1.1"):NewDataObject("ProfessionMaster", {
         type = "data source",
         text = "Profession Master",
-        icon = "Interface/Icons/Inv_misc_coin_02", -- temporary icon until I make a custom one
+        icon = "Interface/Addons/ProfessionMaster/media/ProfessionMaster.blp",
         OnClick = function(self, btn)
             ProfessionMaster.toggle()
         end,
@@ -1406,10 +1442,6 @@ ProfessionMaster.gathering_step = function()
         ProfessionMaster.current_step = 1
     end
 
-    local step_x, step_y = route.route[ProfessionMaster.current_step].x, route.route[ProfessionMaster.current_step].y
-    local is_cave = route.route[ProfessionMaster.current_step].cave
-    local is_node = route.route[ProfessionMaster.current_step].node
-
     local materials = "materials"
 
     if ProfessionMaster.current_profession.name == ProfessionMaster.gathering_professions.mining.name then
@@ -1420,15 +1452,29 @@ ProfessionMaster.gathering_step = function()
 
     local distance = ProfessionMaster.get_step_distance_number()
 
-    if distance and distance < 10 then
+    local step = route.route[ProfessionMaster.current_step]
+
+    local cur_level = 1
+
+    for index = 1, GetNumSkillLines() do
+        local name, _, _, level = GetSkillLineInfo(index)
+        if name == profession.name then
+            cur_level = level
+            break
+        end
+    end
+
+    -- todo: skip walking steps if last step was for wrong vein_id anyway
+    if (distance and distance < 10) or (step.vein_id ~= ProfessionMaster.current_vein and not ProfessionMaster.current_other_nodes) or step.min_level > cur_level then
         ProfessionMaster.current_step = ProfessionMaster.current_step + 1
 
         if ProfessionMaster.current_step > #route.route then
             ProfessionMaster.current_step = 1
         end
-
-        step_x, step_y = route.route[ProfessionMaster.current_step].x, route.route[ProfessionMaster.current_step].y
     end
+    
+    local is_cave = route.route[ProfessionMaster.current_step].cave
+    local is_node = route.route[ProfessionMaster.current_step].node
 
     local msg = "Travel here"
 
@@ -1555,12 +1601,13 @@ ProfessionMaster.update_step_frame = function()
     end
 end
 
-ProfessionMaster.start_route = function(profession_name, vein, zone, route)
+ProfessionMaster.start_route = function(profession_name, vein, zone, route, current_other_nodes)
     ProfessionMaster.current_profession = ProfessionMaster.gathering_professions[profession_name]
     ProfessionMaster.current_vein = vein
     ProfessionMaster.current_area = zone
     ProfessionMaster.current_route = route
     ProfessionMaster.current_step = 0
+    ProfessionMaster.current_other_nodes = current_other_nodes
     ProfessionMaster.en_route_since = GetServerTime()
     ProfessionMaster.starting_ores = GetItemCount(ProfessionMaster.current_profession.list.nodes[ProfessionMaster.current_vein].main_item)
 end
@@ -1571,6 +1618,7 @@ ProfessionMaster.stop_route = function()
     ProfessionMaster.current_area = nil
     ProfessionMaster.current_route = nil
     ProfessionMaster.current_step = 0
+    ProfessionMaster.current_other_nodes = false
     ProfessionMaster.en_route_since = nil
     ProfessionMaster.starting_ores = nil
 end
