@@ -836,14 +836,33 @@ ProfessionMaster.generate_frame = function()
                                 UIDropDownMenu_SetText(profession_frame.sub_frame.manual_route, "Choose a route")
                             end)
 
+                            function pre_sort(list)
+                                local output = { }
+
+                                for level in 1, 450 do
+                                    for id, entry in pairs(list) do
+                                        if entry.min_level == level then
+                                            table.insert(output, {
+                                                id = id,
+                                                entry = entry
+                                            })
+                                        end
+                                    end
+                                end
+
+                                return output
+                            end
+
+                            profession_frame.nodes_list = profession_frame.nodes_list or pre_sort(profession.list.nodes)
+
                             profession_frame.ore_selector = CreateFrame("Frame", nil, profession_frame, "UIDropDownMenuTemplate")
                             profession_frame.ore_selector:SetPoint("TOPLEFT", -8, -22)
                             UIDropDownMenu_SetWidth(profession_frame.ore_selector, 112)
                             UIDropDownMenu_Initialize(profession_frame.ore_selector, function(self, level, menu_list)
                                 local info = UIDropDownMenu_CreateInfo()
 
-                                for vein_id, node in pairs(profession.list.nodes) do
-                                    info.text, info.arg1, info.arg2, info.func, info.checked = node.name, vein_id, node.name, self.set_value, vein_id == profession_frame.selected_vein
+                                for _, node in ipairs(profession_frame.nodes_list) do
+                                    info.text, info.arg1, info.arg2, info.func, info.checked = node.entry.name, node.id, node.entry.name, self.set_value, vein_id == profession_frame.selected_vein
                                     UIDropDownMenu_AddButton(info)
                                 end
                             end)
@@ -865,7 +884,6 @@ ProfessionMaster.generate_frame = function()
                                     info.text, info.arg1, info.arg2, info.func, info.checked = "Any zone", 0, "Any zone", self.set_value, 0 == profession_frame.selected_area
                                     UIDropDownMenu_AddButton(info)
 
-                                    -- todo: sort by level
                                     for zone_id, routes in pairs(profession.list.nodes[profession_frame.selected_vein].routes) do
                                         if #routes > 0 then
                                             info.text, info.arg1, info.arg2, info.func, info.checked = C_Map.GetMapInfo(zone_id).name, zone_id, C_Map.GetMapInfo(zone_id).name, self.set_value, zone_id == profession_frame.selected_area
@@ -888,8 +906,8 @@ ProfessionMaster.generate_frame = function()
                                     elseif menu_list then
                                         local info = UIDropDownMenu_CreateInfo()
 
-                                        for route_id, _ in ipairs(routes[menu_list]) do
-                                            info.text, info.arg1, info.arg2, info.func, info.checked = route_id, route_id, menu_list, self.set_value, ProfessionMaster.current_area == menu_list and ProfessionMaster.current_route == route_id
+                                        for route_id, route in ipairs(routes[menu_list]) do
+                                            info.text, info.arg1, info.arg2, info.func, info.checked = route.name or route_id, route_id, menu_list, self.set_value, ProfessionMaster.current_area == menu_list and ProfessionMaster.current_route == route_id
                                             UIDropDownMenu_AddButton(info, level)
                                         end
                                     end
@@ -1265,6 +1283,8 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
                         return
                     end
 
+                    -- todo: what if route is unused but a variation of the route is heavily used? 
+                    
                     if best_users == 0 then
                         ProfessionMaster.print_verbose("Best route: " .. C_Map.GetMapInfo(best_area).name .. " (" .. best_route .. "): currently empty!")
                     else
