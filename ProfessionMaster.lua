@@ -2,7 +2,9 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
-ProfessionMaster = { }
+-- todo: check that skilllineinfo works on different locales
+
+ProfessionMaster = ProfessionMaster or { }
 
 ProfessionMaster.acceptable_time = 5
 
@@ -16,7 +18,7 @@ ProfessionMaster.current_step = 0
 ProfessionMaster.current_other_nodes = false
 
 ProfessionMaster.en_route_since = nil
-ProfessionMaster.starting_ores = nil
+ProfessionMaster.starting_ores = nil -- todo: update value on whenever ores are auctioned/crafted into ingots/stored in bank
 
 PM = PM or { }
 
@@ -178,6 +180,19 @@ ProfessionMaster.enqueue = function(query, never_auto_dequeue)
     if #ProfessionMaster.queue == 1 and (never_auto_dequeue == nil or never_auto_dequeue == false) then
         ProfessionMaster.dequeue()
     end
+end
+
+ProfessionMaster.check_for_levelups = function(profession)
+    local skill_level, skill_max_level = 0, 0
+
+    for index = 1, GetNumSkillLines() do
+        local name, _, _, level, _, _, max_level = GetSkillLineInfo(index)
+        if name == profession.name then
+            skill    = level
+            skill_id = index
+        end
+    end
+
 end
 
 ProfessionMaster.fetch_recipes = function(profession)
@@ -839,7 +854,7 @@ ProfessionMaster.generate_frame = function()
                             function pre_sort(list)
                                 local output = { }
 
-                                for level in 1, 450 do
+                                for level = 1, 450 do
                                     for id, entry in pairs(list) do
                                         if entry.min_level == level then
                                             table.insert(output, {
@@ -862,7 +877,7 @@ ProfessionMaster.generate_frame = function()
                                 local info = UIDropDownMenu_CreateInfo()
 
                                 for _, node in ipairs(profession_frame.nodes_list) do
-                                    info.text, info.arg1, info.arg2, info.func, info.checked = node.entry.name, node.id, node.entry.name, self.set_value, vein_id == profession_frame.selected_vein
+                                    info.text, info.arg1, info.arg2, info.func, info.checked = node.entry.name, node.id, node.entry.name, self.set_value, node.id == profession_frame.selected_vein
                                     UIDropDownMenu_AddButton(info)
                                 end
                             end)
@@ -907,7 +922,14 @@ ProfessionMaster.generate_frame = function()
                                         local info = UIDropDownMenu_CreateInfo()
 
                                         for route_id, route in ipairs(routes[menu_list]) do
-                                            info.text, info.arg1, info.arg2, info.func, info.checked = route.name or route_id, route_id, menu_list, self.set_value, ProfessionMaster.current_area == menu_list and ProfessionMaster.current_route == route_id
+                                            info.arg1, info.arg2, info.func, info.checked = route_id, menu_list, self.set_value, ProfessionMaster.current_area == menu_list and ProfessionMaster.current_route == route_id
+                                            
+                                            if route.name then
+                                                info.text = "(" .. route_id .. ") " .. route.name
+                                            else
+                                                info.text = route_id
+                                            end
+
                                             UIDropDownMenu_AddButton(info, level)
                                         end
                                     end
@@ -1284,7 +1306,7 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
                     end
 
                     -- todo: what if route is unused but a variation of the route is heavily used? 
-                    
+
                     if best_users == 0 then
                         ProfessionMaster.print_verbose("Best route: " .. C_Map.GetMapInfo(best_area).name .. " (" .. best_route .. "): currently empty!")
                     else
