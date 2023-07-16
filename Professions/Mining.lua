@@ -41,7 +41,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1426] = {
+                [1426] = { -- Dun Morogh
                     { x = 20.9, y = 51.4 },
                     { x = 20.9, y = 51.5 },
                     { x = 21.2, y = 54.6 },
@@ -210,7 +210,7 @@ _G["MINING"] = {
                     { x = 82.5, y = 39.3 },
                     { x = 84.6, y = 53.7 }
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
                     { x = 5.8, y = 44.4 },
                     { x = 5.8, y = 44.6 },
                     { x = 20.2, y = 80.1 },
@@ -260,7 +260,7 @@ _G["MINING"] = {
                     { x = 84.2, y = 55.4 },
                     { x = 84.2, y = 55.5 }
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
                     { x = 20.7, y = 35.3 },
                     { x = 22.8, y = 39.0 },
                     { x = 23.3, y = 31.8 },
@@ -292,7 +292,7 @@ _G["MINING"] = {
                     { x = 63.5, y = 77.0 },
                     { x = 64.1, y = 72.7 }
                 },
-                [1429] = {
+                [1429] = { -- Elwynn Forest
                     { x = 20.7, y = 75.0 },
                     { x = 20.8, y = 71.2 },
                     { x = 20.8, y = 77.6 },
@@ -453,7 +453,7 @@ _G["MINING"] = {
                     { x = 89.4, y = 67.6 },
                     { x = 89.5, y = 67.7 }
                 },
-                [1411] = {
+                [1411] = { -- Durotar
                     { x = 35.6, y = 35.4 },
                     { x = 35.6, y = 35.5 },
                     { x = 36.0, y = 26.4 },
@@ -616,7 +616,7 @@ _G["MINING"] = {
                     { x = 68.5, y = 69.9 },
                     { x = 70.4, y = 71.7 }
                 },
-                [1413] = {
+                [1413] = { -- The Barrens
                     { x = 38.9, y = 25.3 },
                     { x = 39.3, y = 31.3 },
                     { x = 39.9, y = 25.2 },
@@ -843,7 +843,7 @@ _G["MINING"] = {
                     { x = 58.9, y = 27.7 },
                     { x = 59.3, y = 24.8 }
                 },
-                [1432] = {
+                [1432] = { -- Loch Modan
                     { x = 23.2, y = 24.4 },
                     { x = 23.2, y = 24.5 },
                     { x = 23.8, y = 36.8 },
@@ -985,7 +985,7 @@ _G["MINING"] = {
                     { x = 78.7, y = 64.5 },
                     { x = 84.1, y = 57.4 }
                 },
-                [1436] = {
+                [1436] = { -- Westfall
                     { x = 23.7, y = 57.3 },
                     { x = 26.2, y = 64.5 },
                     { x = 26.9, y = 72.3 },
@@ -1100,7 +1100,7 @@ _G["MINING"] = {
                     { x = 66.5, y = 54.6 },
                     { x = 66.7, y = 76.9 }
                 },
-                [1433] = {
+                [1433] = { -- Redridge Mountains
                     { x = 8.4, y = 77.2 },
                     { x = 8.4, y = 77.6 },
                     { x = 8.5, y = 77.4 },
@@ -1204,7 +1204,7 @@ _G["MINING"] = {
                     { x = 21.8, y = 14.1 },
                     { x = 22.0, y = 19.0 }
                 },
-                [1420] = {
+                [1420] = { -- Tirisfal Glades
                     { x = 28.2, y = 47.0 },
                     { x = 29.7, y = 42.4 },
                     { x = 29.8, y = 42.5 },
@@ -1347,7 +1347,7 @@ _G["MINING"] = {
                     { x = 87.7, y = 37.1 },
                     { x = 91.1, y = 51.5 }
                 },
-                [1421] = {
+                [1421] = { -- Silverpine Forest
                     { x = 33.1, y = 20.4 },
                     { x = 33.1, y = 20.5 },
                     { x = 33.2, y = 15.4 },
@@ -1436,7 +1436,7 @@ _G["MINING"] = {
                     { x = 73.4, y = 29.3 },
                     { x = 76.7, y = 20.4 }
                 },
-                [1439] = {
+                [1439] = { -- Darkshore
                     { x = 30.1, y = 91.2 },
                     { x = 31.1, y = 87.0 },
                     { x = 31.7, y = 84.1 },
@@ -1558,7 +1558,7 @@ _G["MINING"] = {
                     { x = 62.6, y = 6.5 },
                     { x = 62.9, y = 9.4 }
                 },
-                [1412] = {
+                [1412] = { -- Mulgore
                     { x = 28.0, y = 26.1 },
                     { x = 29.2, y = 19.1 },
                     { x = 29.8, y = 19.6 },
@@ -1674,7 +1674,7 @@ _G["MINING"] = {
                     { x = 68.7, y = 65.3 },
                     { x = 68.8, y = 63.1 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 15.3, y = 53.6 },
                     { x = 17.2, y = 56.2 },
                     { x = 18.1, y = 49.8 },
@@ -1711,7 +1711,7 @@ _G["MINING"] = {
                     { x = 75.8, y = 48.9 },
                     { x = 81.1, y = 39.6 }
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
                     { x = 14.1, y = 32.9 },
                     { x = 18.7, y = 23.9 },
                     { x = 21.4, y = 43.9 },
@@ -1755,7 +1755,7 @@ _G["MINING"] = {
                     { x = 81.0, y = 44.3 },
                     { x = 82.5, y = 49.8 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 9.4, y = 16.6 },
                     { x = 9.5, y = 16.6 },
                     { x = 10.6, y = 8.7 },
@@ -1801,7 +1801,7 @@ _G["MINING"] = {
                     { x = 67.5, y = 58.5 },
                     { x = 68.9, y = 55.0 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 50.0, y = 9.3 },
                     { x = 53.5, y = 14.1 },
                     { x = 58.8, y = 8.0 },
@@ -1816,7 +1816,7 @@ _G["MINING"] = {
                     { x = 72.6, y = 24.5 },
                     { x = 73.4, y = 33.2 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 34.9, y = 47.9 },
                     { x = 36.0, y = 61.2 },
                     { x = 36.7, y = 64.2 },
@@ -1875,58 +1875,411 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1426] = {
+                [1426] = { -- Dun Morogh
+                    {
+                        name = "Complete Route",
+                        nodes = 42,
+                        route = {
+                            { x = 44.1, y = 29.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 29.0, cave = false, node = true , node_id = 1731 },
+                            { x = 38.7, y = 29.9, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 30.8, cave = false, node = true , node_id = 1731 },
+                            { x = 30.7, y = 33.9, cave = false, node = true , node_id = 1731 },
+                            { x = 29.7, y = 40.7, cave = false, node = true , node_id = 1731 },
+                            { x = 26.8, y = 44.6, cave = false, node = true , node_id = 1731 },
+                            { x = 27.6, y = 46.5, cave = false, node = true , node_id = 1731 },
+                            { x = 27.1, y = 49.0, cave = false, node = true , node_id = 1731 },
+                            { x = 25.0, y = 51.5, cave = true,  node = true , node_id = 1731 },
+                            { x = 29.3, y = 54.3, cave = false, node = true , node_id = 1731 },
+                            { x = 32.0, y = 59.0, cave = false, node = true , node_id = 1731 },
+                            { x = 36.0, y = 63.6, cave = false, node = true , node_id = 1731 },
+                            { x = 39.0, y = 65.0, cave = false, node = true , node_id = 1731 },
+                            { x = 42.8, y = 63.5, cave = false, node = true , node_id = 1731 },
+                            { x = 43.1, y = 61.2, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 58.9, cave = false, node = true , node_id = 1731 },
+                            { x = 49.8, y = 57.7, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 58.3, cave = false, node = true , node_id = 1731 },
+                            { x = 56.5, y = 56.2, cave = false, node = true , node_id = 1731 },
+                            { x = 58.8, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.2, y = 57.5, cave = false, node = true , node_id = 1731 },
+                            { x = 63.5, y = 59.1, cave = false, node = true , node_id = 1731 },
+                            { x = 65.6, y = 56.0, cave = false, node = true , node_id = 1731 },
+                            { x = 66.3, y = 57.2, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 58.8, cave = false, node = true , node_id = 1731 },
+                            { x = 66.6, y = 59.7, cave = false, node = true , node_id = 1731 },
+                            { x = 68.4, y = 60.6, cave = false, node = true , node_id = 1731 },
+                            { x = 70.7, y = 59.4, cave = false, node = true , node_id = 1731 },
+                            { x = 72.4, y = 58.1, cave = false, node = true , node_id = 1731 },
+                            { x = 71.2, y = 57.3, cave = true,  node = true , node_id = 1731 },
+                            { x = 64.9, y = 51.5, cave = false, node = true , node_id = 1731 },
+                            { x = 55.0, y = 54.8, cave = false, node = true , node_id = 1731 },
+                            { x = 56.2, y = 53.4, cave = false, node = true , node_id = 1731 },
+                            { x = 56.8, y = 49.3, cave = false, node = false, node_id = 0 },
+                            { x = 53.5, y = 50.0, cave = false, node = true , node_id = 1731 },
+                            { x = 51.7, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 53.6, y = 43.0, cave = false, node = true , node_id = 1731 },
+                            { x = 51.7, y = 43.9, cave = false, node = true , node_id = 1731 },
+                            { x = 50.0, y = 44.5, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 45.1, cave = false, node = true , node_id = 1731 },
+                            { x = 43.2, y = 38.7, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 35.7, cave = true,  node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Caveless Route",
+                        nodes = 34,
+                        route = {
+                            { x = 44.1, y = 29.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 29.0, cave = false, node = true , node_id = 1731 },
+                            { x = 38.7, y = 29.9, cave = false, node = true , node_id = 1731 },
+                            { x = 36.5, y = 34.7, cave = false, node = true , node_id = 1731 },
+                            { x = 29.7, y = 40.7, cave = false, node = true , node_id = 1731 },
+                            { x = 26.8, y = 44.6, cave = false, node = true , node_id = 1731 },
+                            { x = 27.6, y = 46.5, cave = false, node = true , node_id = 1731 },
+                            { x = 27.1, y = 49.0, cave = false, node = true , node_id = 1731 },
+                            { x = 29.3, y = 54.3, cave = false, node = true , node_id = 1731 },
+                            { x = 32.9, y = 54.3, cave = false, node = true , node_id = 1731 },
+                            { x = 32.0, y = 59.0, cave = false, node = true , node_id = 1731 },
+                            { x = 36.0, y = 63.6, cave = false, node = true , node_id = 1731 },
+                            { x = 39.0, y = 65.0, cave = false, node = true , node_id = 1731 },
+                            { x = 43.5, y = 67.6, cave = false, node = true , node_id = 1731 },
+                            { x = 42.8, y = 63.5, cave = false, node = true , node_id = 1731 },
+                            { x = 43.1, y = 61.2, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 58.9, cave = false, node = true , node_id = 1731 },
+                            { x = 49.8, y = 57.7, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 58.3, cave = false, node = true , node_id = 1731 },
+                            { x = 57.0, y = 61.3, cave = false, node = true , node_id = 1731 },
+                            { x = 61.8, y = 62.0, cave = false, node = true , node_id = 1731 },
+                            { x = 63.5, y = 59.1, cave = false, node = true , node_id = 1731 },
+                            { x = 61.2, y = 57.5, cave = false, node = true , node_id = 1731 },
+                            { x = 58.8, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 56.5, y = 56.2, cave = false, node = true , node_id = 1731 },
+                            { x = 55.0, y = 54.8, cave = false, node = true , node_id = 1731 },
+                            { x = 56.2, y = 53.4, cave = false, node = true , node_id = 1731 },
+                            { x = 56.9, y = 49.4, cave = false, node = false, node_id = 0 },
+                            { x = 53.5, y = 50.0, cave = false, node = true , node_id = 1731 },
+                            { x = 51.7, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 53.6, y = 43.0, cave = false, node = true , node_id = 1731 },
+                            { x = 51.7, y = 43.9, cave = false, node = true , node_id = 1731 },
+                            { x = 50.0, y = 44.5, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 45.1, cave = false, node = true , node_id = 1731 },
+                            { x = 43.2, y = 38.7, cave = false, node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Fast Route",
+                        nodes = 20,
+                        route = {
+                            { x = 44.1, y = 29.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 29.0, cave = false, node = true , node_id = 1731 },
+                            { x = 38.7, y = 29.9, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 30.8, cave = false, node = true , node_id = 1731 },
+                            { x = 30.7, y = 33.9, cave = false, node = true , node_id = 1731 },
+                            { x = 29.7, y = 40.7, cave = false, node = true , node_id = 1731 },
+                            { x = 26.8, y = 44.6, cave = false, node = true , node_id = 1731 },
+                            { x = 27.6, y = 46.5, cave = false, node = true , node_id = 1731 },
+                            { x = 27.1, y = 49.0, cave = false, node = true , node_id = 1731 },
+                            { x = 25.0, y = 51.5, cave = true,  node = true , node_id = 1731 },
+                            { x = 29.3, y = 54.3, cave = false, node = true , node_id = 1731 },
+                            { x = 32.9, y = 54.3, cave = false, node = true , node_id = 1731 },
+                            { x = 36.0, y = 63.6, cave = false, node = true , node_id = 1731 },
+                            { x = 39.0, y = 65.0, cave = false, node = true , node_id = 1731 },
+                            { x = 42.8, y = 63.5, cave = false, node = true , node_id = 1731 },
+                            { x = 43.1, y = 61.2, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 58.9, cave = false, node = true , node_id = 1731 },
+                            { x = 44.3, y = 53.9, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 45.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 35.7, cave = true,  node = true , node_id = 1731 }
+                        }
+                    }
+                },
+                [1431] = { -- Duskwood
 
                 },
-                [1431] = {
+                [1437] = { -- Wetlands
 
                 },
-                [1437] = {
+                [1429] = { -- Elwynn Forest
+                    {
+                        name = "Fast Route",
+                        nodes = 42,
+                        route = {
+                            { x = 30.2, y = 54.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.6, y = 56.4, cave = false, node = true , node_id = 1731 },
+                            { x = 34.6, y = 61.7, cave = false, node = false, node_id = 0 },
+                            { x = 34.4, y = 72.4, cave = false, node = true , node_id = 1731 },
+                            { x = 38.1, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 72.9, cave = false, node = true , node_id = 1731 },
+                            { x = 37.2, y = 82.8, cave = false, node = true , node_id = 1731 },
+                            { x = 38.5, y = 86.7, cave = false, node = true , node_id = 1731 },
+                            { x = 40.7, y = 82.0, cave = true,  node = true , node_id = 1731 },
+                            { x = 43.7, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 45.6, y = 72.5, cave = false, node = true , node_id = 1731 },
+                            { x = 47.6, y = 73.7, cave = false, node = true , node_id = 1731 },
+                            { x = 50.4, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 76.5, cave = false, node = true , node_id = 1731 },
+                            { x = 51.3, y = 80.7, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 83.6, cave = false, node = true , node_id = 1731 },
+                            { x = 50.1, y = 84.8, cave = false, node = true , node_id = 1731 },
+                            { x = 50.5, y = 87.1, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 85.5, cave = false, node = true , node_id = 1731 },
+                            { x = 54.0, y = 82.2, cave = false, node = true , node_id = 1731 },
+                            { x = 55.8, y = 81.2, cave = false, node = true , node_id = 1731 },
+                            { x = 56.3, y = 79.2, cave = false, node = true , node_id = 1731 },
+                            { x = 57.5, y = 78.6, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 78.7, cave = false, node = true , node_id = 1731 },
+                            { x = 59.8, y = 77.3, cave = false, node = true , node_id = 1731 },
+                            { x = 65.6, y = 72.0, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 70.6, cave = false, node = true , node_id = 1731 },
+                            { x = 69.1, y = 68.9, cave = false, node = true , node_id = 1731 },
+                            { x = 72.6, y = 64.9, cave = false, node = true , node_id = 1731 },
+                            { x = 74.5, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 67.9, y = 54.6, cave = false, node = true , node_id = 1731 },
+                            { x = 67.7, y = 57.3, cave = false, node = false, node_id = 0 },
+                            { x = 65.5, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.9, y = 53.9, cave = true,  node = true , node_id = 1731 },
+                            { x = 62.3, y = 63.6, cave = false, node = true , node_id = 1731 },
+                            { x = 60.5, y = 63.7, cave = false, node = true , node_id = 1731 },
+                            { x = 60.2, y = 65.2, cave = false, node = true , node_id = 1731 },
+                            { x = 57.3, y = 56.9, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 58.5, cave = false, node = true , node_id = 1731 },
+                            { x = 49.6, y = 57.6, cave = false, node = false, node_id = 0 },
+                            { x = 47.5, y = 55.9, cave = false, node = false, node_id = 0 },
+                            { x = 43.5, y = 49.1, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 50.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.0, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 38.6, y = 50.8, cave = false, node = true , node_id = 1731 },
+                            { x = 37.3, y = 50.9, cave = false, node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Fast Caveless",
+                        nodes = 45,
+                        route = {
+                            { x = 30.2, y = 54.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.6, y = 56.4, cave = false, node = true , node_id = 1731 },
+                            { x = 30.0, y = 60.1, cave = false, node = true , node_id = 1731 },
+                            { x = 28.1, y = 66.2, cave = false, node = true , node_id = 1731 },
+                            { x = 25.5, y = 66.6, cave = false, node = true , node_id = 1731 },
+                            { x = 25.5, y = 69.3, cave = false, node = true , node_id = 1731 },
+                            { x = 27.7, y = 69.8, cave = false, node = true , node_id = 1731 },
+                            { x = 29.3, y = 71.9, cave = false, node = true , node_id = 1731 },
+                            { x = 31.9, y = 70.7, cave = false, node = true , node_id = 1731 },
+                            { x = 34.4, y = 72.4, cave = false, node = true , node_id = 1731 },
+                            { x = 38.1, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 72.9, cave = false, node = true , node_id = 1731 },
+                            { x = 43.7, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 45.6, y = 72.5, cave = false, node = true , node_id = 1731 },
+                            { x = 47.6, y = 73.7, cave = false, node = true , node_id = 1731 },
+                            { x = 50.4, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 76.5, cave = false, node = true , node_id = 1731 },
+                            { x = 51.3, y = 80.7, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 83.6, cave = false, node = true , node_id = 1731 },
+                            { x = 50.1, y = 84.8, cave = false, node = true , node_id = 1731 },
+                            { x = 50.5, y = 87.1, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 85.5, cave = false, node = true , node_id = 1731 },
+                            { x = 54.0, y = 82.2, cave = false, node = true , node_id = 1731 },
+                            { x = 55.8, y = 81.2, cave = false, node = true , node_id = 1731 },
+                            { x = 56.3, y = 79.2, cave = false, node = true , node_id = 1731 },
+                            { x = 57.5, y = 78.6, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 78.7, cave = false, node = true , node_id = 1731 },
+                            { x = 59.8, y = 77.3, cave = false, node = true , node_id = 1731 },
+                            { x = 65.6, y = 72.0, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 70.6, cave = false, node = true , node_id = 1731 },
+                            { x = 69.1, y = 68.9, cave = false, node = true , node_id = 1731 },
+                            { x = 72.6, y = 64.9, cave = false, node = true , node_id = 1731 },
+                            { x = 74.5, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 67.9, y = 54.6, cave = false, node = true , node_id = 1731 },
+                            { x = 65.5, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 62.3, y = 63.6, cave = false, node = true , node_id = 1731 },
+                            { x = 60.5, y = 63.7, cave = false, node = true , node_id = 1731 },
+                            { x = 60.2, y = 65.2, cave = false, node = true , node_id = 1731 },
+                            { x = 56.9, y = 62.3, cave = false, node = false, node_id = 0 },
+                            { x = 54.0, y = 62.2, cave = false, node = false, node_id = 0 },
+                            { x = 52.2, y = 63.5, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 58.5, cave = false, node = true , node_id = 1731 },
+                            { x = 49.4, y = 58.1, cave = false, node = false, node_id = 0 },
+                            { x = 47.7, y = 57.9, cave = false, node = false, node_id = 0 },
+                            { x = 43.5, y = 49.1, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 50.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.0, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 38.6, y = 50.8, cave = false, node = true , node_id = 1731 },
+                            { x = 37.3, y = 50.9, cave = false, node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Complete Route",
+                        nodes = 62,
+                        route = {
+                            { x = 30.2, y = 54.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.6, y = 56.4, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 72.9, cave = false, node = true , node_id = 1731 },
+                            { x = 38.1, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.4, y = 72.4, cave = false, node = true , node_id = 1731 },
+                            { x = 31.9, y = 70.7, cave = false, node = true , node_id = 1731 },
+                            { x = 29.3, y = 71.9, cave = false, node = true , node_id = 1731 },
+                            { x = 27.7, y = 69.8, cave = false, node = true , node_id = 1731 },
+                            { x = 25.5, y = 69.3, cave = false, node = true , node_id = 1731 },
+                            { x = 21.3, y = 68.6, cave = false, node = true , node_id = 1731 },
+                            { x = 20.8, y = 71.2, cave = false, node = true , node_id = 1731 },
+                            { x = 20.7, y = 75.0, cave = false, node = true , node_id = 1731 },
+                            { x = 20.8, y = 77.6, cave = false, node = true , node_id = 1731 },
+                            { x = 24.2, y = 84.5, cave = false, node = true , node_id = 1731 },
+                            { x = 29.1, y = 88.1, cave = false, node = true , node_id = 1731 },
+                            { x = 38.5, y = 86.7, cave = false, node = true , node_id = 1731 },
+                            { x = 40.0, y = 81.1, cave = true,  node = true , node_id = 1731 },
+                            { x = 43.7, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 45.6, y = 72.5, cave = false, node = true , node_id = 1731 },
+                            { x = 47.6, y = 73.7, cave = false, node = true , node_id = 1731 },
+                            { x = 50.4, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 76.5, cave = false, node = true , node_id = 1731 },
+                            { x = 51.3, y = 80.7, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 83.6, cave = false, node = true , node_id = 1731 },
+                            { x = 50.1, y = 84.8, cave = false, node = true , node_id = 1731 },
+                            { x = 50.5, y = 87.1, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 85.5, cave = false, node = true , node_id = 1731 },
+                            { x = 54.0, y = 82.2, cave = false, node = true , node_id = 1731 },
+                            { x = 55.8, y = 81.2, cave = false, node = true , node_id = 1731 },
+                            { x = 56.3, y = 79.2, cave = false, node = true , node_id = 1731 },
+                            { x = 57.5, y = 78.6, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 78.7, cave = false, node = true , node_id = 1731 },
+                            { x = 59.8, y = 77.3, cave = false, node = true , node_id = 1731 },
+                            { x = 65.6, y = 72.0, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 70.6, cave = false, node = true , node_id = 1731 },
+                            { x = 69.1, y = 68.9, cave = false, node = true , node_id = 1731 },
+                            { x = 73.9, y = 77.5, cave = false, node = true , node_id = 1731 },
+                            { x = 76.2, y = 80.5, cave = false, node = true , node_id = 1731 },
+                            { x = 80.3, y = 79.9, cave = false, node = true , node_id = 1731 },
+                            { x = 83.6, y = 80.6, cave = false, node = true , node_id = 1731 },
+                            { x = 85.4, y = 81.4, cave = false, node = true , node_id = 1731 },
+                            { x = 85.7, y = 79.2, cave = false, node = true , node_id = 1731 },
+                            { x = 89.5, y = 67.7, cave = false, node = true , node_id = 1731 },
+                            { x = 89.3, y = 62.1, cave = false, node = true , node_id = 1731 },
+                            { x = 86.9, y = 60.3, cave = false, node = true , node_id = 1731 },
+                            { x = 82.5, y = 55.0, cave = false, node = true , node_id = 1731 },
+                            { x = 80.9, y = 42.6, cave = false, node = true , node_id = 1731 },
+                            { x = 79.1, y = 37.3, cave = false, node = true , node_id = 1731 },
+                            { x = 74.7, y = 36.8, cave = false, node = true , node_id = 1731 },
+                            { x = 69.7, y = 37.3, cave = false, node = true , node_id = 1731 },
+                            { x = 64.8, y = 39.1, cave = false, node = true , node_id = 1731 },
+                            { x = 65.1, y = 47.2, cave = false, node = true , node_id = 1731 },
+                            { x = 67.9, y = 54.6, cave = false, node = true , node_id = 1731 },
+                            { x = 67.1, y = 58.2, cave = false, node = false, node_id = 0 },
+                            { x = 65.5, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.3, y = 51.9, cave = true,  node = true , node_id = 1731 },
+                            { x = 57.3, y = 56.9, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 58.5, cave = false, node = true , node_id = 1731 },
+                            { x = 49.6, y = 57.6, cave = false, node = false, node_id = 0 },
+                            { x = 43.5, y = 49.1, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 50.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.0, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 38.6, y = 50.8, cave = false, node = true , node_id = 1731 },
+                            { x = 37.3, y = 50.9, cave = false, node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Caveless Route",
+                        nodes = 52,
+                        route = {
+                            { x = 30.2, y = 54.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.6, y = 56.4, cave = false, node = true , node_id = 1731 },
+                            { x = 30.0, y = 60.1, cave = false, node = true , node_id = 1731 },
+                            { x = 28.1, y = 66.2, cave = false, node = true , node_id = 1731 },
+                            { x = 25.5, y = 66.6, cave = false, node = true , node_id = 1731 },
+                            { x = 25.5, y = 69.3, cave = false, node = true , node_id = 1731 },
+                            { x = 21.3, y = 68.6, cave = false, node = true , node_id = 1731 },
+                            { x = 20.8, y = 71.2, cave = false, node = true , node_id = 1731 },
+                            { x = 20.7, y = 75.0, cave = false, node = true , node_id = 1731 },
+                            { x = 20.8, y = 77.6, cave = false, node = true , node_id = 1731 },
+                            { x = 24.2, y = 84.5, cave = false, node = true , node_id = 1731 },
+                            { x = 29.1, y = 88.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.4, y = 72.4, cave = false, node = true , node_id = 1731 },
+                            { x = 38.1, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.3, y = 72.9, cave = false, node = true , node_id = 1731 },
+                            { x = 43.7, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 45.6, y = 72.5, cave = false, node = true , node_id = 1731 },
+                            { x = 47.6, y = 73.7, cave = false, node = true , node_id = 1731 },
+                            { x = 50.4, y = 74.0, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 76.5, cave = false, node = true , node_id = 1731 },
+                            { x = 51.3, y = 80.7, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 83.6, cave = false, node = true , node_id = 1731 },
+                            { x = 50.1, y = 84.8, cave = false, node = true , node_id = 1731 },
+                            { x = 50.5, y = 87.1, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 85.5, cave = false, node = true , node_id = 1731 },
+                            { x = 54.0, y = 82.2, cave = false, node = true , node_id = 1731 },
+                            { x = 55.8, y = 81.2, cave = false, node = true , node_id = 1731 },
+                            { x = 56.3, y = 79.2, cave = false, node = true , node_id = 1731 },
+                            { x = 57.5, y = 78.6, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 78.7, cave = false, node = true , node_id = 1731 },
+                            { x = 59.8, y = 77.3, cave = false, node = true , node_id = 1731 },
+                            { x = 65.6, y = 72.0, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 70.6, cave = false, node = true , node_id = 1731 },
+                            { x = 69.1, y = 68.9, cave = false, node = true , node_id = 1731 },
+                            { x = 72.6, y = 64.9, cave = false, node = true , node_id = 1731 },
+                            { x = 74.5, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 76.0, y = 59.8, cave = false, node = true , node_id = 1731 },
+                            { x = 82.5, y = 55.0, cave = false, node = true , node_id = 1731 },
+                            { x = 80.9, y = 42.6, cave = false, node = true , node_id = 1731 },
+                            { x = 79.1, y = 37.3, cave = false, node = true , node_id = 1731 },
+                            { x = 74.7, y = 36.8, cave = false, node = true , node_id = 1731 },
+                            { x = 69.7, y = 37.3, cave = false, node = true , node_id = 1731 },
+                            { x = 64.8, y = 39.1, cave = false, node = true , node_id = 1731 },
+                            { x = 67.8, y = 46.3, cave = false, node = false, node_id = 0 },
+                            { x = 67.9, y = 54.6, cave = false, node = true , node_id = 1731 },
+                            { x = 67.1, y = 57.5, cave = false, node = false, node_id = 0 },
+                            { x = 65.5, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 57.3, y = 56.9, cave = false, node = true , node_id = 1731 },
+                            { x = 52.0, y = 58.5, cave = false, node = true , node_id = 1731 },
+                            { x = 49.4, y = 57.9, cave = false, node = false, node_id = 0 },
+                            { x = 47.9, y = 57.6, cave = false, node = false, node_id = 0 },
+                            { x = 43.5, y = 49.1, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 50.1, cave = false, node = true , node_id = 1731 },
+                            { x = 41.0, y = 52.5, cave = false, node = true , node_id = 1731 },
+                            { x = 38.6, y = 50.8, cave = false, node = true , node_id = 1731 },
+                            { x = 37.3, y = 50.9, cave = false, node = true , node_id = 1731 }
+                        }
+                    }
+                },
+                [1411] = { -- Durotar
 
                 },
-                [1429] = {
+                [1413] = { -- The Barrens
 
                 },
-                [1411] = {
+                [1432] = { -- Loch Modan
 
                 },
-                [1413] = {
+                [1436] = { -- Westfall
 
                 },
-                [1432] = {
+                [1433] = { -- Redridge Mountains
 
                 },
-                [1436] = {
+                [1420] = { -- Tirisfal Glades
 
                 },
-                [1433] = {
+                [1421] = { -- Silverpine Forest
 
                 },
-                [1420] = {
+                [1439] = { -- Darkshore
 
                 },
-                [1421] = {
+                [1412] = { -- Mulgore
 
                 },
-                [1439] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 },
-                [1412] = {
+                [1440] = { -- Ashenvale
 
                 },
-                [1424] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1440] = {
+                [1443] = { -- Desolace
 
                 },
-                [1441] = {
-
-                },
-                [1443] = {
-
-                },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 }
             }
@@ -1968,7 +2321,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1440] = {
+                [1440] = { -- Ashenvale
                     { x = 39.8, y = 19.4 },
                     { x = 39.8, y = 19.5 },
                     { x = 40.0, y = 14.4 },
@@ -2016,7 +2369,7 @@ _G["MINING"] = {
                     { x = 58.9, y = 27.7 },
                     { x = 59.3, y = 24.8 }
                 },
-                [1433] = {
+                [1433] = { -- Redridge Mountains
                     { x = 18.6, y = 33.2 },
                     { x = 21.1, y = 38.9 },
                     { x = 23.4, y = 24.4 },
@@ -2104,7 +2457,7 @@ _G["MINING"] = {
                     { x = 86.3, y = 62.0 },
                     { x = 87.6, y = 51.1 }
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
                     { x = 32.5, y = 47.5 },
                     { x = 32.6, y = 44.2 },
                     { x = 32.6, y = 47.2 },
@@ -2184,7 +2537,7 @@ _G["MINING"] = {
                     { x = 71.1, y = 45.4 },
                     { x = 71.2, y = 45.5 }
                 },
-                [1432] = {
+                [1432] = { -- Loch Modan
                     { x = 22.6, y = 31.4 },
                     { x = 22.6, y = 31.7 },
                     { x = 25.3, y = 47.5 },
@@ -2263,7 +2616,7 @@ _G["MINING"] = {
                     { x = 80.0, y = 39.8 },
                     { x = 80.1, y = 73.8 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 32.4, y = 65.8 },
                     { x = 32.5, y = 65.7 },
                     { x = 32.6, y = 27.1 },
@@ -2341,7 +2694,7 @@ _G["MINING"] = {
                     { x = 78.8, y = 61.9 },
                     { x = 78.9, y = 28.1 }
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
                     { x = 23.8, y = 80.4 },
                     { x = 23.8, y = 80.6 },
                     { x = 25.1, y = 80.4 },
@@ -2416,7 +2769,7 @@ _G["MINING"] = {
                     { x = 86.6, y = 47.3 },
                     { x = 86.6, y = 47.5 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 11.2, y = 21.5 },
                     { x = 13.7, y = 15.1 },
                     { x = 14.5, y = 25.5 },
@@ -2491,7 +2844,7 @@ _G["MINING"] = {
                     { x = 88.6, y = 80.7 },
                     { x = 89.2, y = 68.1 }
                 },
-                [1413] = {
+                [1413] = { -- The Barrens
                     { x = 39.5, y = 23.6 },
                     { x = 39.8, y = 19.4 },
                     { x = 40.0, y = 20.6 },
@@ -2562,7 +2915,7 @@ _G["MINING"] = {
                     { x = 64.2, y = 49.4 },
                     { x = 64.2, y = 49.5 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 27.9, y = 68.6 },
                     { x = 29.8, y = 64.8 },
                     { x = 30.4, y = 11.9 },
@@ -2632,7 +2985,7 @@ _G["MINING"] = {
                     { x = 76.5, y = 44.5 },
                     { x = 80.2, y = 84.6 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 30.9, y = 36.7 },
                     { x = 34.2, y = 38.1 },
                     { x = 35.4, y = 31.8 },
@@ -2692,7 +3045,7 @@ _G["MINING"] = {
                     { x = 80.8, y = 16.9 },
                     { x = 81.2, y = 37.3 }
                 },
-                [1421] = {
+                [1421] = { -- Silverpine Forest
                     { x = 36.8, y = 13.1 },
                     { x = 39.7, y = 32.6 },
                     { x = 40.1, y = 69.2 },
@@ -2746,7 +3099,7 @@ _G["MINING"] = {
                     { x = 67.8, y = 52.6 },
                     { x = 69.3, y = 54.6 }
                 },
-                [1439] = {
+                [1439] = { -- Darkshore
                     { x = 32.3, y = 78.7 },
                     { x = 34.0, y = 72.6 },
                     { x = 34.8, y = 56.0 },
@@ -2799,7 +3152,7 @@ _G["MINING"] = {
                     { x = 61.8, y = 18.9 },
                     { x = 62.1, y = 12.3 }
                 },
-                [1417] = {
+                [1417] = { -- Arathi Highlands
                     { x = 17.2, y = 47.8 },
                     { x = 17.2, y = 52.8 },
                     { x = 18.4, y = 56.3 },
@@ -2849,7 +3202,7 @@ _G["MINING"] = {
                     { x = 72.3, y = 60.0 },
                     { x = 72.5, y = 59.9 }
                 },
-                [1436] = {
+                [1436] = { -- Westfall
                     { x = 28.0, y = 33.0 },
                     { x = 29.0, y = 48.5 },
                     { x = 29.2, y = 45.7 },
@@ -2897,46 +3250,46 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1440] = {
+                [1440] = { -- Ashenvale
 
                 },
-                [1433] = {
+                [1433] = { -- Redridge Mountains
 
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
 
                 },
-                [1432] = {
+                [1432] = { -- Loch Modan
 
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
 
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1413] = {
+                [1413] = { -- The Barrens
 
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 },
-                [1443] = {
+                [1443] = { -- Desolace
 
                 },
-                [1421] = {
+                [1421] = { -- Silverpine Forest
 
                 },
-                [1439] = {
+                [1439] = { -- Darkshore
 
                 },
-                [1417] = {
+                [1417] = { -- Arathi Highlands
 
                 },
-                [1436] = {
+                [1436] = { -- Westfall
 
                 }
             }
@@ -2968,7 +3321,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
                     { x = 17.2, y = 52.8 },
                     { x = 18.3, y = 89.6 },
                     { x = 19.2, y = 33.4 },
@@ -3103,7 +3456,7 @@ _G["MINING"] = {
                     { x = 86.1, y = 31.1 },
                     { x = 86.5, y = 30.4 }
                 },
-                [1413] = {
+                [1413] = { -- The Barrens
                     { x = 36.8, y = 15.8 },
                     { x = 37.1, y = 16.9 },
                     { x = 37.6, y = 14.9 },
@@ -3205,7 +3558,7 @@ _G["MINING"] = {
                     { x = 63.1, y = 50.8 },
                     { x = 64.2, y = 49.4 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 10.4, y = 41.1 },
                     { x = 11.2, y = 21.5 },
                     { x = 11.7, y = 38.1 },
@@ -3289,7 +3642,7 @@ _G["MINING"] = {
                     { x = 89.2, y = 68.1 },
                     { x = 89.4, y = 76.9 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 32.4, y = 65.8 },
                     { x = 32.5, y = 65.6 },
                     { x = 32.6, y = 27.0 },
@@ -3355,7 +3708,7 @@ _G["MINING"] = {
                     { x = 78.9, y = 28.1 },
                     { x = 80.0, y = 30.9 }
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
                     { x = 24.7, y = 55.4 },
                     { x = 25.8, y = 15.4 },
                     { x = 26.3, y = 18.0 },
@@ -3416,7 +3769,7 @@ _G["MINING"] = {
                     { x = 49.9, y = 30.4 },
                     { x = 51.0, y = 36.5 }
                 },
-                [1418] = {
+                [1418] = { -- Badlands
                     { x = 7.4, y = 91.5 },
                     { x = 7.5, y = 87.2 },
                     { x = 7.5, y = 91.6 },
@@ -3470,7 +3823,7 @@ _G["MINING"] = {
                     { x = 64.6, y = 72.2 },
                     { x = 65.3, y = 43.0 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 27.5, y = 71.4 },
                     { x = 28.0, y = 68.6 },
                     { x = 28.6, y = 62.1 },
@@ -3515,7 +3868,7 @@ _G["MINING"] = {
                     { x = 76.1, y = 48.6 },
                     { x = 80.2, y = 84.6 }
                 },
-                [1433] = {
+                [1433] = { -- Redridge Mountains
                     { x = 18.3, y = 25.0 },
                     { x = 18.6, y = 33.2 },
                     { x = 18.8, y = 20.1 },
@@ -3553,7 +3906,7 @@ _G["MINING"] = {
                     { x = 83.3, y = 41.8 },
                     { x = 87.5, y = 51.1 }
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
                     { x = 26.7, y = 37.6 },
                     { x = 30.5, y = 71.2 },
                     { x = 30.5, y = 71.5 },
@@ -3589,7 +3942,7 @@ _G["MINING"] = {
                     { x = 85.6, y = 54.1 },
                     { x = 85.9, y = 49.2 }
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
                     { x = 32.5, y = 47.3 },
                     { x = 32.6, y = 44.3 },
                     { x = 33.3, y = 51.2 },
@@ -3621,7 +3974,7 @@ _G["MINING"] = {
                     { x = 65.9, y = 33.9 },
                     { x = 67.9, y = 37.7 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 32.1, y = 71.6 },
                     { x = 35.5, y = 56.5 },
                     { x = 36.2, y = 79.8 },
@@ -3647,7 +4000,7 @@ _G["MINING"] = {
                     { x = 74.1, y = 37.0 },
                     { x = 75.1, y = 47.0 }
                 },
-                [1432] = {
+                [1432] = { -- Loch Modan
                     { x = 22.6, y = 31.5 },
                     { x = 25.4, y = 47.4 },
                     { x = 27.1, y = 85.6 },
@@ -3671,7 +4024,7 @@ _G["MINING"] = {
                     { x = 78.8, y = 46.8 },
                     { x = 80.1, y = 73.7 }
                 },
-                [1439] = {
+                [1439] = { -- Darkshore
                     { x = 37.3, y = 59.4 },
                     { x = 37.8, y = 63.2 },
                     { x = 44.4, y = 63.5 },
@@ -3693,7 +4046,7 @@ _G["MINING"] = {
                     { x = 60.3, y = 20.4 },
                     { x = 62.1, y = 12.3 }
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
                     { x = 49.5, y = 66.8 },
                     { x = 53.4, y = 34.8 },
                     { x = 55.0, y = 26.4 },
@@ -3713,7 +4066,7 @@ _G["MINING"] = {
                     { x = 72.1, y = 48.8 },
                     { x = 73.7, y = 46.0 }
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
                     { x = 8.2, y = 15.5 },
                     { x = 20.4, y = 41.9 },
                     { x = 23.4, y = 33.9 },
@@ -3730,7 +4083,7 @@ _G["MINING"] = {
                     { x = 71.3, y = 65.2 },
                     { x = 74.1, y = 51.4 }
                 },
-                [1436] = {
+                [1436] = { -- Westfall
                     { x = 29.4, y = 41.0 },
                     { x = 29.5, y = 41.0 },
                     { x = 29.6, y = 68.5 },
@@ -3747,7 +4100,7 @@ _G["MINING"] = {
                     { x = 45.8, y = 20.5 },
                     { x = 63.7, y = 79.2 }
                 },
-                [1444] = {
+                [1444] = { -- Feralas
                     { x = 50.9, y = 58.8 },
                     { x = 51.8, y = 57.0 },
                     { x = 52.0, y = 58.1 },
@@ -3759,7 +4112,7 @@ _G["MINING"] = {
                     { x = 61.3, y = 58.0 },
                     { x = 80.3, y = 47.3 }
                 },
-                [1421] = {
+                [1421] = { -- Silverpine Forest
                     { x = 36.8, y = 13.1 },
                     { x = 39.7, y = 32.6 },
                     { x = 54.9, y = 59.3 },
@@ -3770,7 +4123,7 @@ _G["MINING"] = {
                     { x = 63.8, y = 73.1 },
                     { x = 66.2, y = 77.2 }
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
                     { x = 21.3, y = 58.7 },
                     { x = 24.3, y = 50.7 },
                     { x = 24.6, y = 68.3 },
@@ -3780,7 +4133,7 @@ _G["MINING"] = {
                     { x = 52.5, y = 59.8 },
                     { x = 62.8, y = 59.2 }
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
                     { x = 13.0, y = 69.1 },
                     { x = 17.7, y = 57.7 },
                     { x = 27.8, y = 65.3 },
@@ -3789,79 +4142,79 @@ _G["MINING"] = {
                     { x = 66.4, y = 78.7 },
                     { x = 68.8, y = 81.7 }
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
                     { x = 56.0, y = 76.6 },
                     { x = 64.6, y = 49.1 }
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
                     { x = 38.7, y = 66.0 }
                 }
             },
             routes = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
 
                 },
-                [1413] = {
+                [1413] = { -- The Barrens
 
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
 
                 },
-                [1418] = {
+                [1418] = { -- Badlands
 
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 },
-                [1433] = {
+                [1433] = { -- Redridge Mountains
 
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
 
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
 
                 },
-                [1443] = {
+                [1443] = { -- Desolace
 
                 },
-                [1432] = {
+                [1432] = { -- Loch Modan
 
                 },
-                [1439] = {
+                [1439] = { -- Darkshore
 
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
 
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
 
                 },
-                [1436] = {
+                [1436] = { -- Westfall
 
                 },
-                [1444] = {
+                [1444] = { -- Feralas
 
                 },
-                [1421] = {
+                [1421] = { -- Silverpine Forest
 
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
 
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
 
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
 
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
 
                 }
             }
@@ -3903,7 +4256,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
                     { x = 18.3, y = 89.3 },
                     { x = 18.3, y = 89.6 },
                     { x = 19.2, y = 33.4 },
@@ -4046,7 +4399,7 @@ _G["MINING"] = {
                     { x = 86.1, y = 31.1 },
                     { x = 86.5, y = 30.4 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 29.2, y = 8.1 },
                     { x = 29.4, y = 71.2 },
                     { x = 29.5, y = 71.2 },
@@ -4172,7 +4525,7 @@ _G["MINING"] = {
                     { x = 78.9, y = 54.3 },
                     { x = 79.6, y = 24.4 }
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
                     { x = 24.7, y = 55.4 },
                     { x = 25.2, y = 52.4 },
                     { x = 25.2, y = 52.5 },
@@ -4289,7 +4642,7 @@ _G["MINING"] = {
                     { x = 52.0, y = 26.4 },
                     { x = 52.9, y = 28.1 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 10.2, y = 32.8 },
                     { x = 10.4, y = 30.9 },
                     { x = 10.4, y = 36.3 },
@@ -4400,7 +4753,7 @@ _G["MINING"] = {
                     { x = 89.4, y = 76.9 },
                     { x = 89.5, y = 76.9 }
                 },
-                [1418] = {
+                [1418] = { -- Badlands
                     { x = 7.4, y = 91.5 },
                     { x = 7.5, y = 87.2 },
                     { x = 7.5, y = 91.6 },
@@ -4485,7 +4838,7 @@ _G["MINING"] = {
                     { x = 64.6, y = 72.2 },
                     { x = 65.3, y = 43.0 }
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
                     { x = 53.2, y = 46.8 },
                     { x = 55.2, y = 39.9 },
                     { x = 58.0, y = 43.2 },
@@ -4544,7 +4897,7 @@ _G["MINING"] = {
                     { x = 93.3, y = 56.4 },
                     { x = 93.3, y = 56.5 }
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
                     { x = 5.4, y = 31.0 },
                     { x = 5.5, y = 30.9 },
                     { x = 6.0, y = 51.3 },
@@ -4597,7 +4950,7 @@ _G["MINING"] = {
                     { x = 76.0, y = 89.2 },
                     { x = 76.0, y = 89.5 }
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
                     { x = 30.3, y = 21.7 },
                     { x = 31.0, y = 65.8 },
                     { x = 31.2, y = 21.6 },
@@ -4648,7 +5001,7 @@ _G["MINING"] = {
                     { x = 63.2, y = 18.9 },
                     { x = 63.3, y = 6.8 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 37.6, y = 26.0 },
                     { x = 39.4, y = 26.5 },
                     { x = 39.5, y = 26.4 },
@@ -4699,7 +5052,7 @@ _G["MINING"] = {
                     { x = 90.4, y = 39.3 },
                     { x = 90.5, y = 39.4 }
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
                     { x = 25.9, y = 34.1 },
                     { x = 26.7, y = 37.6 },
                     { x = 32.8, y = 73.6 },
@@ -4743,7 +5096,7 @@ _G["MINING"] = {
                     { x = 87.2, y = 49.2 },
                     { x = 88.1, y = 51.8 }
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
                     { x = 31.2, y = 52.2 },
                     { x = 35.0, y = 51.2 },
                     { x = 36.4, y = 47.9 },
@@ -4779,7 +5132,7 @@ _G["MINING"] = {
                     { x = 72.1, y = 48.8 },
                     { x = 73.7, y = 46.0 }
                 },
-                [1444] = {
+                [1444] = { -- Feralas
                     { x = 50.9, y = 58.8 },
                     { x = 51.8, y = 57.0 },
                     { x = 52.0, y = 58.1 },
@@ -4800,7 +5153,7 @@ _G["MINING"] = {
                     { x = 80.3, y = 47.3 },
                     { x = 81.1, y = 38.5 }
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
                     { x = 38.2, y = 45.4 },
                     { x = 38.2, y = 45.5 },
                     { x = 41.8, y = 46.2 },
@@ -4820,7 +5173,7 @@ _G["MINING"] = {
                     { x = 69.7, y = 28.7 },
                     { x = 71.1, y = 29.8 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 27.4, y = 71.4 },
                     { x = 27.5, y = 71.4 },
                     { x = 28.6, y = 62.1 },
@@ -4837,7 +5190,7 @@ _G["MINING"] = {
                     { x = 38.7, y = 21.0 },
                     { x = 40.2, y = 19.2 }
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
                     { x = 21.3, y = 58.7 },
                     { x = 24.3, y = 50.7 },
                     { x = 24.6, y = 68.1 },
@@ -4852,7 +5205,7 @@ _G["MINING"] = {
                     { x = 52.5, y = 59.7 },
                     { x = 62.8, y = 59.1 }
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
                     { x = 56.0, y = 76.6 },
                     { x = 64.6, y = 49.1 },
                     { x = 64.7, y = 49.5 },
@@ -4862,52 +5215,52 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
 
                 },
-                [1443] = {
+                [1443] = { -- Desolace
 
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
 
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1418] = {
+                [1418] = { -- Badlands
 
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
 
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
 
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
 
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
 
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
 
                 },
-                [1444] = {
+                [1444] = { -- Feralas
 
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
 
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
 
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
 
                 }
             }
@@ -4939,7 +5292,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
                     { x = 15.7, y = 67.7 },
                     { x = 17.5, y = 71.7 },
                     { x = 19.2, y = 33.4 },
@@ -5082,7 +5435,7 @@ _G["MINING"] = {
                     { x = 86.5, y = 30.4 },
                     { x = 87.4, y = 30.9 }
                 },
-                [1418] = {
+                [1418] = { -- Badlands
                     { x = 3.9, y = 80.6 },
                     { x = 4.0, y = 80.3 },
                     { x = 6.2, y = 77.3 },
@@ -5208,7 +5561,7 @@ _G["MINING"] = {
                     { x = 83.8, y = 54.8 },
                     { x = 84.0, y = 33.2 }
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
                     { x = 25.2, y = 52.6 },
                     { x = 25.3, y = 61.8 },
                     { x = 25.6, y = 60.3 },
@@ -5322,7 +5675,7 @@ _G["MINING"] = {
                     { x = 51.2, y = 26.5 },
                     { x = 52.2, y = 26.7 }
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
                     { x = 28.2, y = 53.5 },
                     { x = 28.2, y = 62.1 },
                     { x = 28.2, y = 74.4 },
@@ -5424,7 +5777,7 @@ _G["MINING"] = {
                     { x = 72.1, y = 48.8 },
                     { x = 73.7, y = 46.0 }
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
                     { x = 21.3, y = 58.7 },
                     { x = 23.3, y = 59.9 },
                     { x = 24.3, y = 50.6 },
@@ -5521,7 +5874,7 @@ _G["MINING"] = {
                     { x = 82.9, y = 50.4 },
                     { x = 83.0, y = 50.5 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 10.2, y = 32.8 },
                     { x = 10.6, y = 38.3 },
                     { x = 10.8, y = 39.9 },
@@ -5592,7 +5945,7 @@ _G["MINING"] = {
                     { x = 88.9, y = 62.4 },
                     { x = 89.4, y = 76.9 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 24.8, y = 82.5 },
                     { x = 27.1, y = 58.1 },
                     { x = 27.9, y = 74.2 },
@@ -5649,7 +6002,7 @@ _G["MINING"] = {
                     { x = 74.1, y = 37.0 },
                     { x = 74.3, y = 60.2 }
                 },
-                [1447] = {
+                [1447] = { -- Azshara
                     { x = 14.2, y = 74.4 },
                     { x = 15.4, y = 68.2 },
                     { x = 15.5, y = 68.2 },
@@ -5704,7 +6057,7 @@ _G["MINING"] = {
                     { x = 87.4, y = 26.4 },
                     { x = 88.2, y = 32.0 }
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
                     { x = 20.6, y = 74.3 },
                     { x = 25.1, y = 75.9 },
                     { x = 25.2, y = 37.9 },
@@ -5756,7 +6109,7 @@ _G["MINING"] = {
                     { x = 68.1, y = 75.1 },
                     { x = 73.2, y = 73.1 }
                 },
-                [1444] = {
+                [1444] = { -- Feralas
                     { x = 25.9, y = 67.3 },
                     { x = 26.0, y = 68.8 },
                     { x = 26.2, y = 67.9 },
@@ -5799,7 +6152,7 @@ _G["MINING"] = {
                     { x = 73.0, y = 56.4 },
                     { x = 80.3, y = 47.3 }
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
                     { x = 25.4, y = 69.9 },
                     { x = 25.6, y = 69.9 },
                     { x = 45.4, y = 53.3 },
@@ -5835,7 +6188,7 @@ _G["MINING"] = {
                     { x = 93.0, y = 36.8 },
                     { x = 93.0, y = 51.9 }
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
                     { x = 29.8, y = 65.7 },
                     { x = 30.6, y = 71.4 },
                     { x = 32.9, y = 74.6 },
@@ -5867,7 +6220,7 @@ _G["MINING"] = {
                     { x = 55.2, y = 80.5 },
                     { x = 55.6, y = 67.8 }
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
                     { x = 29.6, y = 47.1 },
                     { x = 30.9, y = 35.5 },
                     { x = 31.0, y = 35.4 },
@@ -5894,7 +6247,7 @@ _G["MINING"] = {
                     { x = 53.6, y = 36.5 },
                     { x = 55.0, y = 27.1 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 37.6, y = 26.0 },
                     { x = 39.5, y = 26.6 },
                     { x = 41.8, y = 31.3 },
@@ -5919,7 +6272,7 @@ _G["MINING"] = {
                     { x = 88.6, y = 31.0 },
                     { x = 90.4, y = 39.3 }
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
                     { x = 33.0, y = 49.2 },
                     { x = 34.8, y = 21.0 },
                     { x = 37.9, y = 64.6 },
@@ -5941,7 +6294,7 @@ _G["MINING"] = {
                     { x = 78.8, y = 57.8 },
                     { x = 80.6, y = 41.9 }
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
                     { x = 5.5, y = 30.9 },
                     { x = 5.9, y = 51.3 },
                     { x = 10.5, y = 66.1 },
@@ -5962,7 +6315,7 @@ _G["MINING"] = {
                     { x = 64.6, y = 73.3 },
                     { x = 76.0, y = 89.4 }
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
                     { x = 42.7, y = 43.1 },
                     { x = 43.5, y = 30.6 },
                     { x = 45.1, y = 50.9 },
@@ -5982,7 +6335,7 @@ _G["MINING"] = {
                     { x = 64.7, y = 41.2 },
                     { x = 69.6, y = 30.8 }
                 },
-                [1451] = {
+                [1451] = { -- Silithus
                     { x = 15.8, y = 88.4 },
                     { x = 17.6, y = 22.6 },
                     { x = 19.4, y = 11.0 },
@@ -6001,7 +6354,7 @@ _G["MINING"] = {
                     { x = 67.1, y = 24.7 },
                     { x = 68.4, y = 49.0 }
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
                     { x = 30.3, y = 21.8 },
                     { x = 31.1, y = 21.0 },
                     { x = 31.2, y = 22.5 },
@@ -6018,7 +6371,7 @@ _G["MINING"] = {
                     { x = 57.7, y = 80.1 },
                     { x = 62.1, y = 18.1 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 25.9, y = 70.9 },
                     { x = 27.1, y = 63.2 },
                     { x = 27.5, y = 71.4 },
@@ -6034,7 +6387,7 @@ _G["MINING"] = {
                     { x = 37.5, y = 69.8 },
                     { x = 37.6, y = 73.0 }
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
                     { x = 13.8, y = 77.9 },
                     { x = 14.6, y = 61.0 },
                     { x = 20.7, y = 67.1 },
@@ -6048,7 +6401,7 @@ _G["MINING"] = {
                     { x = 41.5, y = 75.4 },
                     { x = 43.9, y = 88.0 }
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
                     { x = 25.9, y = 34.1 },
                     { x = 26.7, y = 37.6 },
                     { x = 32.8, y = 73.6 },
@@ -6060,7 +6413,7 @@ _G["MINING"] = {
                     { x = 73.6, y = 76.9 },
                     { x = 74.1, y = 80.1 }
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
                     { x = 53.1, y = 46.9 },
                     { x = 55.2, y = 39.9 },
                     { x = 58.0, y = 43.2 },
@@ -6070,82 +6423,82 @@ _G["MINING"] = {
                     { x = 71.3, y = 65.1 },
                     { x = 78.1, y = 64.8 }
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
                     { x = 38.2, y = 45.5 },
                     { x = 41.8, y = 46.2 }
                 }
             },
             routes = {
-                [1417] = {
+                [1417] = { -- Arathi Highlands
 
                 },
-                [1418] = {
+                [1418] = { -- Badlands
 
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
 
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
 
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
 
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1443] = {
+                [1443] = { -- Desolace
 
                 },
-                [1447] = {
+                [1447] = { -- Azshara
 
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
 
                 },
-                [1444] = {
+                [1444] = { -- Feralas
 
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
 
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
 
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
 
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
 
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
 
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
 
                 },
-                [1451] = {
+                [1451] = { -- Silithus
 
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
 
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
 
                 },
-                [1431] = {
+                [1431] = { -- Duskwood
 
                 },
-                [1440] = {
+                [1440] = { -- Ashenvale
 
                 },
-                [1437] = {
+                [1437] = { -- Wetlands
 
                 }
             }
@@ -6197,7 +6550,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1425] = {
+                [1425] = { -- The Hinterlands
                     { x = 23.3, y = 59.9 },
                     { x = 25.5, y = 63.1 },
                     { x = 25.6, y = 65.8 },
@@ -6316,7 +6669,7 @@ _G["MINING"] = {
                     { x = 82.9, y = 50.4 },
                     { x = 82.9, y = 50.5 }
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
                     { x = 28.2, y = 53.4 },
                     { x = 28.2, y = 53.5 },
                     { x = 28.2, y = 62.2 },
@@ -6408,7 +6761,7 @@ _G["MINING"] = {
                     { x = 69.6, y = 52.8 },
                     { x = 71.9, y = 47.0 }
                 },
-                [1447] = {
+                [1447] = { -- Azshara
                     { x = 14.2, y = 74.4 },
                     { x = 15.4, y = 68.2 },
                     { x = 15.4, y = 71.4 },
@@ -6491,7 +6844,7 @@ _G["MINING"] = {
                     { x = 87.5, y = 26.3 },
                     { x = 88.1, y = 32.0 }
                 },
-                [1443] = {
+                [1443] = { -- Desolace
                     { x = 24.8, y = 82.4 },
                     { x = 24.8, y = 82.5 },
                     { x = 27.2, y = 58.1 },
@@ -6571,7 +6924,7 @@ _G["MINING"] = {
                     { x = 78.2, y = 26.6 },
                     { x = 79.9, y = 20.1 }
                 },
-                [1418] = {
+                [1418] = { -- Badlands
                     { x = 4.0, y = 80.3 },
                     { x = 4.0, y = 80.6 },
                     { x = 6.1, y = 77.5 },
@@ -6644,7 +6997,7 @@ _G["MINING"] = {
                     { x = 83.9, y = 33.2 },
                     { x = 83.9, y = 54.7 }
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
                     { x = 16.9, y = 41.9 },
                     { x = 17.9, y = 34.6 },
                     { x = 17.9, y = 37.5 },
@@ -6714,7 +7067,7 @@ _G["MINING"] = {
                     { x = 67.8, y = 32.5 },
                     { x = 73.2, y = 73.1 }
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
                     { x = 25.3, y = 61.8 },
                     { x = 25.6, y = 60.3 },
                     { x = 26.4, y = 62.6 },
@@ -6775,7 +7128,7 @@ _G["MINING"] = {
                     { x = 52.4, y = 28.1 },
                     { x = 52.7, y = 28.3 }
                 },
-                [1444] = {
+                [1444] = { -- Feralas
                     { x = 25.4, y = 73.1 },
                     { x = 25.9, y = 67.3 },
                     { x = 26.0, y = 68.8 },
@@ -6832,7 +7185,7 @@ _G["MINING"] = {
                     { x = 73.0, y = 56.5 },
                     { x = 75.8, y = 55.7 }
                 },
-                [1417] = {
+                [1417] = { -- Arathi Highlands
                     { x = 15.7, y = 67.7 },
                     { x = 16.0, y = 70.7 },
                     { x = 16.1, y = 64.3 },
@@ -6882,7 +7235,7 @@ _G["MINING"] = {
                     { x = 86.1, y = 31.8 },
                     { x = 87.4, y = 30.9 }
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
                     { x = 25.4, y = 70.0 },
                     { x = 25.5, y = 70.0 },
                     { x = 45.3, y = 53.5 },
@@ -6925,7 +7278,7 @@ _G["MINING"] = {
                     { x = 93.0, y = 36.9 },
                     { x = 93.0, y = 51.9 }
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
                     { x = 29.9, y = 65.8 },
                     { x = 30.6, y = 71.4 },
                     { x = 32.9, y = 74.6 },
@@ -6961,7 +7314,7 @@ _G["MINING"] = {
                     { x = 55.2, y = 80.5 },
                     { x = 55.5, y = 67.9 }
                 },
-                [1451] = {
+                [1451] = { -- Silithus
                     { x = 15.8, y = 88.4 },
                     { x = 15.8, y = 88.5 },
                     { x = 17.6, y = 22.4 },
@@ -6993,7 +7346,7 @@ _G["MINING"] = {
                     { x = 72.4, y = 40.3 },
                     { x = 72.5, y = 40.3 }
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
                     { x = 30.5, y = 20.3 },
                     { x = 30.8, y = 22.4 },
                     { x = 31.1, y = 21.0 },
@@ -7023,7 +7376,7 @@ _G["MINING"] = {
                     { x = 57.7, y = 80.0 },
                     { x = 58.1, y = 75.6 }
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
                     { x = 29.6, y = 47.1 },
                     { x = 30.9, y = 35.5 },
                     { x = 31.0, y = 35.4 },
@@ -7053,7 +7406,7 @@ _G["MINING"] = {
                     { x = 53.6, y = 36.5 },
                     { x = 55.0, y = 27.1 }
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
                     { x = 42.7, y = 43.1 },
                     { x = 43.4, y = 30.7 },
                     { x = 43.5, y = 30.6 },
@@ -7082,7 +7435,7 @@ _G["MINING"] = {
                     { x = 68.0, y = 28.9 },
                     { x = 69.6, y = 30.8 }
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
                     { x = 33.0, y = 49.2 },
                     { x = 34.7, y = 21.0 },
                     { x = 37.9, y = 64.4 },
@@ -7105,7 +7458,7 @@ _G["MINING"] = {
                     { x = 78.8, y = 57.8 },
                     { x = 80.6, y = 41.9 }
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
                     { x = 21.2, y = 35.7 },
                     { x = 31.5, y = 28.4 },
                     { x = 31.5, y = 28.5 },
@@ -7125,7 +7478,7 @@ _G["MINING"] = {
                     { x = 65.9, y = 10.0 },
                     { x = 69.2, y = 61.3 }
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
                     { x = 13.8, y = 77.9 },
                     { x = 14.6, y = 61.0 },
                     { x = 20.6, y = 67.0 },
@@ -7144,7 +7497,7 @@ _G["MINING"] = {
                     { x = 41.5, y = 75.5 },
                     { x = 43.9, y = 88.0 }
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
                     { x = 25.9, y = 70.9 },
                     { x = 26.9, y = 67.0 },
                     { x = 27.1, y = 63.2 },
@@ -7162,7 +7515,7 @@ _G["MINING"] = {
                     { x = 37.8, y = 69.1 },
                     { x = 38.0, y = 65.2 }
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
                     { x = 9.6, y = 35.2 },
                     { x = 10.8, y = 39.9 },
                     { x = 11.1, y = 32.1 },
@@ -7175,7 +7528,7 @@ _G["MINING"] = {
                     { x = 43.7, y = 30.9 },
                     { x = 44.7, y = 32.3 }
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
                     { x = 42.5, y = 32.3 },
                     { x = 42.5, y = 32.5 },
                     { x = 42.8, y = 30.5 },
@@ -7187,67 +7540,67 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1425] = {
+                [1425] = { -- The Hinterlands
 
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
 
                 },
-                [1447] = {
+                [1447] = { -- Azshara
 
                 },
-                [1443] = {
+                [1443] = { -- Desolace
 
                 },
-                [1418] = {
+                [1418] = { -- Badlands
 
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
 
                 },
-                [1434] = {
+                [1434] = { -- Stranglethorn Vale
 
                 },
-                [1444] = {
+                [1444] = { -- Feralas
 
                 },
-                [1417] = {
+                [1417] = { -- Arathi Highlands
 
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
 
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
 
                 },
-                [1451] = {
+                [1451] = { -- Silithus
 
                 },
-                [1445] = {
+                [1445] = { -- Dustwallow Marsh
 
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
 
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
 
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
 
                 },
-                [1435] = {
+                [1435] = { -- Swamp of Sorrows
 
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
 
                 },
-                [1442] = {
+                [1442] = { -- Stonetalon Mountains
 
                 },
-                [1441] = {
+                [1441] = { -- Thousand Needles
 
                 },
-                [1424] = {
+                [1424] = { -- Hillsbrad Foothills
 
                 }
             }
@@ -7309,7 +7662,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
                     { x = 37.8, y = 35.2 },
                     { x = 39.0, y = 15.4 },
                     { x = 39.1, y = 15.5 },
@@ -7367,7 +7720,7 @@ _G["MINING"] = {
                     { x = 81.4, y = 61.2 },
                     { x = 81.5, y = 61.1 }
                 },
-                [1451] = {
+                [1451] = { -- Silithus
                     { x = 17.1, y = 90.0 },
                     { x = 17.4, y = 66.8 },
                     { x = 17.5, y = 66.8 },
@@ -7422,7 +7775,7 @@ _G["MINING"] = {
                     { x = 67.2, y = 40.2 },
                     { x = 70.0, y = 29.8 }
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
                     { x = 16.9, y = 58.0 },
                     { x = 20.7, y = 42.7 },
                     { x = 27.1, y = 64.1 },
@@ -7476,7 +7829,7 @@ _G["MINING"] = {
                     { x = 91.6, y = 61.3 },
                     { x = 92.6, y = 43.6 }
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
                     { x = 49.4, y = 20.2 },
                     { x = 49.5, y = 20.2 },
                     { x = 50.6, y = 23.7 },
@@ -7525,7 +7878,7 @@ _G["MINING"] = {
                     { x = 70.9, y = 40.4 },
                     { x = 70.9, y = 40.5 }
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
                     { x = 49.4, y = 20.2 },
                     { x = 49.5, y = 20.2 },
                     { x = 50.6, y = 23.7 },
@@ -7574,7 +7927,7 @@ _G["MINING"] = {
                     { x = 70.9, y = 40.4 },
                     { x = 70.9, y = 40.5 }
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
                     { x = 43.4, y = 33.3 },
                     { x = 43.5, y = 33.4 },
                     { x = 43.5, y = 33.5 },
@@ -7617,7 +7970,7 @@ _G["MINING"] = {
                     { x = 65.2, y = 60.6 },
                     { x = 66.9, y = 54.1 }
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
                     { x = 22.7, y = 38.7 },
                     { x = 23.2, y = 24.1 },
                     { x = 25.0, y = 62.6 },
@@ -7654,7 +8007,7 @@ _G["MINING"] = {
                     { x = 75.5, y = 80.1 },
                     { x = 75.6, y = 69.8 }
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
                     { x = 38.2, y = 33.3 },
                     { x = 39.2, y = 28.4 },
                     { x = 39.2, y = 28.5 },
@@ -7687,7 +8040,7 @@ _G["MINING"] = {
                     { x = 67.2, y = 31.7 },
                     { x = 69.1, y = 30.2 }
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
                     { x = 13.0, y = 42.7 },
                     { x = 15.6, y = 32.4 },
                     { x = 15.7, y = 32.6 },
@@ -7716,7 +8069,7 @@ _G["MINING"] = {
                     { x = 42.0, y = 30.9 },
                     { x = 43.7, y = 21.8 }
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
                     { x = 26.9, y = 65.6 },
                     { x = 27.3, y = 70.1 },
                     { x = 29.4, y = 64.7 },
@@ -7737,7 +8090,7 @@ _G["MINING"] = {
                     { x = 64.4, y = 47.2 },
                     { x = 65.5, y = 52.3 }
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
                     { x = 52.8, y = 65.9 },
                     { x = 54.4, y = 67.2 },
                     { x = 54.4, y = 83.5 },
@@ -7758,7 +8111,7 @@ _G["MINING"] = {
                     { x = 72.5, y = 61.8 },
                     { x = 77.7, y = 53.0 }
                 },
-                [1444] = {
+                [1444] = { -- Feralas
                     { x = 34.7, y = 31.1 },
                     { x = 37.8, y = 31.9 },
                     { x = 45.4, y = 69.4 },
@@ -7771,40 +8124,40 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
 
                 },
-                [1451] = {
+                [1451] = { -- Silithus
 
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
 
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
 
                 },
-                [1452] = {
+                [1452] = { -- Winterspring
 
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
 
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
 
                 },
-                [1419] = {
+                [1419] = { -- Blasted Lands
 
                 },
-                [1427] = {
+                [1427] = { -- Searing Gorge
 
                 },
-                [1446] = {
+                [1446] = { -- Tanaris
 
                 },
-                [1425] = {
+                [1425] = { -- The Hinterlands
 
                 },
-                [1444] = {
+                [1444] = { -- Feralas
 
                 }
             }
@@ -7866,7 +8219,7 @@ _G["MINING"] = {
                 }
             },
             locations = {
-                [1452] = {
+                [1452] = { -- Winterspring
                     { x = 48.2, y = 8.9 },
                     { x = 49.1, y = 44.3 },
                     { x = 49.3, y = 14.3 },
@@ -7934,7 +8287,7 @@ _G["MINING"] = {
                     { x = 70.8, y = 39.6 },
                     { x = 71.0, y = 37.6 }
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
                     { x = 36.3, y = 56.0 },
                     { x = 36.9, y = 50.8 },
                     { x = 40.2, y = 47.1 },
@@ -7995,7 +8348,7 @@ _G["MINING"] = {
                     { x = 87.2, y = 79.8 },
                     { x = 87.9, y = 43.8 }
                 },
-                [1447] = {
+                [1447] = { -- Azshara
                     { x = 37.1, y = 61.6 },
                     { x = 38.2, y = 33.4 },
                     { x = 38.2, y = 33.5 },
@@ -8054,7 +8407,7 @@ _G["MINING"] = {
                     { x = 79.1, y = 37.5 },
                     { x = 88.8, y = 34.2 }
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
                     { x = 15.0, y = 30.2 },
                     { x = 16.2, y = 50.7 },
                     { x = 22.1, y = 63.1 },
@@ -8089,7 +8442,7 @@ _G["MINING"] = {
                     { x = 95.4, y = 31.7 },
                     { x = 95.5, y = 31.7 }
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
                     { x = 20.8, y = 42.4 },
                     { x = 20.8, y = 42.5 },
                     { x = 21.9, y = 61.0 },
@@ -8114,7 +8467,7 @@ _G["MINING"] = {
                     { x = 54.0, y = 46.4 },
                     { x = 54.0, y = 46.5 }
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
                     { x = 40.9, y = 14.4 },
                     { x = 40.9, y = 14.5 },
                     { x = 42.0, y = 20.4 },
@@ -8135,22 +8488,22 @@ _G["MINING"] = {
                 }
             },
             routes = {
-                [1452] = {
+                [1452] = { -- Winterspring
 
                 },
-                [1423] = {
+                [1423] = { -- Eastern Plaguelands
 
                 },
-                [1447] = {
+                [1447] = { -- Azshara
 
                 },
-                [1428] = {
+                [1428] = { -- Burning Steppes
 
                 },
-                [1449] = {
+                [1449] = { -- Un'Goro Crater
 
                 },
-                [1422] = {
+                [1422] = { -- Western Plaguelands
 
                 }
             }
