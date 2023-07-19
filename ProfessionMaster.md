@@ -79,6 +79,7 @@ root(Guides)
     Basic crafting profession guides
         Completionism
             Where to get all recipes
+            What a material is used for (tooltip)
         Automatically generated
         Cheapest kind of guide
         Best recipe to level
