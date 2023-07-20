@@ -3,6 +3,8 @@
 --
 
 ProfessionMaster = ProfessionMaster or { }
+PM = PM or { }
+PM.items = PM.items or { }
 
 ProfessionMaster.color_source = function(recipe)
     if recipe.taught_by_trainer then

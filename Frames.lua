@@ -4,7 +4,19 @@
 
 ProfessionMaster.init_frames = function(event)
     if event == "AUCTION_HOUSE_SHOW" then
-        ProfessionMaster.init_auction_frames()
+        if not ProfessionMaster.frame then
+            ProfessionMaster.init_auction_frames()
+        end
+
+        ProfessionMaster.tab_button:Show()
+    elseif event == "AUCTION_HOUSE_CLOSED" then
+        if ProfessionMaster.tab_button then
+            ProfessionMaster.tab_button:Hide()
+        end
+
+        if ProfessionMaster.frame then
+            ProfessionMaster.frame:Hide()
+        end
     elseif event == "TRADE_SKILL_SHOW" then
         ProfessionMaster.init_profession_frames()
     elseif event == "LEARNED_SPELL_IN_TAB" or event == "PLAYER_ENTERING_WORLD" then
@@ -13,7 +25,16 @@ ProfessionMaster.init_frames = function(event)
 end
 
 ProfessionMaster.init_auction_frames = function()
-    if ProfessionMaster.frame ~= nil then return end
+    if ProfessionMaster.frame then return end
+    if not AuctionFrame then
+        ProfessionMaster.enqueue({
+            condition = function() return AuctionFrame ~= nil end,
+            execute = ProfessionMaster.init_auction_frames,
+            allow_skipping = true
+        }, true)
+        return
+    end
+
     local tab_index = AuctionFrame.numTabs + 1
 
     local tab_button = CreateFrame(
@@ -26,6 +47,8 @@ ProfessionMaster.init_auction_frames = function()
     tab_button:SetText("|cFFFF8000Profession Master|r")
     tab_button:SetPoint("LEFT", _G["AuctionFrameTab" .. (tab_index - 1)], "RIGHT", -15, 0)
     tab_button:SetID(tab_index)
+
+    ProfessionMaster.tab_button = tab_button
 
     local frame = CreateFrame(
         "Frame",
@@ -54,9 +77,11 @@ ProfessionMaster.init_auction_frames = function()
     scan_text:SetPoint("TOPLEFT", frame, "TOP", 0, -32)
 
     local i = 0
+    
+    local build = select(4, GetBuildInfo())
 
     for _, profession in pairs(ProfessionMaster.professions) do
-        if profession.flags.crafting then
+        if profession.flags.crafting and (not profession.required_version or profession.required_version <= build) then
             local button = CreateFrame(
                 "Button",
                 "ProfessionMaster" .. profession.name .. "Button",
@@ -123,6 +148,7 @@ ProfessionMaster.init_auction_frames = function()
     ProfessionMaster.frame = frame
 end
 
+-- todo: individual profession frames!!!
 ProfessionMaster.init_profession_frames = function()
     if not ProfessionMaster.profession_frame and TradeSkillFrame then
         local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame)
@@ -246,6 +272,7 @@ ProfessionMaster.generate_frame = function()
     frame.profession_frames = frame.profession_frames or { }
 
     -- todo: Secondary professions!!!
+    -- todo: Update when training new profession!!!
     for index = 1, GetNumSkillLines() do
         local name, _, _, level = GetSkillLineInfo(index)
         if ProfessionMaster.professions[name:gsub("%s+", ""):lower()] ~= nil then
@@ -602,9 +629,16 @@ end
 
 ProfessionMaster.frame_initializer = function()
     local helper = CreateFrame("Frame", nil, UIParent)
-    helper:SetScript("OnEvent", ProfessionMaster.init_frames)
     helper:RegisterEvent("AUCTION_HOUSE_SHOW")
+    helper:RegisterEvent("AUCTION_HOUSE_CLOSED")
     helper:RegisterEvent("TRADE_SKILL_SHOW")
     helper:RegisterEvent("LEARNED_SPELL_IN_TAB")
     helper:RegisterEvent("PLAYER_ENTERING_WORLD")
+    helper:SetScript("OnEvent", ProfessionMaster.init_frames)
+
+    ProfessionMaster.enqueue({
+        condition = function() return AuctionFrame ~= nil end,
+        execute = ProfessionMaster.init_auction_frames,
+        allow_skipping = true
+    }, true)
 end
