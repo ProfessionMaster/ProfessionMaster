@@ -138,6 +138,7 @@ ProfessionMaster.fetch_recipes = function(profession)
                         end
 
                         local _, link = GetItemInfo(item_id)
+                        if not link then link = item.name end
 
                         ProfessionMaster.print(current_item .. "/" .. total_items .. " " .. link .. " - price: " .. ProfessionMaster.format_price(lowest_price))
 
