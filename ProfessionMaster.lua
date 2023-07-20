@@ -82,6 +82,11 @@ ProfessionMaster.profession_level_names = {
 
 ProfessionMaster.check_for_levelups = function(profession)
     local skill_level, skill_max_level = 0, 0
+    local min_levels = ProfessionMaster.min_level_for_professions.crafting
+
+    if profession.flags.gathering then
+        min_levels = ProfessionMaster.min_level_for_professions.gathering
+    end
 
     for index = 1, GetNumSkillLines() do
         local name, _, _, level, _, _, max_level = GetSkillLineInfo(index)
@@ -92,11 +97,11 @@ ProfessionMaster.check_for_levelups = function(profession)
     end
 
     if (skill_max_level == 450 and select(4, GetBuildInfo()) > 30000) or (skill_max_level == 300 and select(4, GetBuildInfo()) < 20000) then
-        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[#ProfessionMaster.min_level_for_professions] .. ")"
+        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[#min_levels] .. ")"
     end
 
-    if skill_level + 25 >= skill_max_level and UnitLevel("player") >= ProfessionMaster.min_level_for_professions[skill_max_level / 75 + 1] then
-        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " - Can train " .. ProfessionMaster.min_level_for_professions[skill_max_level / 75 + 1] .. "!"
+    if skill_level + 25 >= skill_max_level and UnitLevel("player") >= min_levels[skill_max_level / 75 + 1] then
+        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " - Can train " .. min_levels[skill_max_level / 75 + 1] .. "!"
     end
 
     return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[skill_max_level / 75] .. ")"
