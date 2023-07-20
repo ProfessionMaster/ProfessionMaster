@@ -2658,7 +2658,7 @@ _G["PM_FREE_mining"] = {
                             { x = 30.4, y = 28.6, cave = false, node = true , node_id = 1731 },
                             { x = 33.6, y = 32.5, cave = false, node = true , node_id = 1731 },
                             { x = 33.6, y = 34.8, cave = false, node = true , node_id = 1731 },
-                            { x = 32.6, y = 35.9, cave = false, node = true , node_id = 1731 }
+                            { x = 32.6, y = 35.9, cave = false, node = true , node_id = 1731 },
                             { x = 34.5, y = 38.2, cave = false, node = true , node_id = 1731 },
                             { x = 32.9, y = 40.6, cave = false, node = true , node_id = 1731 },
                             { x = 31.2, y = 42.5, cave = false, node = true , node_id = 1731 },

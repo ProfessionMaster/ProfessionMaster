@@ -158,7 +158,6 @@ ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounde
     for _, data in ipairs(frame.frames) do
         data.f:SetSize(data.w(), data.h())
         data.f:SetPoint(data.a)
-        data.f:SetDepth(0)
         data.f:SetFrameStrata("LOW")
         data.tex = data.f:CreateTexture()
         data.tex:SetAllPoints(data.f)

@@ -2055,10 +2055,10 @@ _G["PM_FREE_mining"] = {
                     }
                 },
                 [1431] = { -- Duskwood
-
+                    -- Not in free version
                 },
                 [1437] = { -- Wetlands
-
+                    -- Not in free version
                 },
                 [1429] = { -- Elwynn Forest
                     {
@@ -2302,13 +2302,63 @@ _G["PM_FREE_mining"] = {
                     }
                 },
                 [1411] = { -- Durotar
-
+                    {
+                        name = "Fast Route",
+                        nodes = 44,
+                        route = {
+                            { x = 37.3, y = 51.7, cave = false, node = true , node_id = 1731 },
+                            { x = 40.5, y = 50.3, cave = false, node = true , node_id = 1731 },
+                            { x = 42.8, y = 51.5, cave = false, node = true , node_id = 1731 },
+                            { x = 45.0, y = 50.4, cave = false, node = true , node_id = 1731 },
+                            { x = 45.7, y = 49.7, cave = false, node = true , node_id = 1731 },
+                            { x = 47.8, y = 49.2, cave = false, node = true , node_id = 1731 },
+                            { x = 48.6, y = 49.2, cave = false, node = true , node_id = 1731 },
+                            { x = 49.5, y = 51.1, cave = false, node = true , node_id = 1731 },
+                            { x = 49.9, y = 54.4, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 55.5, cave = false, node = true , node_id = 1731 },
+                            { x = 52.5, y = 59.3, cave = false, node = true , node_id = 1731 },
+                            { x = 54.5, y = 60.3, cave = false, node = true , node_id = 1731 },
+                            { x = 59.3, y = 60.9, cave = false, node = true , node_id = 1731 },
+                            { x = 60.1, y = 61.7, cave = false, node = true , node_id = 1731 },
+                            { x = 61.1, y = 60.0, cave = false, node = true , node_id = 1731 },
+                            { x = 60.6, y = 57.2, cave = false, node = true , node_id = 1731 },
+                            { x = 60.5, y = 55.5, cave = false, node = true , node_id = 1731 },
+                            { x = 58.9, y = 47.0, cave = false, node = true , node_id = 1731 },
+                            { x = 59.2, y = 41.1, cave = false, node = true , node_id = 1731 },
+                            { x = 57.5, y = 42.6, cave = false, node = true , node_id = 1731 },
+                            { x = 56.3, y = 48.9, cave = false, node = true , node_id = 1731 },
+                            { x = 52.4, y = 43.1, cave = false, node = false, node_id = 0 },
+                            { x = 53.0, y = 36.6, cave = false, node = true , node_id = 1731 },
+                            { x = 52.9, y = 32.9, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 29.9, cave = false, node = true , node_id = 1731 },
+                            { x = 50.0, y = 26.4, cave = false, node = true , node_id = 1731 },
+                            { x = 49.7, y = 20.9, cave = false, node = true , node_id = 1731 },
+                            { x = 49.6, y = 19.1, cave = false, node = true , node_id = 1731 },
+                            { x = 49.8, y = 16.8, cave = false, node = true , node_id = 1731 },
+                            { x = 50.7, y = 17.2, cave = false, node = true , node_id = 1731 },
+                            { x = 52.9, y = 18.1, cave = false, node = true , node_id = 1731 },
+                            { x = 54.8, y = 17.9, cave = false, node = true , node_id = 1731 },
+                            { x = 56.5, y = 16.1, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 17.8, cave = false, node = true , node_id = 1731 },
+                            { x = 54.2, y = 13.9, cave = false, node = true , node_id = 1731 },
+                            { x = 41.4, y = 17.8, cave = false, node = true , node_id = 1731 },
+                            { x = 42.8, y = 19.7, cave = false, node = true , node_id = 1731 },
+                            { x = 37.6, y = 20.9, cave = false, node = true , node_id = 1731 },
+                            { x = 36.0, y = 26.4, cave = false, node = true , node_id = 1731 },
+                            { x = 36.1, y = 28.8, cave = false, node = true , node_id = 1731 },
+                            { x = 36.5, y = 33.7, cave = false, node = true , node_id = 1731 },
+                            { x = 35.6, y = 35.5, cave = false, node = true , node_id = 1731 },
+                            { x = 37.1, y = 37.1, cave = false, node = true , node_id = 1731 },
+                            { x = 39.5, y = 40.2, cave = false, node = true , node_id = 1731 },
+                            { x = 36.1, y = 44.1, cave = false, node = true , node_id = 1731 }
+                        }
+                    }
                 },
                 [1413] = { -- The Barrens
-
+                    -- Not in free version
                 },
                 [1432] = { -- Loch Modan
-
+                    -- Not in free version
                 },
                 [1436] = { -- Westfall
                     {
@@ -2392,34 +2442,262 @@ _G["PM_FREE_mining"] = {
                     }
                 },
                 [1433] = { -- Redridge Mountains
-
+                    -- Not in free version
                 },
                 [1420] = { -- Tirisfal Glades
-
+                    {
+                        name = "Fast Route",
+                        nodes = 78,
+                        route = {
+                            { x = 33.5, y = 52.8, cave = false, node = true , node_id = 1731 },
+                            { x = 34.6, y = 47.2, cave = false, node = true , node_id = 1731 },
+                            { x = 34.3, y = 44.7, cave = false, node = true , node_id = 1731 },
+                            { x = 37.2, y = 39.6, cave = false, node = true , node_id = 1731 },
+                            { x = 37.5, y = 37.5, cave = false, node = true , node_id = 1731 },
+                            { x = 39.2, y = 37.2, cave = false, node = true , node_id = 1731 },
+                            { x = 40.7, y = 39.3, cave = false, node = true , node_id = 1731 },
+                            { x = 43.5, y = 38.7, cave = false, node = true , node_id = 1731 },
+                            { x = 43.3, y = 35.8, cave = false, node = true , node_id = 1731 },
+                            { x = 42.7, y = 31.5, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 28.9, cave = false, node = true , node_id = 1731 },
+                            { x = 47.3, y = 27.7, cave = false, node = true , node_id = 1731 },
+                            { x = 49.6, y = 27.1, cave = false, node = true , node_id = 1731 },
+                            { x = 51.5, y = 27.2, cave = false, node = true , node_id = 1731 },
+                            { x = 53.4, y = 26.5, cave = false, node = true , node_id = 1731 },
+                            { x = 55.1, y = 31.2, cave = false, node = true , node_id = 1731 },
+                            { x = 53.5, y = 32.1, cave = false, node = true , node_id = 1731 },
+                            { x = 50.7, y = 34.2, cave = false, node = true , node_id = 1731 },
+                            { x = 50.3, y = 35.0, cave = false, node = true , node_id = 1731 },
+                            { x = 49.3, y = 39.1, cave = false, node = true , node_id = 1731 },
+                            { x = 48.7, y = 43.7, cave = false, node = true , node_id = 1731 },
+                            { x = 48.6, y = 46.0, cave = false, node = true , node_id = 1731 },
+                            { x = 48.4, y = 47.4, cave = false, node = true , node_id = 1731 },
+                            { x = 50.5, y = 45.3, cave = false, node = true , node_id = 1731 },
+                            { x = 52.2, y = 46.2, cave = false, node = true , node_id = 1731 },
+                            { x = 54.5, y = 47.8, cave = false, node = true , node_id = 1731 },
+                            { x = 56.5, y = 45.3, cave = false, node = true , node_id = 1731 },
+                            { x = 57.6, y = 43.8, cave = false, node = true , node_id = 1731 },
+                            { x = 55.2, y = 43.4, cave = false, node = true , node_id = 1731 },
+                            { x = 54.6, y = 40.6, cave = false, node = true , node_id = 1731 },
+                            { x = 55.9, y = 38.0, cave = false, node = true , node_id = 1731 },
+                            { x = 56.0, y = 35.0, cave = false, node = true , node_id = 1731 },
+                            { x = 56.8, y = 33.0, cave = false, node = true , node_id = 1731 },
+                            { x = 57.3, y = 30.3, cave = false, node = true , node_id = 1731 },
+                            { x = 58.0, y = 29.3, cave = false, node = true , node_id = 1731 },
+                            { x = 60.1, y = 30.6, cave = false, node = true , node_id = 1731 },
+                            { x = 74.8, y = 28.8, cave = false, node = true , node_id = 1731 },
+                            { x = 74.3, y = 31.6, cave = false, node = true , node_id = 1731 },
+                            { x = 76.0, y = 31.2, cave = false, node = true , node_id = 1731 },
+                            { x = 77.3, y = 32.8, cave = false, node = true , node_id = 1731 },
+                            { x = 75.6, y = 36.2, cave = false, node = true , node_id = 1731 },
+                            { x = 73.9, y = 41.5, cave = false, node = true , node_id = 1731 },
+                            { x = 75.5, y = 44.1, cave = false, node = true , node_id = 1731 },
+                            { x = 77.6, y = 45.3, cave = false, node = true , node_id = 1731 },
+                            { x = 76.6, y = 48.5, cave = false, node = true , node_id = 1731 },
+                            { x = 74.5, y = 53.6, cave = false, node = true , node_id = 1731 },
+                            { x = 74.1, y = 56.5, cave = false, node = true , node_id = 1731 },
+                            { x = 74.2, y = 57.7, cave = false, node = true , node_id = 1731 },
+                            { x = 76.5, y = 58.2, cave = false, node = true , node_id = 1731 },
+                            { x = 81.0, y = 60.3, cave = false, node = true , node_id = 1731 },
+                            { x = 82.2, y = 64.6, cave = false, node = true , node_id = 1731 },
+                            { x = 84.9, y = 64.1, cave = false, node = true , node_id = 1731 },
+                            { x = 83.6, y = 68.3, cave = false, node = true , node_id = 1731 },
+                            { x = 82.3, y = 73.1, cave = false, node = true , node_id = 1731 },
+                            { x = 82.3, y = 75.2, cave = false, node = true , node_id = 1731 },
+                            { x = 79.6, y = 73.6, cave = false, node = true , node_id = 1731 },
+                            { x = 75.4, y = 74.6, cave = false, node = true , node_id = 1731 },
+                            { x = 73.3, y = 72.3, cave = false, node = true , node_id = 1731 },
+                            { x = 73.5, y = 68.3, cave = false, node = true , node_id = 1731 },
+                            { x = 70.3, y = 67.1, cave = false, node = true , node_id = 1731 },
+                            { x = 68.6, y = 54.4, cave = false, node = true , node_id = 1731 },
+                            { x = 61.2, y = 46.4, cave = false, node = true , node_id = 1731 },
+                            { x = 54.9, y = 54.0, cave = false, node = true , node_id = 1731 },
+                            { x = 53.5, y = 53.7, cave = false, node = true , node_id = 1731 },
+                            { x = 52.8, y = 52.0, cave = false, node = true , node_id = 1731 },
+                            { x = 50.0, y = 66.1, cave = false, node = true , node_id = 1731 },
+                            { x = 50.1, y = 70.8, cave = false, node = true , node_id = 1731 },
+                            { x = 49.2, y = 70.1, cave = false, node = true , node_id = 1731 },
+                            { x = 47.3, y = 69.9, cave = false, node = true , node_id = 1731 },
+                            { x = 45.2, y = 69.9, cave = false, node = true , node_id = 1731 },
+                            { x = 42.5, y = 69.9, cave = false, node = true , node_id = 1731 },
+                            { x = 41.4, y = 69.4, cave = false, node = true , node_id = 1731 },
+                            { x = 42.1, y = 66.2, cave = false, node = true , node_id = 1731 },
+                            { x = 43.3, y = 64.1, cave = false, node = true , node_id = 1731 },
+                            { x = 45.5, y = 64.7, cave = false, node = true , node_id = 1731 },
+                            { x = 40.3, y = 57.1, cave = false, node = true , node_id = 1731 },
+                            { x = 38.7, y = 53.4, cave = false, node = true , node_id = 1731 },
+                            { x = 37.7, y = 52.8, cave = false, node = true , node_id = 1731 }
+                        }
+                    }
                 },
                 [1421] = { -- Silverpine Forest
-
+                    -- Not in free version
                 },
                 [1439] = { -- Darkshore
-
+                    -- Not in free version
                 },
                 [1412] = { -- Mulgore
-
+                    {
+                        name = "Fast Caveless",
+                        nodes = 56,
+                        route = {
+                            { x = 43.8, y = 72.8, cave = false, node = true , node_id = 1731 },
+                            { x = 48.4, y = 74.3, cave = false, node = true , node_id = 1731 },
+                            { x = 52.2, y = 72.6, cave = false, node = true , node_id = 1731 },
+                            { x = 53.9, y = 74.7, cave = false, node = true , node_id = 1731 },
+                            { x = 55.9, y = 74.7, cave = false, node = true , node_id = 1731 },
+                            { x = 61.3, y = 72.2, cave = false, node = true , node_id = 1731 },
+                            { x = 64.7, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 66.1, y = 71.3, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 72.7, cave = false, node = true , node_id = 1731 },
+                            { x = 68.4, y = 69.6, cave = false, node = true , node_id = 1731 },
+                            { x = 68.6, y = 66.4, cave = false, node = false, node_id = 0 },
+                            { x = 68.8, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 62.9, y = 55.4, cave = false, node = true , node_id = 1731 },
+                            { x = 61.5, y = 53.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.3, y = 51.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.6, y = 50.5, cave = false, node = true , node_id = 1731 },
+                            { x = 59.5, y = 45.9, cave = false, node = true , node_id = 1731 },
+                            { x = 57.6, y = 42.9, cave = false, node = true , node_id = 1731 },
+                            { x = 56.6, y = 40.5, cave = false, node = true , node_id = 1731 },
+                            { x = 56.8, y = 38.6, cave = false, node = true , node_id = 1731 },
+                            { x = 57.4, y = 35.1, cave = false, node = true , node_id = 1731 },
+                            { x = 56.7, y = 29.7, cave = false, node = true , node_id = 1731 },
+                            { x = 49.3, y = 24.6, cave = false, node = true , node_id = 1731 },
+                            { x = 44.6, y = 12.0, cave = false, node = true , node_id = 1731 },
+                            { x = 41.1, y = 6.6, cave = false, node = true , node_id = 1731 },
+                            { x = 38.4, y = 7.0, cave = false, node = true , node_id = 1731 },
+                            { x = 37.4, y = 8.9, cave = false, node = true , node_id = 1731 },
+                            { x = 36.9, y = 14.1, cave = false, node = true , node_id = 1731 },
+                            { x = 36.5, y = 15.4, cave = false, node = false, node_id = 0 },
+                            { x = 29.8, y = 19.6, cave = false, node = true , node_id = 1731 },
+                            { x = 28.0, y = 26.1, cave = false, node = true , node_id = 1731 },
+                            { x = 30.4, y = 28.6, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 32.5, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 34.8, cave = false, node = true , node_id = 1731 },
+                            { x = 32.6, y = 35.9, cave = false, node = true , node_id = 1731 },
+                            { x = 34.5, y = 38.2, cave = false, node = true , node_id = 1731 },
+                            { x = 32.9, y = 40.6, cave = false, node = true , node_id = 1731 },
+                            { x = 31.2, y = 42.5, cave = false, node = true , node_id = 1731 },
+                            { x = 33.5, y = 47.2, cave = false, node = true , node_id = 1731 },
+                            { x = 31.9, y = 47.6, cave = false, node = true , node_id = 1731 },
+                            { x = 31.7, y = 50.3, cave = false, node = true , node_id = 1731 },
+                            { x = 34.1, y = 51.6, cave = false, node = true , node_id = 1731 },
+                            { x = 35.0, y = 55.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.8, y = 58.8, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 58.1, cave = false, node = true , node_id = 1731 },
+                            { x = 32.5, y = 59.8, cave = false, node = true , node_id = 1731 },
+                            { x = 31.4, y = 61.4, cave = false, node = true , node_id = 1731 },
+                            { x = 30.1, y = 62.5, cave = false, node = true , node_id = 1731 },
+                            { x = 31.1, y = 64.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.7, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 33.1, y = 62.5, cave = false, node = true , node_id = 1731 },
+                            { x = 34.2, y = 62.0, cave = false, node = true , node_id = 1731 },
+                            { x = 34.3, y = 66.9, cave = false, node = true , node_id = 1731 },
+                            { x = 34.8, y = 69.6, cave = false, node = true , node_id = 1731 },
+                            { x = 33.2, y = 70.0, cave = false, node = true , node_id = 1731 },
+                            { x = 33.0, y = 76.1, cave = false, node = true , node_id = 1731 },
+                            { x = 33.8, y = 81.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.5, y = 79.8, cave = false, node = true , node_id = 1731 }
+                        }
+                    },
+                    {
+                        name = "Complete Route",
+                        nodes = 76,
+                        route = {
+                            { x = 33.8, y = 81.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.5, y = 79.8, cave = false, node = true , node_id = 1731 },
+                            { x = 43.8, y = 72.8, cave = false, node = true , node_id = 1731 },
+                            { x = 48.4, y = 74.3, cave = false, node = true , node_id = 1731 },
+                            { x = 52.2, y = 72.6, cave = false, node = true , node_id = 1731 },
+                            { x = 53.9, y = 74.7, cave = false, node = true , node_id = 1731 },
+                            { x = 55.9, y = 74.7, cave = false, node = true , node_id = 1731 },
+                            { x = 61.3, y = 72.2, cave = false, node = true , node_id = 1731 },
+                            { x = 64.7, y = 71.1, cave = false, node = true , node_id = 1731 },
+                            { x = 66.1, y = 71.3, cave = false, node = true , node_id = 1731 },
+                            { x = 67.0, y = 72.7, cave = false, node = true , node_id = 1731 },
+                            { x = 68.4, y = 69.6, cave = false, node = true , node_id = 1731 },
+                            { x = 68.7, y = 65.3, cave = false, node = true , node_id = 1731 },
+                            { x = 68.8, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 62.9, y = 55.4, cave = false, node = true , node_id = 1731 },
+                            { x = 61.5, y = 53.5, cave = false, node = true , node_id = 1731 },
+                            { x = 61.6, y = 50.5, cave = false, node = true , node_id = 1731 },
+                            { x = 63.5, y = 44.8, cave = true,  node = true , node_id = 1731 },
+                            { x = 59.5, y = 45.9, cave = false, node = true , node_id = 1731 },
+                            { x = 57.6, y = 42.9, cave = false, node = true , node_id = 1731 },
+                            { x = 56.6, y = 40.5, cave = false, node = true , node_id = 1731 },
+                            { x = 56.8, y = 38.6, cave = false, node = true , node_id = 1731 },
+                            { x = 58.5, y = 35.7, cave = true,  node = true , node_id = 1731 },
+                            { x = 58.3, y = 31.3, cave = false, node = true , node_id = 1731 },
+                            { x = 60.1, y = 30.0, cave = false, node = true , node_id = 1731 },
+                            { x = 60.7, y = 29.2, cave = false, node = true , node_id = 1731 },
+                            { x = 63.0, y = 25.9, cave = false, node = true , node_id = 1731 },
+                            { x = 63.0, y = 23.7, cave = false, node = true , node_id = 1731 },
+                            { x = 63.3, y = 20.5, cave = false, node = true , node_id = 1731 },
+                            { x = 62.3, y = 19.6, cave = false, node = true , node_id = 1731 },
+                            { x = 60.9, y = 18.8, cave = false, node = true , node_id = 1731 },
+                            { x = 58.8, y = 18.0, cave = false, node = true , node_id = 1731 },
+                            { x = 56.8, y = 15.9, cave = false, node = true , node_id = 1731 },
+                            { x = 55.9, y = 13.5, cave = false, node = true , node_id = 1731 },
+                            { x = 54.8, y = 12.8, cave = false, node = true , node_id = 1731 },
+                            { x = 55.0, y = 10.0, cave = false, node = true , node_id = 1731 },
+                            { x = 54.0, y = 8.9, cave = false, node = true , node_id = 1731 },
+                            { x = 52.8, y = 6.5, cave = false, node = true , node_id = 1731 },
+                            { x = 52.2, y = 4.9, cave = false, node = true , node_id = 1731 },
+                            { x = 50.2, y = 6.7, cave = false, node = true , node_id = 1731 },
+                            { x = 48.5, y = 6.6, cave = false, node = true , node_id = 1731 },
+                            { x = 44.6, y = 12.0, cave = false, node = true , node_id = 1731 },
+                            { x = 41.1, y = 6.6, cave = false, node = true , node_id = 1731 },
+                            { x = 38.4, y = 7.0, cave = false, node = true , node_id = 1731 },
+                            { x = 37.4, y = 8.9, cave = false, node = true , node_id = 1731 },
+                            { x = 36.9, y = 14.1, cave = false, node = true , node_id = 1731 },
+                            { x = 36.5, y = 16.6, cave = false, node = true , node_id = 1731 },
+                            { x = 29.8, y = 19.6, cave = false, node = true , node_id = 1731 },
+                            { x = 29.2, y = 19.1, cave = false, node = true , node_id = 1731 },
+                            { x = 28.0, y = 26.1, cave = false, node = true , node_id = 1731 },
+                            { x = 30.4, y = 28.6, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 32.5, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 34.8, cave = false, node = true , node_id = 1731 },
+                            { x = 32.6, y = 35.9, cave = false, node = true , node_id = 1731 },
+                            { x = 34.5, y = 38.2, cave = false, node = true , node_id = 1731 },
+                            { x = 32.9, y = 40.6, cave = false, node = true , node_id = 1731 },
+                            { x = 31.2, y = 42.5, cave = false, node = true , node_id = 1731 },
+                            { x = 33.5, y = 47.2, cave = false, node = true , node_id = 1731 },
+                            { x = 31.9, y = 47.6, cave = false, node = true , node_id = 1731 },
+                            { x = 31.7, y = 50.3, cave = false, node = true , node_id = 1731 },
+                            { x = 34.1, y = 51.6, cave = false, node = true , node_id = 1731 },
+                            { x = 33.2, y = 54.2, cave = false, node = true , node_id = 1731 },
+                            { x = 35.0, y = 55.1, cave = false, node = true , node_id = 1731 },
+                            { x = 34.8, y = 58.8, cave = false, node = true , node_id = 1731 },
+                            { x = 33.6, y = 58.1, cave = false, node = true , node_id = 1731 },
+                            { x = 32.5, y = 59.8, cave = false, node = true , node_id = 1731 },
+                            { x = 31.4, y = 61.4, cave = false, node = true , node_id = 1731 },
+                            { x = 30.1, y = 62.5, cave = false, node = true , node_id = 1731 },
+                            { x = 31.1, y = 64.0, cave = false, node = true , node_id = 1731 },
+                            { x = 31.7, y = 63.1, cave = false, node = true , node_id = 1731 },
+                            { x = 33.1, y = 62.5, cave = false, node = true , node_id = 1731 },
+                            { x = 34.2, y = 62.0, cave = false, node = true , node_id = 1731 },
+                            { x = 34.3, y = 66.9, cave = false, node = true , node_id = 1731 },
+                            { x = 34.8, y = 69.6, cave = false, node = true , node_id = 1731 },
+                            { x = 33.2, y = 70.0, cave = false, node = true , node_id = 1731 },
+                            { x = 33.0, y = 76.1, cave = false, node = true , node_id = 1731 }
+                        }
+                    }
                 },
                 [1424] = { -- Hillsbrad Foothills
-
+                    -- Not in free version
                 },
                 [1440] = { -- Ashenvale
-
+                    -- Not in free version
                 },
                 [1441] = { -- Thousand Needles
-
+                    -- Not in free version
                 },
                 [1443] = { -- Desolace
-
+                    -- Not in free version
                 },
                 [1442] = { -- Stonetalon Mountains
-
+                    -- Not in free version
                 }
             }
         }
