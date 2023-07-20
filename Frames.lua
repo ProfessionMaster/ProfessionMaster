@@ -141,16 +141,18 @@ ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounde
         return ""
     end
 
+    local media = "Interface/Addons/ProfessionMaster/media/"
+
     frame.frames = {
-        { f = CreateFrame("Frame", nil, frame), a = "TOPRIGHT",    w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTopRight"    .. str(rounded_tr) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMRIGHT", w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottomRight" .. str(rounded_br) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMLEFT",  w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottomLeft"  .. str(rounded_bl) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "TOPLEFT",     w = function() return                     8 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTopLeft"     .. str(rounded_tl) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "TOP",         w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameTop.blp"                                  },
-        { f = CreateFrame("Frame", nil, frame), a = "RIGHT",       w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameRight.blp"                                },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOM",      w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = "Interface/Addons/ProfessionMaster/media/FrameBottom.blp"                               },
-        { f = CreateFrame("Frame", nil, frame), a = "LEFT",        w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameLeft.blp"                                 },
-        { f = CreateFrame("Frame", nil, frame), a = "CENTER",      w = function() return frame:GetWidth() - 16 end, h = function() return frame:GetHeight() - 16 end, t = "Interface/Addons/ProfessionMaster/media/FrameCenter.blp"                               }
+        { f = CreateFrame("Frame", nil, frame), a = "TOPRIGHT",    w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameTopRight"    .. str(rounded_tr) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMRIGHT", w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameBottomRight" .. str(rounded_br) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMLEFT",  w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameBottomLeft"  .. str(rounded_bl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOPLEFT",     w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameTopLeft"     .. str(rounded_tl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOP",         w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = media .. "FrameTop.blp"                                  },
+        { f = CreateFrame("Frame", nil, frame), a = "RIGHT",       w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameRight.blp"                                },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOM",      w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = media .. "FrameBottom.blp"                               },
+        { f = CreateFrame("Frame", nil, frame), a = "LEFT",        w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameLeft.blp"                                 },
+        { f = CreateFrame("Frame", nil, frame), a = "CENTER",      w = function() return frame:GetWidth() - 16 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameCenter.blp"                               }
     }
 
     for _, data in ipairs(frame.frames) do

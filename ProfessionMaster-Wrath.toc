@@ -11,8 +11,15 @@ libs/CallbackHandler-1.0.lua
 libs/LibDataBroker-1.1.lua
 libs/LibDBIcon-1.0.lua
 
-FreeProfessions/Jewelcrafting.lua
-FreeProfessions/Mining.lua
+FreeProfessions/WoTLK/Alchemy.lua
+FreeProfessions/WoTLK/Blacksmithing.lua
+FreeProfessions/WoTLK/Enchanting.lua
+FreeProfessions/WoTLK/Engineering.lua
+FreeProfessions/WoTLK/Inscription.lua
+FreeProfessions/WoTLK/Jewelcrafting.lua
+FreeProfessions/WoTLK/Leatherworking.lua
+FreeProfessions/WoTLK/Tailoring.lua
+FreeProfessions/WoTLK/Mining.lua
 
 Professions.lua
 Synchronization.lua

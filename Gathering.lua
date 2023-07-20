@@ -2,6 +2,10 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
+-- todo: add skip step button
+-- todo: add do not autocomplete option
+-- todo: warn if pick not in inventory (mining only)
+
 ProfessionMaster.acceptable_time = 5
 
 ProfessionMaster.current_profession = nil

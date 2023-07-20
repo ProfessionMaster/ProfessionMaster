@@ -2,24 +2,24 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
-local FreePMGuides = {
-    jewelcrafting  = _G["PM_FREE_jewelcrafting"],
-    alchemy        = _G["PM_FREE_alchemy"],
-    blacksmithing  = _G["PM_FREE_blacksmithing"],
-    enchanting     = _G["PM_FREE_enchanting"],
-    engineering    = _G["PM_FREE_engineering"],
-    inscription    = _G["PM_FREE_inscription"],
-    leatherworking = _G["PM_FREE_leatherworking"],
-    tailoring      = _G["PM_FREE_tailoring"],
-    mining         = _G["PM_FREE_mining"],
-    herbalism      = _G["PM_FREE_herbalism"],
-    firstaid       = _G["PM_FREE_firstaid"],
-    cooking        = _G["PM_FREE_cooking"],
-    fishing        = _G["PM_FREE_fishing"]
-}
+-- TODO: Enchanting mats!!!
 
 ProfessionMaster = ProfessionMaster or { }
-PMGuides = PMGuides or FreePMGuides
+PMGuides = {
+    jewelcrafting  = (PMGuides and PMGuides.jewelcrafting ) or _G["PM_FREE_jewelcrafting"],
+    alchemy        = (PMGuides and PMGuides.alchemy       ) or _G["PM_FREE_alchemy"],
+    blacksmithing  = (PMGuides and PMGuides.blacksmithing ) or _G["PM_FREE_blacksmithing"],
+    enchanting     = (PMGuides and PMGuides.enchanting    ) or _G["PM_FREE_enchanting"],
+    engineering    = (PMGuides and PMGuides.engineering   ) or _G["PM_FREE_engineering"],
+    inscription    = (PMGuides and PMGuides.inscription   ) or _G["PM_FREE_inscription"],
+    leatherworking = (PMGuides and PMGuides.leatherworking) or _G["PM_FREE_leatherworking"],
+    tailoring      = (PMGuides and PMGuides.tailoring     ) or _G["PM_FREE_tailoring"],
+    mining         = (PMGuides and PMGuides.mining        ) or _G["PM_FREE_mining"],
+    herbalism      = (PMGuides and PMGuides.herbalism     ) or _G["PM_FREE_herbalism"],
+    firstaid       = (PMGuides and PMGuides.firstaid      ) or _G["PM_FREE_firstaid"],
+    cooking        = (PMGuides and PMGuides.cooking       ) or _G["PM_FREE_cooking"],
+    fishing        = (PMGuides and PMGuides.fishing       ) or _G["PM_FREE_fishing"]
+}
 
 ProfessionMaster.professions = {
     jewelcrafting = {

@@ -79,6 +79,7 @@ ProfessionMaster.setup_tooltip = function(tooltip)
                 if PM.items[item_id].best_source == "auction house" then
                     best_source = "Auction house"
                 elseif PM.items[item_id].best_source == "vendor" then
+                    -- todo: which vendor? where? nearest?
                     best_soure = "Vendor"
                 else
                     best_source = "|cFFFFFFFF" .. PM.items[item_id].best_source.name

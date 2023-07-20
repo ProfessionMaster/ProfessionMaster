@@ -77,7 +77,7 @@ ProfessionMaster.profession_level_names = {
     "Expert",
     "Artisan",
     "Master",
-    "Grandmaster"
+    "Grand Master"
 }
 
 ProfessionMaster.check_for_levelups = function(profession)
