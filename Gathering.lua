@@ -4,7 +4,6 @@
 
 -- todo: add skip step button
 -- todo: add do not autocomplete option
--- todo: warn if pick not in inventory (mining only)
 
 ProfessionMaster = ProfessionMaster or { }
 
@@ -195,7 +194,17 @@ end
 
 ProfessionMaster.gathering_step = function()
     if ProfessionMaster.current_profession == nil then
-        return "No route selected"
+        return "No route selected", false
+    end
+
+    local profession = ProfessionMaster.current_profession
+
+    if profession and profession.list.mandatory_tools then
+        for item_id, data in pairs(profession.list.mandatory_tools) do
+            if GetItemCount(item_id) < data.required_amount then
+                return "Get " .. data.required_amount .. " " .. data.name, false
+            end
+        end
     end
 
     local zone_id = C_Map.GetBestMapForUnit("Player")
@@ -211,13 +220,12 @@ ProfessionMaster.gathering_step = function()
         local target_instance = C_Map.GetWorldPosFromMapPos(ProfessionMaster.current_area, { x = 50, y = 50 })
     
         if player_instance ~= target_instance then
-            return "Travel to " .. GetRealZoneText(target_instance)
+            return "Travel to " .. GetRealZoneText(target_instance), false
         end
 
-        return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name
+        return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name, true
     end
 
-    local profession = ProfessionMaster.current_profession
     local vein = profession.list.nodes[ProfessionMaster.current_vein]
     local area = vein.routes[ProfessionMaster.current_area]
     local route = area[ProfessionMaster.current_route]
@@ -291,7 +299,7 @@ ProfessionMaster.gathering_step = function()
         msg = route.route[ProfessionMaster.current_step].msg
     end
 
-    return "Step " .. ProfessionMaster.current_step .. ": " .. msg
+    return "Step " .. ProfessionMaster.current_step .. ": " .. msg, true
 end
 
 ProfessionMaster.correct_instance = function()
@@ -387,12 +395,12 @@ ProfessionMaster.update_step_frame = function()
         return
     end
 
-    local msg = ProfessionMaster.gathering_step()
+    local msg, should_show_rest = ProfessionMaster.gathering_step()
     local angle = ProfessionMaster.get_step_direction() * 180 / math.pi
 
     ProfessionMaster.step_frame:Show()
 
-    if ProfessionMaster.correct_instance() then
+    if ProfessionMaster.correct_instance() and should_show_rest then
         ProfessionMaster.step_frame.inner_frame:Show()
         ProfessionMaster.step_frame.inner_frame:SetPoint("CENTER", sin(angle) * 14, cos(angle) * 14)
         ProfessionMaster.step_frame.text:SetText("|cFFFFFFFF" .. msg .. "\n" .. ProfessionMaster.get_step_distance())

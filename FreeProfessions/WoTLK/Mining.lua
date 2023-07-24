@@ -8,6 +8,12 @@
 --
 
 _G["PM_FREE_mining"] = {
+    mandatory_tools = {
+        [2901] = {
+            name = "Mining Pick",
+            required_amount = 1
+        }
+    },
     items = {
         [2770] = {
             name = "Copper Ore",

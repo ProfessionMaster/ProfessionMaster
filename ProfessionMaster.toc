@@ -1,7 +1,7 @@
 ## Interface: 11403
 ## Title: Profession Master
 ## Author: Bryan Morabito
-## Version: 0.1.2b
+## Version: 0.1.3b
 ## Notes: Profession leveling guide
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMGuides
