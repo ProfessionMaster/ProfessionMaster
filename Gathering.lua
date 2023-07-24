@@ -213,7 +213,25 @@ ProfessionMaster.gathering_step = function()
     x = floor(x * 1000) / 10
     y = floor(y * 1000) / 10
 
+    local vein = profession.list.nodes[ProfessionMaster.current_vein]
+    local area = vein.routes[ProfessionMaster.current_area]
+    local route = area[ProfessionMaster.current_route]
+
     if zone_id ~= ProfessionMaster.current_area then
+        local distance = nil
+        local best_step = nil
+
+        for i = 1, #route.route do
+            ProfessionMaster.current_step = i
+            local cur_distance = ProfessionMaster.get_step_distance_number()
+            if not distance or distance > cur_distance then
+                best_step = i
+                distance = cur_distance
+            end
+        end
+
+        ProfessionMaster.current_step = best_step
+        
         ProfessionMaster.en_route_since = GetServerTime()
 
         local player_instance = C_Map.GetWorldPosFromMapPos(zone_id, { x = x, y = y })
@@ -225,10 +243,6 @@ ProfessionMaster.gathering_step = function()
 
         return "Travel to " .. C_Map.GetMapInfo(ProfessionMaster.current_area).name, true
     end
-
-    local vein = profession.list.nodes[ProfessionMaster.current_vein]
-    local area = vein.routes[ProfessionMaster.current_area]
-    local route = area[ProfessionMaster.current_route]
 
     if ProfessionMaster.current_step < 1 then
         local best_step = 0
