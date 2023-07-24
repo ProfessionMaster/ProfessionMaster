@@ -119,7 +119,7 @@ ProfessionMaster.request_route_usage = function(vein_id, zone_id)
 
                     for key, profession in pairs(ProfessionMaster.professions) do
                         if profession.flags.gathering and profession.list and profession.list.nodes[vein_id] then
-                            if ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame.optimal_route then
+                            if ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame and ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame.optimal_route then
                                 ProfessionMaster.main_frame.profession_frames[profession.name].sub_frame.optimal_route:Enable()
                             end
                         end
