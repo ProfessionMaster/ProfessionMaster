@@ -11,4 +11,6 @@ end
 ProfessionMaster.command_initializer = function()
     SLASH_PROFESSIONMASTER1, SLASH_PROFESSIONMASTER2 = "/pm", "/professionmaster"
     SlashCmdList["PROFESSIONMASTER"] = ProfessionMaster.slash_command
+
+    ProfessionMaster.data = select(2, BNGetInfo())
 end

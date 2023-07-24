@@ -6,6 +6,8 @@
 -- todo: add do not autocomplete option
 -- todo: warn if pick not in inventory (mining only)
 
+ProfessionMaster = ProfessionMaster or { }
+
 ProfessionMaster.acceptable_time = 5
 
 ProfessionMaster.current_profession = nil

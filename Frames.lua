@@ -2,6 +2,8 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
+ProfessionMaster = ProfessionMaster or { }
+
 ProfessionMaster.init_frames = function(event)
     if event == "AUCTION_HOUSE_SHOW" then
         if not ProfessionMaster.frame then
