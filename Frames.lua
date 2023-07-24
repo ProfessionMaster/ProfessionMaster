@@ -200,18 +200,24 @@ ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounde
 end
 
 ProfessionMaster.reset_position = function()
-    PM.x_pos = nil
-    PM.y_pos = nil
-    PM.step_x_pos = nil
-    PM.step_y_pos = nil
-
     if ProfessionMaster.main_frame then
-        ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", -16, 90)
+        ProfessionMaster.main_frame:ClearAllPoints()
+        ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", nil, "BOTTOMRIGHT", -16, 90)
     end
     
     if ProfessionMaster.step_frame then
-        ProfessionMaster.step_frame:SetPoint("TOP", 0, -16)
+        ProfessionMaster.step_frame:ClearAllPoints()
+        ProfessionMaster.step_frame:SetPoint("TOP", nil, "TOP", 0, -16)
     end
+    
+    PM.x_pos = nil
+    PM.y_pos = nil
+    PM.anchor = "BOTTOMRIGHT"
+    PM.anchor_to = "BOTTOMRIGHT"
+    PM.step_x_pos = nil
+    PM.step_y_pos = nil
+    PM.step_anchor = "TOP"
+    PM.step_anchor_to = "TOP"
 end
 
 ProfessionMaster.generate_frame = function()
@@ -224,7 +230,7 @@ ProfessionMaster.generate_frame = function()
     frame:SetWidth(280)
     frame:SetHeight(72)
     frame:RegisterForDrag("LeftButton")
-    frame:SetPoint("BOTTOMRIGHT", PM.x_pos or -16, PM.y_pos or 90)
+    frame:SetPoint(PM.anchor or "BOTTOMRIGHT", PM.x_pos or -16, PM.y_pos or 90)
     frame:SetClampedToScreen(true)
 
     frame:SetMovable(true)
@@ -236,7 +242,7 @@ ProfessionMaster.generate_frame = function()
     end)
     frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
-        _, _, _, PM.x_pos, PM.y_pos = self:GetPoint()
+        PM.anchor, _, PM.anchor_to, PM.x_pos, PM.y_pos = self:GetPoint()
     end)
 
     frame.close = frame.close or CreateFrame("Button", "PMFrameClose", frame, "UIPanelButtonTemplate")
@@ -568,7 +574,7 @@ ProfessionMaster.generate_frame = function()
     step_frame:SetWidth(48)
     step_frame:SetHeight(48)
     step_frame:RegisterForDrag("LeftButton")
-    step_frame:SetPoint("TOP", PM.step_x_pos or 0, PM.step_y_pos or -16)
+    step_frame:SetPoint(PM.step_anchor or "TOP", PM.step_x_pos or 0, PM.step_y_pos or -16)
     step_frame:SetClampedToScreen(true)
 
     step_frame:SetMovable(true)
@@ -580,7 +586,7 @@ ProfessionMaster.generate_frame = function()
     end)
     step_frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
-        _, _, _, PM.step_x_pos, PM.step_y_pos = self:GetPoint()
+        PM.step_anchor, _, PM.step_anchor_to, PM.step_x_pos, PM.step_y_pos = self:GetPoint()
     end)
 
     step_frame.text = step_frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -625,11 +631,17 @@ ProfessionMaster.generate_frame = function()
         text = "Profession Master",
         icon = "Interface/Addons/ProfessionMaster/media/ProfessionMaster.blp",
         OnClick = function(self, btn)
-            ProfessionMaster.toggle()
+            if btn == "LeftButton" then
+                ProfessionMaster.toggle()
+            elseif btn == "RightButton" then
+                ProfessionMaster.reset_position()
+            end
         end,
         OnTooltipShow = function(tooltip)
             if not tooltip or not tooltip.AddLine then return end
-            tooltip:AddLine("Toggle Profession Master frame")
+            tooltip:AddLine("Profession Master")
+            tooltip:AddLine("Left click: |cFFFFFFFFToggle frame")
+            tooltip:AddLine("Right click: |cFFFFFFFFReset frame position")
         end,
     })
 
