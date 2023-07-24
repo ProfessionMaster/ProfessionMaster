@@ -274,7 +274,7 @@ ProfessionMaster.gathering_step = function()
     end
 
     -- todo: skip walking steps if last step was for wrong vein_id anyway
-    if (distance and distance < 10) or (step.vein_id ~= ProfessionMaster.current_vein and not ProfessionMaster.current_other_nodes) or step.min_level > cur_level then
+    if (distance and distance < 10) or (step.node_id ~= ProfessionMaster.current_vein and not ProfessionMaster.current_other_nodes) or step.min_level > cur_level then
         ProfessionMaster.current_step = ProfessionMaster.current_step + 1
 
         if ProfessionMaster.current_step > #route.route then
