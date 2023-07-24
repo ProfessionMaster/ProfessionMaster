@@ -199,6 +199,15 @@ ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounde
     end)
 end
 
+ProfessionMaster.reset_position = function()
+    PM.x_pos = nil
+    PM.y_pos = nil
+
+    if ProfessionMaster.main_frame then
+        ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", -16, 90)
+    end
+end
+
 ProfessionMaster.generate_frame = function()
     local frame = ProfessionMaster.main_frame or (function()
         local f = CreateFrame("Frame", "PMFrame", UIParent)
@@ -209,7 +218,7 @@ ProfessionMaster.generate_frame = function()
     frame:SetWidth(280)
     frame:SetHeight(72)
     frame:RegisterForDrag("LeftButton")
-    frame:SetPoint("BOTTOMRIGHT", -16, 90)
+    frame:SetPoint("BOTTOMRIGHT", PM.x_pos or -16, PM.y_pos or 90)
     frame:SetClampedToScreen(true)
 
     frame:SetMovable(true)
@@ -221,6 +230,7 @@ ProfessionMaster.generate_frame = function()
     end)
     frame:SetScript("OnDragStop", function(self)
         self:StopMovingOrSizing()
+        _, _, _, PM.x_pos, PM.y_pos = self:GetPoint()
     end)
 
     frame.close = frame.close or CreateFrame("Button", "PMFrameClose", frame, "UIPanelButtonTemplate")
