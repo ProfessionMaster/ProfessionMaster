@@ -202,9 +202,15 @@ end
 ProfessionMaster.reset_position = function()
     PM.x_pos = nil
     PM.y_pos = nil
+    PM.step_x_pos = nil
+    PM.step_y_pos = nil
 
     if ProfessionMaster.main_frame then
         ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", -16, 90)
+    end
+    
+    if ProfessionMaster.step_frame then
+        ProfessionMaster.step_frame:SetPoint("TOP", 0, -16)
     end
 end
 
@@ -562,12 +568,20 @@ ProfessionMaster.generate_frame = function()
     step_frame:SetWidth(48)
     step_frame:SetHeight(48)
     step_frame:RegisterForDrag("LeftButton")
-    step_frame:SetPoint("TOP", 0, -16)
+    step_frame:SetPoint("TOP", PM.step_x_pos or 0, PM.step_y_pos or -16)
     step_frame:SetClampedToScreen(true)
 
     step_frame:SetMovable(true)
     step_frame:EnableMouse(true)
     step_frame:RegisterForDrag("LeftButton")
+    
+    step_frame:SetScript("OnDragStart", function(self)
+        self:StartMoving()
+    end)
+    step_frame:SetScript("OnDragStop", function(self)
+        self:StopMovingOrSizing()
+        _, _, _, PM.step_x_pos, PM.step_y_pos = self:GetPoint()
+    end)
 
     step_frame.text = step_frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     step_frame.text:SetJustifyH("CENTER")
