@@ -10,49 +10,58 @@ end
 
 ProfessionMaster.init_profession_frames = function()
     if not ProfessionMaster.profession_frame and TradeSkillFrame then
-        local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame)
+        local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame, "ButtonFrameTemplate")
 
         frame:SetPoint("TOPLEFT", TradeSkillFrame, "TOPRIGHT", 0, -13)
         frame:SetPoint("BOTTOMLEFT", TradeSkillFrame, "BOTTOMRIGHT", 0, 72)
         frame:SetWidth(320)
-        ProfessionMaster.set_background(frame, true, true, true, true)
 
         frame.title = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.title:SetText("|cFFFFFFFFProfession Master")
-        frame.title:SetPoint("TOP", frame, "TOP", 0, -12)
+        frame.title:SetPoint("TOP", frame, "TOP", 16, -6)
+
+        frame.corner = CreateFrame("Frame", nil, frame)
+        frame.corner:SetPoint("TOPLEFT", -6, 7)
+        frame.corner:SetSize(60, 60)
+        frame.corner.tex = frame.corner:CreateTexture()
+        frame.corner.tex:SetAllPoints(frame.corner)
 
         frame.profession_title = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.profession_title:SetText("")
-        frame.profession_title:SetPoint("TOP", frame, "TOP", 0, -28)
+        frame.profession_title:SetPoint("TOP", frame, "TOP", 16, -28)
 
         frame.profession_level = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.profession_level:SetText("")
-        frame.profession_level:SetPoint("TOP", frame, "TOP", 0, -42)
+        frame.profession_level:SetPoint("TOP", frame, "TOP", 16, -44)
 
         frame.best_recipe = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe:SetText("")
-        frame.best_recipe:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -58)
+        frame.best_recipe:SetJustifyH("LEFT")
+        frame.best_recipe:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -70)
 
         frame.best_recipe_price_per_craft = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe_price_per_craft:SetText("")
-        frame.best_recipe_price_per_craft:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -72)
+        frame.best_recipe_price_per_craft:SetJustifyH("LEFT")
+        frame.best_recipe_price_per_craft:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -84)
 
         frame.best_recipe_price_per_skill_up = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe_price_per_skill_up:SetText("")
-        frame.best_recipe_price_per_skill_up:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -86)
+        frame.best_recipe_price_per_skill_up:SetJustifyH("LEFT")
+        frame.best_recipe_price_per_skill_up:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -98)
 
         frame.best_recipe_fetched_at = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe_fetched_at:SetText("")
-        frame.best_recipe_fetched_at:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -100)
+        frame.best_recipe_fetched_at:SetJustifyH("LEFT")
+        frame.best_recipe_fetched_at:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -112)
 
         frame.reagents = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.reagents:SetText("Best reagent sources:")
-        frame.reagents:SetPoint("TOP", frame, "TOP", 0, -116)
+        frame.reagents:SetPoint("TOP", frame, "TOP", 0, -128)
 
         frame.reagents_list = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.reagents_list:SetText("")
         frame.reagents_list:SetJustifyH("LEFT")
-        frame.reagents_list:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -130)
+        frame.reagents_list:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -142)
 
         ProfessionMaster.profession_frame = frame
 
@@ -87,7 +96,7 @@ ProfessionMaster.format_timestamp = function(timestamp)
 
     if timediff < 86400 then
         local hours = math.floor(timediff / 3600)
-        local minutes = math.floor((timediff - hours * 60) / 60)
+        local minutes = math.floor((timediff - hours * 3600) / 60)
 
         if timediff < 60 then
             return "|cFF00FF00< 1min ago"
@@ -113,6 +122,8 @@ end
 
 -- todo: consider every profession learned by this character
 ProfessionMaster.list_reagents = function(recipe)
+    if not recipe then return "" end
+
     local reagents = ""
 
     for _, material in ipairs(recipe.materials) do
@@ -147,10 +158,18 @@ ProfessionMaster.update_profession_frames = function()
     local best_recipe = ProfessionMaster.get_best_recipe(profession, current_level)
 
     local frame = ProfessionMaster.profession_frame
+
+    if frame.profession ~= profession then
+        SetPortraitToTexture(frame.corner.tex, profession.icon)
+        frame.profession = profession
+    end
+
+    frame:Show()
+
     frame.profession_title:SetText(profession_name)
     frame.profession_level:SetText("|cFFFFFFFF" .. ProfessionMaster.check_for_levelups(profession))
     
-    frame.best_recipe:SetText("|cFFFFFFFFBest recipe: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
+    frame.best_recipe:SetText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
     frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(profession, best_recipe)) or "|cFFFF0000unknown"))
     frame.best_recipe_price_per_skill_up:SetText("|cFFFFFFFFAverage price per skill up: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price_per_skill_up(profession, best_recipe, current_level)) or "|cFFFF0000unknown"))
     frame.best_recipe_fetched_at:SetText("|cFFFFFFFFRecipe last fetched: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
