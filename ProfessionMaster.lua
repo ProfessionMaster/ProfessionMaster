@@ -10,7 +10,7 @@ if PM.items == nil then PM.items = { } end
 ProfessionMaster.verbose = true -- Disable in production
 
 ProfessionMaster.print = function(msg)
-	DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8000Profession Master|r: " .. msg)
+	DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8000ProfessionMaster|r: " .. msg)
 end
 
 ProfessionMaster.print_verbose = function(msg)

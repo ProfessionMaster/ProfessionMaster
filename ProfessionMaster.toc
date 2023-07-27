@@ -1,8 +1,8 @@
 ## Interface: 11403
-## Title: Profession Master
+## Title: ProfessionMaster
 ## Author: Bryan Morabito
-## Version: 0.1.5b
-## Notes: Profession leveling guide
+## Version: 0.1.6b
+## Notes: Profession Leveling, Completionism, and Gold-Making utility
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMGuides
 

@@ -46,7 +46,7 @@ ProfessionMaster.setup_tooltip = function(tooltip)
 
         str = str:sub(1, #str - 2)
 
-        tooltip:AddDoubleLine("Profession Master:", str)
+        tooltip:AddDoubleLine("ProfessionMaster:", str)
         tooltip:AddLine(" ")
         tooltip:AddLine("|cFFFFFFFFUsed for:")
         

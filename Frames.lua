@@ -44,7 +44,7 @@ ProfessionMaster.init_auction_frames = function()
         "AuctionTabTemplate"
     )
 
-    tab_button:SetText("|cFFFF8000Profession Master|r")
+    tab_button:SetText("|cFFFF8000ProfessionMaster|r")
     tab_button:SetPoint("LEFT", _G["AuctionFrameTab" .. (tab_index - 1)], "RIGHT", -15, 0)
     tab_button:SetID(tab_index)
 
@@ -65,7 +65,7 @@ ProfessionMaster.init_auction_frames = function()
     frame:Hide()
 
     local title = frame:CreateFontString(nil, nil, "GameFontNormal")
-    title:SetText("Profession Master")
+    title:SetText("ProfessionMaster")
     title:SetPoint("TOP", frame, "TOP")
 
     local scan_text = frame:CreateFontString(nil, nil, "GameFontNormal")
@@ -242,7 +242,7 @@ ProfessionMaster.generate_frame = function()
     end)]]
     
     local title = frame.title or frame:CreateFontString(nil, nil, "GameFontNormal")
-    title:SetText("Profession Master")
+    title:SetText("ProfessionMaster")
     title:SetPoint("TOP", frame, "TOP", 0, -4)
     title:SetTextColor(1, 1, 1)
 
@@ -594,7 +594,7 @@ ProfessionMaster.generate_frame = function()
 
     local minimap_button = LibStub("LibDataBroker-1.1"):NewDataObject("ProfessionMaster", {
         type = "data source",
-        text = "Profession Master",
+        text = "ProfessionMaster",
         icon = "Interface/Addons/ProfessionMaster/media/ProfessionMaster.blp",
         OnClick = function(self, btn)
             if btn == "LeftButton" then

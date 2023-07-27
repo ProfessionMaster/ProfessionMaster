@@ -17,7 +17,7 @@ ProfessionMaster.init_profession_frames = function()
         frame:SetWidth(320)
 
         frame.title = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.title:SetText("|cFFFFFFFFProfession Master")
+        frame.title:SetText("|cFFFFFFFFProfessionMaster")
         frame.title:SetPoint("TOP", frame, "TOP", 16, -6)
 
         frame.corner = CreateFrame("Frame", nil, frame)
