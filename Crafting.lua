@@ -2,6 +2,8 @@
 -- Copyright (c) 2023 Bryan Morabito, All Rights Reserved.
 --
 
+-- todo: scan all known professions at once
+
 ProfessionMaster = ProfessionMaster or { }
 PM = PM or { }
 PM.items = PM.items or { }
@@ -133,6 +135,7 @@ ProfessionMaster.fetch_recipes = function(profession)
                                 best_source       = best_material_source,
                                 vendor_price      = profession.list.items[item_id].vendor_purchase_price,
                                 auction_price     = auction_price,
+                                auction_fetch_at  = time(),
                                 price             = lowest_price
                             }
                         end
@@ -206,6 +209,7 @@ ProfessionMaster.print_best_recipe = function(profession, skill)
     end
 end
 
+-- todo: consider every profession learned by this character
 ProfessionMaster.fetch_recipe_price = function(profession, recipe)
     local price = 0
 

@@ -5,15 +5,15 @@
 ProfessionMaster = ProfessionMaster or { }
 ProfessionMaster.queue = { }
 
-ProfessionMaster.dequeue = function(hw_input)
+ProfessionMaster.dequeue = function(hw_input, same_tick)
     if #ProfessionMaster.queue == 0 then return end
 
     for index, query in pairs(ProfessionMaster.queue) do
         if hw_input or not query.requires_hw_input then
-            if query.condition() then
+            if query.condition() and (not same_tick or not query.forbid_same_tick) then
                 query.execute()
                 table.remove(ProfessionMaster.queue, index)
-                ProfessionMaster.dequeue()
+                ProfessionMaster.dequeue(hw_input, same_tick or query.forbid_same_tick)
                 return
             elseif query.allow_skipping ~= true then
                 return

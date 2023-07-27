@@ -1,7 +1,7 @@
 ## Interface: 11403
 ## Title: Profession Master
 ## Author: Bryan Morabito
-## Version: 0.1.3b
+## Version: 0.1.4b
 ## Notes: Profession leveling guide
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMGuides
@@ -26,6 +26,7 @@ Queue.lua
 Tooltip.lua
 Command.lua
 Frames.lua
+TradeSkillFrame.lua
 Crafting.lua
 Gathering.lua
 GuideParser.lua

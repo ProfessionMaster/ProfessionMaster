@@ -27,9 +27,9 @@ ProfessionMaster.format_price = function(price)
     local gold   = math.floor(price / 10000)
 
     if gold > 0 then
-        return "|cFFFFD700" .. gold .. "g |r|cFFC0C0C0" .. silver .. "s |r|cFFB87333" .. copper .. "c|r"
+        return "|cFFFFD700" .. gold .. "g |cFFC0C0C0" .. silver .. "s |cFFB87333" .. copper .. "c|r"
     elseif silver > 0 then
-        return "|cFFC0C0C0" .. silver .. "s |r|cFFB87333" .. copper .. "c|r"
+        return "|cFFC0C0C0" .. silver .. "s |cFFB87333" .. copper .. "c|r"
     else
         return "|cFFB87333" .. copper .. "c|r"
     end
@@ -109,6 +109,7 @@ end
 
 ProfessionMaster.init = function()
     ProfessionMaster.frame_initializer()
+    ProfessionMaster.trade_skill_frames_initializer()
     ProfessionMaster.queue_initializer()
     ProfessionMaster.tooltip_initializer()
     ProfessionMaster.chat_initializer()

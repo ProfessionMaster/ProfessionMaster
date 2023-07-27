@@ -19,8 +19,6 @@ ProfessionMaster.init_frames = function(event)
         if ProfessionMaster.frame then
             ProfessionMaster.frame:Hide()
         end
-    elseif event == "TRADE_SKILL_SHOW" then
-        ProfessionMaster.init_profession_frames()
     elseif event == "LEARNED_SPELL_IN_TAB" or event == "PLAYER_ENTERING_WORLD" then
         ProfessionMaster.generate_frame()
     end
@@ -150,19 +148,6 @@ ProfessionMaster.init_auction_frames = function()
     ProfessionMaster.frame = frame
 end
 
--- todo: individual profession frames!!!
-ProfessionMaster.init_profession_frames = function()
-    if not ProfessionMaster.profession_frame and TradeSkillFrame then
-        local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame)
-
-        local title = frame:CreateFontString(nil, nil, "GameFontNormal")
-        title:SetText("Profession Master")
-        title:SetPoint("TOP", frame, "TOP")
-
-        ProfessionMaster.profession_frame = frame
-    end
-end
-
 ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounded_bl, rounded_tl)
     local str = function(rounded)
         if rounded then return "Rounded" end
@@ -172,15 +157,15 @@ ProfessionMaster.set_background = function(frame, rounded_tr, rounded_br, rounde
     local media = "Interface/Addons/ProfessionMaster/media/"
 
     frame.frames = {
-        { f = CreateFrame("Frame", nil, frame), a = "TOPRIGHT",    w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameTopRight"    .. str(rounded_tr) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMRIGHT", w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameBottomRight" .. str(rounded_br) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMLEFT",  w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameBottomLeft"  .. str(rounded_bl) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "TOPLEFT",     w = function() return                     8 end, h = function() return                      8 end, t = media .. "FrameTopLeft"     .. str(rounded_tl) .. ".blp" },
-        { f = CreateFrame("Frame", nil, frame), a = "TOP",         w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = media .. "FrameTop.blp"                                  },
-        { f = CreateFrame("Frame", nil, frame), a = "RIGHT",       w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameRight.blp"                                },
-        { f = CreateFrame("Frame", nil, frame), a = "BOTTOM",      w = function() return frame:GetWidth() - 16 end, h = function() return                      8 end, t = media .. "FrameBottom.blp"                               },
-        { f = CreateFrame("Frame", nil, frame), a = "LEFT",        w = function() return                     8 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameLeft.blp"                                 },
-        { f = CreateFrame("Frame", nil, frame), a = "CENTER",      w = function() return frame:GetWidth() - 16 end, h = function() return frame:GetHeight() - 16 end, t = media .. "FrameCenter.blp"                               }
+        { f = CreateFrame("Frame", nil, frame), a = "TOPRIGHT",    w = function() return                    16 end, h = function() return                     16 end, t = media .. "FrameTopRight"    .. str(rounded_tr) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMRIGHT", w = function() return                    16 end, h = function() return                     16 end, t = media .. "FrameBottomRight" .. str(rounded_br) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOMLEFT",  w = function() return                    16 end, h = function() return                     16 end, t = media .. "FrameBottomLeft"  .. str(rounded_bl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOPLEFT",     w = function() return                    16 end, h = function() return                     16 end, t = media .. "FrameTopLeft"     .. str(rounded_tl) .. ".blp" },
+        { f = CreateFrame("Frame", nil, frame), a = "TOP",         w = function() return frame:GetWidth() - 32 end, h = function() return                     16 end, t = media .. "FrameTop.blp"                                  },
+        { f = CreateFrame("Frame", nil, frame), a = "RIGHT",       w = function() return                    16 end, h = function() return frame:GetHeight() - 32 end, t = media .. "FrameRight.blp"                                },
+        { f = CreateFrame("Frame", nil, frame), a = "BOTTOM",      w = function() return frame:GetWidth() - 32 end, h = function() return                     16 end, t = media .. "FrameBottom.blp"                               },
+        { f = CreateFrame("Frame", nil, frame), a = "LEFT",        w = function() return                    16 end, h = function() return frame:GetHeight() - 32 end, t = media .. "FrameLeft.blp"                                 },
+        { f = CreateFrame("Frame", nil, frame), a = "CENTER",      w = function() return frame:GetWidth() - 32 end, h = function() return frame:GetHeight() - 32 end, t = media .. "FrameCenter.blp"                               }
     }
 
     for _, data in ipairs(frame.frames) do
@@ -202,7 +187,7 @@ end
 ProfessionMaster.reset_position = function()
     if ProfessionMaster.main_frame then
         ProfessionMaster.main_frame:ClearAllPoints()
-        ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", nil, "BOTTOMRIGHT", -16, 90)
+        ProfessionMaster.main_frame:SetPoint("BOTTOMRIGHT", nil, "BOTTOMRIGHT", -32, 90)
     end
     
     if ProfessionMaster.step_frame then
@@ -639,7 +624,7 @@ ProfessionMaster.generate_frame = function()
         end,
         OnTooltipShow = function(tooltip)
             if not tooltip or not tooltip.AddLine then return end
-            tooltip:AddLine("Profession Master")
+            tooltip:AddLine("ProfessionMaster")
             tooltip:AddLine("Left click: |cFFFFFFFFToggle frame")
             tooltip:AddLine("Right click: |cFFFFFFFFReset frame position")
         end,
@@ -669,7 +654,6 @@ ProfessionMaster.frame_initializer = function()
     local helper = CreateFrame("Frame", nil, UIParent)
     helper:RegisterEvent("AUCTION_HOUSE_SHOW")
     helper:RegisterEvent("AUCTION_HOUSE_CLOSED")
-    helper:RegisterEvent("TRADE_SKILL_SHOW")
     helper:RegisterEvent("LEARNED_SPELL_IN_TAB")
     helper:RegisterEvent("PLAYER_ENTERING_WORLD")
     helper:SetScript("OnEvent", ProfessionMaster.init_frames)
