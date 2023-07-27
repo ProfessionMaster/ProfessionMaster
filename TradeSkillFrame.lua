@@ -128,19 +128,22 @@ ProfessionMaster.list_reagents = function(recipe)
 
     for _, material in ipairs(recipe.materials) do
         local _, link = GetItemInfo(material.item_id)
-        reagents = reagents .. material.amount .. "x " .. link .. ": "
+        reagents = reagents .. material.amount .. "x " .. (link or PM.items[material.item_id].name or "|cFFFF0000unknown|r") .. ": "
         if not PM.items[material.item_id] or not PM.items[material.item_id].found_best_source then
             reagents = reagents .. "|cFFFF0000unknown|r\n"
         else
             local source = ""
             
             if type(PM.items[material.item_id].best_source) == "string" then
-                source = "|cFF00FF00" .. PM.items[material.item_id].best_source .. "|r"
+                source = "|cFF00FF00" .. PM.items[material.item_id].best_source
             else
-                source = "|cFFFFFF00" .. PM.items[material.item_id].best_source.name .. "|r"
+                source = "|cFFFFFF00" .. PM.items[material.item_id].best_source.name
             end
 
-            reagents = reagents .. source .. "\n"
+            local count = GetItemCount(material.item_id, true)
+            if count < material.amount then count = "|cFFFF0000" .. count .. "|cFFFFFFFF" end
+
+            reagents = reagents .. source .. " |cFFFFFFFF(have: " .. count .. ")|r\n"
         end
     end
 
