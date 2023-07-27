@@ -3,6 +3,7 @@
 --
 
 -- todo: scan all known professions at once
+-- todo: factor in materials you already own
 
 ProfessionMaster = ProfessionMaster or { }
 PM = PM or { }

@@ -72,10 +72,6 @@ ProfessionMaster.init_auction_frames = function()
     scan_text:SetText("Scan best recipes for professions")
     scan_text:SetPoint("TOPLEFT", frame, "TOPLEFT", 24, -32)
 
-    local scan_text = frame:CreateFontString(nil, nil, "GameFontNormal")
-    scan_text:SetText("Fetch best recipe for professions at current level")
-    scan_text:SetPoint("TOPLEFT", frame, "TOP", 0, -32)
-
     local i = 0
     
     local build = select(4, GetBuildInfo())
@@ -102,21 +98,6 @@ ProfessionMaster.init_auction_frames = function()
                 frame,
                 "UIPanelButtonTemplate"
             )
-
-            fetch_button:SetText(profession.name)
-            fetch_button:SetPoint("TOPLEFT", frame, "TOP", 0, -48 - 28 * i)
-            fetch_button:SetSize(128, 24)
-            fetch_button:SetScript("OnClick", function()
-                for index = 1, GetNumSkillLines() do
-                    local name, _, _, level = GetSkillLineInfo(index)
-                    if name == profession.name then
-                        ProfessionMaster.print_best_recipe(profession, level)
-                        return
-                    end
-                end
-
-                ProfessionMaster.print("You do not have this profession!")
-            end)
 
             i = i + 1
         end
