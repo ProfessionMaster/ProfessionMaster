@@ -10,6 +10,10 @@ PM = PM or { }
 PM.items = PM.items or { }
 
 ProfessionMaster.color_source = function(recipe)
+    if not recipe then
+        return ""
+    end
+
     if recipe.taught_by_trainer then
         return "|cFF00FF00" .. recipe.source .. "|r"
     elseif recipe.source == "Vendor" then
@@ -19,10 +23,15 @@ ProfessionMaster.color_source = function(recipe)
     end
 end
 
-ProfessionMaster.print_recipe = function(profession, recipe, msg, level)
+ProfessionMaster.print_recipe = function(recipe, msg, level)
+    if not recipe then
+        ProfessionMaster.print("|cFFFF0000Unknown recipe")    
+        return
+    end
+
     local link          = GetSpellLink(recipe.spell_id)
-    local price         = ProfessionMaster.fetch_recipe_price(profession, recipe)
-    local average_price = ProfessionMaster.fetch_recipe_price_per_skill_up(profession, recipe, level)
+    local price         = ProfessionMaster.fetch_recipe_price(recipe)
+    local average_price = ProfessionMaster.fetch_recipe_price_per_skill_up(recipe, level)
 
     local text = link .. " - Price per craft: " .. ProfessionMaster.format_price(price) .. " - Average price per skill up: " .. ProfessionMaster.format_price(average_price)
 
@@ -45,6 +54,7 @@ ProfessionMaster.print_material = function(profession, material)
 end
 
 ProfessionMaster.get_skill_up_chance = function(recipe, skill_level)
+    if not recipe then return 0 end
     if recipe.levels[2] <= skill_level then
         return (recipe.levels[3] - skill_level)/(recipe.levels[3] - recipe.levels[2])
     elseif recipe.levels[3] > skill_level then
@@ -72,8 +82,6 @@ ProfessionMaster.fetch_recipes = function(profession)
         ProfessionMaster.print("You have to be at the auction house to use this function!")
         return
     end
-
-    ProfessionMaster.queue = { }
 
     local skill_id, skill = -1, 0
 
@@ -134,6 +142,7 @@ ProfessionMaster.fetch_recipes = function(profession)
                                 item              = item,
                                 found_best_source = false,
                                 best_source       = best_material_source,
+                                best_profession   = nil,
                                 vendor_price      = profession.list.items[item_id].vendor_purchase_price,
                                 auction_price     = auction_price,
                                 auction_fetch_at  = time(),
@@ -172,11 +181,12 @@ ProfessionMaster.fetch_recipes = function(profession)
                         }
                     end
 
-                    local price = ProfessionMaster.fetch_recipe_product_price(profession, recipe)
+                    local price, best_profession = ProfessionMaster.fetch_recipe_product_price(recipe)
 
                     if price < PM.items[item_id].price then
-                        PM.items[item_id].best_source = recipe
-                        PM.items[item_id].price       = price
+                        PM.items[item_id].best_source     = recipe
+                        PM.items[item_id].price           = price
+                        PM.items[item_id].best_profession = best_profession
                     end
                 end
             end
@@ -200,19 +210,21 @@ end
 
 ProfessionMaster.print_best_recipe = function(profession, skill)
     ProfessionMaster.print("Best recipe for " .. profession.name .. " at current level (" .. skill .. "):")
-    ProfessionMaster.print_recipe(profession, profession.best_recipes[skill], nil, skill)
-    ProfessionMaster.print("Recipe source: " .. ProfessionMaster.color_source(profession.best_recipes[skill]))
-    ProfessionMaster.print("Average amount of crafts needed per skill up: " .. (1 / ProfessionMaster.get_skill_up_chance(profession.best_recipes[skill], skill)))
-    ProfessionMaster.print("Required materials per craft:")
+    ProfessionMaster.print_recipe(profession.best_recipes[skill], nil, skill)
+    if profession.best_recipes[skill] then
+        ProfessionMaster.print("Recipe source: " .. ProfessionMaster.color_source(profession.best_recipes[skill]))
+        ProfessionMaster.print("Average amount of crafts needed per skill up: " .. (1 / ProfessionMaster.get_skill_up_chance(profession.best_recipes[skill], skill)))
+        ProfessionMaster.print("Required materials per craft:")
 
-    for _,material in ipairs(profession.best_recipes[skill].materials) do
-        ProfessionMaster.print_material(profession, material)
+        for _,material in ipairs(profession.best_recipes[skill].materials) do
+            ProfessionMaster.print_material(profession, material)
+        end
     end
 end
 
--- todo: consider every profession learned by this character
-ProfessionMaster.fetch_recipe_price = function(profession, recipe)
-    local price = 0
+-- todo: option to only check source recipes which you have already learnt
+ProfessionMaster.fetch_recipe_price = function(recipe)
+    local price, best_profession = 0, nil
 
     for _, material in ipairs(recipe.materials) do
         if PM.items[material.item_id] == nil then
@@ -222,41 +234,56 @@ ProfessionMaster.fetch_recipe_price = function(profession, recipe)
                 local current_price = PM.items[material.item_id].price
                 local best_recipe   = nil
 
-                if profession.list.recipes[material.item_id] ~= nil then
-                    for _, material_recipe in ipairs(profession.list.recipes[material.item_id]) do
-                        local recipe_price = ProfessionMaster.fetch_recipe_product_price(profession, material_recipe)
+                for _, profession in pairs(ProfessionMaster.professions) do
+                    local has_profession = false
 
-                        if current_price == 0 or recipe_price < current_price then
-                            best_recipe   = material_recipe
-                            current_price = recipe_price
+                    for index = 1, GetNumSkillLines() do
+                        local name, _, _, level = GetSkillLineInfo(index)
+                        if name == profession.name then
+                            has_profession = true
+                            break
+                        end
+                    end
+
+                    if has_profession then
+                        if profession.list and profession.list.recipes and profession.list.recipes[material.item_id] then
+                            for _, material_recipe in ipairs(profession.list.recipes[material.item_id]) do
+                                local recipe_price = ProfessionMaster.fetch_recipe_product_price(material_recipe)
+
+                                if current_price == 0 or recipe_price < current_price then
+                                    best_recipe     = material_recipe
+                                    current_price   = recipe_price
+                                    best_profession = profession
+                                end
+                            end
                         end
                     end
                 end
-
-                PM.items[material.item_id].found_best_source = true
                 
+                PM.items[material.item_id].found_best_source = true
+                    
                 if best_recipe ~= nil then
-                    PM.items[material.item_id].best_source = best_recipe
-                    PM.items[material.item_id].price       = current_price
+                    PM.items[material.item_id].best_source     = best_recipe
+                    PM.items[material.item_id].best_profession = best_profession
+                    PM.items[material.item_id].price           = current_price
                 end
             end
 
             price = price + (PM.items[material.item_id].price * material.amount)
         end
     end
-
-    return price
+    return price, best_profession
 end
 
-ProfessionMaster.fetch_recipe_product_price = function(profession, recipe)
-    local price_per_craft  = ProfessionMaster.fetch_recipe_price(profession, recipe)
+ProfessionMaster.fetch_recipe_product_price = function(recipe)
+    local price_per_craft, best_profession = ProfessionMaster.fetch_recipe_price(recipe)
     local average_products = (recipe.min_product + recipe.max_product) / 2
 
-    return price_per_craft / average_products
+    return price_per_craft / average_products, best_profession
 end
 
-ProfessionMaster.fetch_recipe_price_per_skill_up = function(profession, recipe, level)
-    return ProfessionMaster.fetch_recipe_price(profession, recipe) / ProfessionMaster.get_skill_up_chance(recipe, level)
+ProfessionMaster.fetch_recipe_price_per_skill_up = function(recipe, level)
+    return ProfessionMaster.fetch_recipe_price(recipe) / ProfessionMaster.get_skill_up_chance(recipe, level)
 end
 
 ProfessionMaster.get_best_recipe = function(profession, level)
@@ -273,7 +300,7 @@ ProfessionMaster.get_best_recipe = function(profession, level)
     for _, v in pairs(profession.list.recipes) do
         for _, recipe in ipairs(v) do
             if recipe.levels[1] <= level and recipe.levels[3] > level then
-                local average_price = ProfessionMaster.fetch_recipe_price_per_skill_up(profession, recipe, level)
+                local average_price = ProfessionMaster.fetch_recipe_price_per_skill_up(recipe, level)
 
                 if best_recipe == nil or best_recipe_price == 0 or average_price < best_recipe_price then
                     best_recipe       = recipe
@@ -286,7 +313,7 @@ ProfessionMaster.get_best_recipe = function(profession, level)
 
     if verbose then
         if best_recipe ~= nil then
-            ProfessionMaster.print_recipe(profession, best_recipe, "Best recipe for level " .. level .. ":", level)
+            ProfessionMaster.print_recipe(best_recipe, "Best recipe for level " .. level .. ":", level)
         else
             ProfessionMaster.print("|cFFFF0000No recipe found for level " .. level .. ".|r")
         end

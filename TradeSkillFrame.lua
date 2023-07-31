@@ -156,6 +156,13 @@ ProfessionMaster.list_reagents = function(recipe)
 end
 
 ProfessionMaster.update_profession_frames = function()
+    ProfessionMaster.enqueue({
+        condition = function() return ProfessionMaster.professions[GetTradeSkillLine():gsub('%s+', ''):lower()] ~= nil end,
+        execute = ProfessionMaster.update_profession_frames,
+        allow_skipping = true,
+        forbid_same_tick = true
+    }, true)
+
     if not ProfessionMaster.profession_frame or not TradeSkillFrame then return end
 
     local profession_name, current_level, max_level = GetTradeSkillLine()
@@ -178,19 +185,12 @@ ProfessionMaster.update_profession_frames = function()
     frame.profession_level:SetText("|cFFFFFFFF" .. ProfessionMaster.check_for_levelups(profession))
     
     frame.best_recipe:SetText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
-    frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(profession, best_recipe)) or "|cFFFF0000unknown"))
-    frame.best_recipe_price_per_skill_up:SetText("|cFFFFFFFFAverage price per skill up: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price_per_skill_up(profession, best_recipe, current_level)) or "|cFFFF0000unknown"))
+    frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
+    frame.best_recipe_price_per_skill_up:SetText("|cFFFFFFFFAverage price per skill up: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price_per_skill_up(best_recipe, current_level)) or "|cFFFF0000unknown"))
     frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per skill up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(best_recipe, current_level)) or "|cFFFF0000unknown")
     frame.best_recipe_fetched_at:SetText("|cFFFFFFFFRecipe last fetched: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
 
     frame.reagents_list:SetText(ProfessionMaster.list_reagents(best_recipe))
-
-    ProfessionMaster.enqueue({
-        condition = function() return ProfessionMaster.professions[GetTradeSkillLine():gsub('%s+', ''):lower()] ~= nil end,
-        execute = ProfessionMaster.update_profession_frames,
-        allow_skipping = true,
-        forbid_same_tick = true
-    }, true)
 end
 
 ProfessionMaster.trade_skill_frames_initializer = function()

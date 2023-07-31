@@ -26,6 +26,7 @@ Encoding.lua
 Synchronization.lua
 Queue.lua
 Tooltip.lua
+Item.lua
 Command.lua
 Frames.lua
 TradeSkillFrame.lua
