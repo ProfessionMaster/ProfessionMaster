@@ -8,13 +8,16 @@ ProfessionMaster.get_item_professions = function(item_id)
     local professions = { }
 
     for _, profession in pairs(ProfessionMaster.professions) do
+        local inserted = false
+
         if profession.flags.crafting then
             if profession.list ~= nil and profession.list.items ~= nil and profession.list.items[item_id] ~= nil then
                 table.insert(professions, profession)
+                inserted = true
             end
         end
         
-        if profession.flags.gathering then
+        if profession.flags.gathering and not inserted then
             if profession.list ~= nil then
                 for _, node in pairs(profession.list.nodes) do
                     if node.items[item_id] ~= nil then
@@ -71,14 +74,9 @@ ProfessionMaster.setup_tooltip = function(tooltip)
                         has_uses = true
                     end
 
-                    tooltip:AddDoubleLine("|T" .. profession.texture .. ":12|t |cFFFFFFFF" .. profession.name, "|cFFFFFFFF" .. recipe_count .. " recipes")
+                    tooltip:AddDoubleLine("|T" .. profession.texture .. ":13|t |cFFFFFFFF" .. profession.name, "|cFFFFFFFF" .. recipe_count .. " recipes")
                 end
             end
-        end
-
-        if has_uses then
-            -- todo
-            --tooltip:AddLine("Ctrl + Right Click |cFFFFFFFFto see all recipes")
         end
 
         local best_source = "|cFFFF0000Unknown"
@@ -93,7 +91,7 @@ ProfessionMaster.setup_tooltip = function(tooltip)
                     best_soure = "Vendor"
                 else
                     if PM.items[item_id].best_profession then
-                        best_source = "|T" .. PM.items[item_id].best_profession.texture .. ":12|t |cFFFFFFFF" .. PM.items[item_id].best_source.name
+                        best_source = "|T" .. PM.items[item_id].best_profession.texture .. ":13|t |cFFFFFFFF" .. PM.items[item_id].best_source.name
                     else
                         best_source = "|cFFFFFFFF" .. PM.items[item_id].best_source.name
                     end
@@ -106,6 +104,11 @@ ProfessionMaster.setup_tooltip = function(tooltip)
         tooltip:AddLine(" ")
 
         if best_price ~= -1 then tooltip:AddDoubleLine("|cFFFFFFFFBest price:", ProfessionMaster.format_price(best_price) .. " |cFFFFFFFF(" .. best_source .. "|cFFFFFFFF)") end
+
+        if has_uses then
+            tooltip:AddLine(" ")
+            tooltip:AddLine("Ctrl + Right Click |cFFFFFFFFto see more details")
+        end
 
         tooltip:AddLine(" ")
     end

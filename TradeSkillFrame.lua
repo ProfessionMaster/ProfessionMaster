@@ -44,29 +44,25 @@ ProfessionMaster.init_profession_frames = function()
         frame.best_recipe_price_per_craft:SetJustifyH("LEFT")
         frame.best_recipe_price_per_craft:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -84)
 
-        frame.best_recipe_price_per_skill_up = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.best_recipe_price_per_skill_up:SetText("")
-        frame.best_recipe_price_per_skill_up:SetJustifyH("LEFT")
-        frame.best_recipe_price_per_skill_up:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -98)
-
         frame.best_recipe_crafts_per_level = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe_crafts_per_level:SetText("")
         frame.best_recipe_crafts_per_level:SetJustifyH("LEFT")
-        frame.best_recipe_crafts_per_level:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -112)
+        frame.best_recipe_crafts_per_level:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -98)
 
         frame.best_recipe_fetched_at = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.best_recipe_fetched_at:SetText("")
         frame.best_recipe_fetched_at:SetJustifyH("LEFT")
-        frame.best_recipe_fetched_at:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -126)
+        frame.best_recipe_fetched_at:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -112)
 
         frame.reagents = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.reagents:SetText("Best reagent sources:")
-        frame.reagents:SetPoint("TOP", frame, "TOP", 0, -142)
+        frame.reagents:SetText("Reagents:")
+        frame.reagents:SetPoint("TOP", frame, "TOP", 0, -128)
 
         frame.reagents_list = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.reagents_list:SetText("")
         frame.reagents_list:SetJustifyH("LEFT")
-        frame.reagents_list:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -156)
+        frame.reagents_list:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -142)
+        frame.reagents_list:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -16, -142)
 
         ProfessionMaster.profession_frame = frame
 
@@ -133,23 +129,19 @@ ProfessionMaster.list_reagents = function(recipe)
 
     for _, material in ipairs(recipe.materials) do
         local _, link = GetItemInfo(material.item_id)
-        reagents = reagents .. material.amount .. "x " .. (link or PM.items[material.item_id].name or "|cFFFF0000unknown|r") .. ": "
-        if not PM.items[material.item_id] or not PM.items[material.item_id].found_best_source then
-            reagents = reagents .. "|cFFFF0000unknown|r\n"
-        else
-            local source = ""
-            
-            if type(PM.items[material.item_id].best_source) == "string" then
-                source = "|cFF00FF00" .. PM.items[material.item_id].best_source
+        reagents = reagents .. material.amount .. "x " .. (link or PM.items[material.item_id].name or "|cFFFF0000unknown") .. " |r|cFFFFFFFF- "
+
+        local count = GetItemCount(material.item_id, true)
+        local craftable = ProfessionMaster.get_number_of_possible_crafts(material.item_id)
+        if count < material.amount then
+            if count + craftable < material.amount then
+                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF - can make: |r|cFFFF0000" .. craftable
             else
-                source = "|cFFFFFF00" .. PM.items[material.item_id].best_source.name
+                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF - can make: |r|cFF00FF00" .. craftable
             end
-
-            local count = GetItemCount(material.item_id, true)
-            if count < material.amount then count = "|cFFFF0000" .. count .. "|cFFFFFFFF" end
-
-            reagents = reagents .. source .. " |cFFFFFFFF(have: " .. count .. ")|r\n"
         end
+
+        reagents = reagents .. "have: |r|cFF00FF00" .. count .. "|r\n"
     end
 
     return reagents
@@ -185,10 +177,9 @@ ProfessionMaster.update_profession_frames = function()
     frame.profession_level:SetText("|cFFFFFFFF" .. ProfessionMaster.check_for_levelups(profession))
     
     frame.best_recipe:SetText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
-    frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
-    frame.best_recipe_price_per_skill_up:SetText("|cFFFFFFFFAverage price per skill up: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price_per_skill_up(best_recipe, current_level)) or "|cFFFF0000unknown"))
-    frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per skill up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(best_recipe, current_level)) or "|cFFFF0000unknown")
-    frame.best_recipe_fetched_at:SetText("|cFFFFFFFFRecipe last fetched: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
+    frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice per craft: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
+    frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per level up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(best_recipe, current_level) or "|cFFFF0000unknown"))
+    frame.best_recipe_fetched_at:SetText("|cFFFFFFFFLast updated: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
 
     frame.reagents_list:SetText(ProfessionMaster.list_reagents(best_recipe))
 end

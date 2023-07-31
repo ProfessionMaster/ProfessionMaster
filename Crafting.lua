@@ -272,7 +272,41 @@ ProfessionMaster.fetch_recipe_price = function(recipe)
             price = price + (PM.items[material.item_id].price * material.amount)
         end
     end
+
     return price, best_profession
+end
+
+-- todo: only check recipes you have already learnt
+ProfessionMaster.fetch_best_recipe_for_item = function(item_id)
+    local best_recipe = nil
+    local current_price = 0
+
+    for _, profession in pairs(ProfessionMaster.professions) do
+        local has_profession = false
+
+        for index = 1, GetNumSkillLines() do
+            local name, _, _, level = GetSkillLineInfo(index)
+            if name == profession.name then
+                has_profession = true
+                break
+            end
+        end
+
+        if has_profession then
+            if profession.list and profession.list.recipes and profession.list.recipes[item_id] then
+                for _, recipe in ipairs(profession.list.recipes[item_id]) do
+                    local recipe_price = ProfessionMaster.fetch_recipe_product_price(recipe)
+
+                    if current_price == 0 or recipe_price < current_price then
+                        best_recipe     = recipe
+                        current_price   = recipe_price
+                    end
+                end
+            end
+        end
+    end
+
+    return best_recipe
 end
 
 ProfessionMaster.fetch_recipe_product_price = function(recipe)
@@ -287,7 +321,7 @@ ProfessionMaster.fetch_recipe_price_per_skill_up = function(recipe, level)
 end
 
 ProfessionMaster.get_best_recipe = function(profession, level)
-    if profession == nil then
+    if not profession or not profession.list or not profession.list.recipes then
         return
     end
 
@@ -338,6 +372,26 @@ ProfessionMaster.process_ah_price = function(args)
         PM.items[args[1]].best_source = "auction house"
         PM.items[args[1]].found_best_source = true -- for now
     end
+end
+
+ProfessionMaster.get_number_of_possible_crafts = function(item_id)
+    local possible_crafts = -1
+    local recipe = ProfessionMaster.fetch_best_recipe_for_item(item_id)
+
+    if not recipe then return 0 end
+
+    for _, material in ipairs(recipe.materials) do
+        local item_count = GetItemCount(material.item_id, true) + ProfessionMaster.get_number_of_possible_crafts(material.item_id)
+        local possible_crafts_this_material = math.floor(item_count / material.amount)
+
+        if possible_crafts_this_material == 0 then return 0 end
+
+        if possible_crafts == -1 or possible_crafts_this_material < possible_crafts then
+            possible_crafts = possible_crafts_this_material
+        end
+    end
+
+    return possible_crafts
 end
 
 ProfessionMaster.operations = ProfessionMaster.operations or { }

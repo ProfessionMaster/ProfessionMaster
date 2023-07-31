@@ -1,7 +1,7 @@
 ## Interface: 30402
 ## Title: ProfessionMaster
 ## Author: Bryan Morabito
-## Version: 0.1.6b
+## Version: 0.2.0b
 ## Notes: Profession Leveling, Completionism, and Gold-Making utility
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMGuides
@@ -26,7 +26,7 @@ Encoding.lua
 Synchronization.lua
 Queue.lua
 Tooltip.lua
-Item.lua
+ItemFrame.lua
 Command.lua
 Frames.lua
 TradeSkillFrame.lua
