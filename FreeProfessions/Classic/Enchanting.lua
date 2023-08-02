@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_enchanting"] = {
+    id = "9b7a5e7f-7917-44f7-b207-08d8b33d92ba",
+    revision = 1,
+    name = "ProfessionMaster Enchanting Classic (base)",
     items = {
         [3371] = {
             name = "Empty Vial",

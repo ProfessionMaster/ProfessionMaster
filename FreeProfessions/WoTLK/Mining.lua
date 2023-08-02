@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_mining"] = {
+    id = "ea9973f8-6902-4a75-b779-675f2d8ecec4",
+    revision = 1,
+    name = "ProfessionMaster Mining WotLK (base)",
     mandatory_tools = {
         [2901] = {
             name = "Mining Pick",

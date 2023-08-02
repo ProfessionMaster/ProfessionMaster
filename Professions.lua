@@ -167,3 +167,32 @@ ProfessionMaster.professions = {
         }
     }
 }
+
+ProfessionMaster.latest_guide_revisions = {
+    ["5e23e49c-adb5-4acd-90a8-5b293fea20c4"] = 1,
+    ["723673f1-accb-4bf8-93aa-47608a8fadd0"] = 1,
+    ["9b7a5e7f-7917-44f7-b207-08d8b33d92ba"] = 1,
+    ["4d08697c-70a1-494e-8e42-175d9a825087"] = 1,
+    ["261b5834-e463-4c3b-a0af-5798f41bf527"] = 1,
+    ["8f5d0328-83b0-46b5-a50d-b04e6f828521"] = 1,
+    ["fcc1de0d-1d52-46fb-8b98-fa428f3e4c27"] = 1,
+    ["c4d67d10-a473-4106-a435-8cb04be516a9"] = 1,
+    ["f504416a-3678-469f-9987-31f0ee71d6d4"] = 1,
+    ["6a06c418-89dc-45ae-9795-d5b6d557b995"] = 1,
+    ["68c78b4d-f0f0-47d1-8a6a-fa8a0bddb46e"] = 1,
+    ["2c26a56e-0751-4f58-8170-1dec744f680d"] = 1,
+    ["a21bd039-0ce8-42cf-97c9-5fcfcfddc70e"] = 1,
+    ["5a4d9ca1-480e-4b07-bd56-94007dc6fff5"] = 1,
+    ["ea9973f8-6902-4a75-b779-675f2d8ecec4"] = 1,
+    ["d45c3013-c3f0-478b-9ca0-644f6be3f3b6"] = 1
+}
+
+ProfessionMaster.check_for_guide_updates = function()
+    for _, profession in pairs(ProfessionMaster.professions) do
+        if ProfessionMaster.latest_guide_revisions[profession.list.id] then
+            if ProfessionMaster.latest_guide_revisions[profession.list.id] > profession.list.revision then
+                ProfessionMaster.print("Your guide for |cFFFF8000" .. profession.list.name .. "|r is out of date.")
+            end
+        end
+    end
+end

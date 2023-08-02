@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_inscription"] = {
+    id = "2c26a56e-0751-4f58-8170-1dec744f680d",
+    revision = 1,
+    name = "ProfessionMaster Inscription WotLK (base)",
     items = {
         [39151] = {
             name = "Alabaster Pigment",

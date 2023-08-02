@@ -7,6 +7,9 @@
 -- This file has been automatically generated, and should not be modified directly.
 --
 _G["PM_FREE_engineering"] = {
+    id = "4d08697c-70a1-494e-8e42-175d9a825087",
+    revision = 1,
+    name = "ProfessionMaster Engineering Classic (base)",
     racial_bonuses = {
         ["Gnome"] = 15
     },

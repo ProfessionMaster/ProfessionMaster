@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_alchemy"] = {
+    id = "5e23e49c-adb5-4acd-90a8-5b293fea20c4",
+    revision = 1,
+    name = "ProfessionMaster Alchemy Classic (base)",
     items = {
         [765] = {
             name = "Silverleaf",

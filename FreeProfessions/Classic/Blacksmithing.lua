@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_blacksmithing"] = {
+    id = "723673f1-accb-4bf8-93aa-47608a8fadd0",
+    revision = 1,
+    name = "ProfessionMaster Blacksmithing Classic (base)",
     items = {
         [774] = {
             name = "Malachite",

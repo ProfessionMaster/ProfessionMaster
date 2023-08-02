@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_leatherworking"] = {
+    id = "261b5834-e463-4c3b-a0af-5798f41bf527",
+    revision = 1,
+    name = "ProfessionMaster Leatherworking Classic (base)",
     items = {
         [783] = {
             name = "Light Hide",

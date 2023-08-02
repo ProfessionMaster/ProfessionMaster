@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_tailoring"] = {
+    id = "d45c3013-c3f0-478b-9ca0-644f6be3f3b6",
+    revision = 1,
+    name = "ProfessionMaster Tailoring WotLK (base)",
     items = {
         [2318] = {
             name = "Light Leather",

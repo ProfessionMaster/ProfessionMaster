@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_jewelcrafting"] = {
+    id = "a21bd039-0ce8-42cf-97c9-5fcfcfddc70e",
+    revision = 1,
+    name = "ProfessionMaster Jewelcrafting WotLK (base)",
     racial_bonuses = {
         ["Draenei"] = 5
     },

@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_mining"] = {
+    id = "8f5d0328-83b0-46b5-a50d-b04e6f828521",
+    revision = 1,
+    name = "ProfessionMaster Mining Classic (base)",
     mandatory_tools = {
         [2901] = {
             name = "Mining Pick",

@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_engineering"] = {
+    id = "68c78b4d-f0f0-47d1-8a6a-fa8a0bddb46e",
+    revision = 1,
+    name = "ProfessionMaster Engineering WotLK (base)",
     racial_bonuses = {
         ["Gnome"] = 15
     },

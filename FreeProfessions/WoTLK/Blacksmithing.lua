@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_blacksmithing"] = {
+    id = "f504416a-3678-469f-9987-31f0ee71d6d4",
+    revision = 1,
+    name = "ProfessionMaster Blacksmithing WotLK (base)",
     items = {
         [774] = {
             name = "Malachite",

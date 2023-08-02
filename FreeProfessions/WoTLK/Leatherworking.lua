@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_leatherworking"] = {
+    id = "5a4d9ca1-480e-4b07-bd56-94007dc6fff5",
+    revision = 1,
+    name = "ProfessionMaster Leatherworking WotLK (base)",
     items = {
         [783] = {
             name = "Light Hide",

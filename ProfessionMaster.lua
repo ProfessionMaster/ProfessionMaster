@@ -115,6 +115,8 @@ ProfessionMaster.init = function()
     ProfessionMaster.chat_initializer()
     ProfessionMaster.command_initializer()
     ProfessionMaster.item_initializer()
+    
+    ProfessionMaster.check_for_guide_updates()
 end
 
 ProfessionMaster.init()

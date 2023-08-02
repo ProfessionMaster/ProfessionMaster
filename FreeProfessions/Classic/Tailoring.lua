@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_tailoring"] = {
+    id = "fcc1de0d-1d52-46fb-8b98-fa428f3e4c27",
+    revision = 1,
+    name = "ProfessionMaster Tailoring Classic (base)",
     items = {
         [2318] = {
             name = "Light Leather",

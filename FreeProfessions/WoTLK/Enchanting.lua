@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_enchanting"] = {
+    id = "6a06c418-89dc-45ae-9795-d5b6d557b995",
+    revision = 1,
+    name = "ProfessionMaster Enchanting WotLK (base)",
     racial_bonuses = {
         ["BloodElf"] = 10
     },
