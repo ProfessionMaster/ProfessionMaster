@@ -101,10 +101,10 @@ ProfessionMaster.check_for_levelups = function(profession)
     end
 
     if skill_level + 25 >= skill_max_level and UnitLevel("player") >= min_levels[skill_max_level / 75 + 1] then
-        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " - Can train " .. ProfessionMaster.profession_level_names[skill_max_level / 75 + 1] .. "!"
+        return "Current level: " .. skill_level .. " / " .. skill_max_level .. " - Can train " .. ProfessionMaster.profession_level_names[math.floor(skill_max_level / 75) + 1] .. "!"
     end
 
-    return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[skill_max_level / 75] .. ")"
+    return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[math.floor(skill_max_level / 75)] .. ")"
 end
 
 ProfessionMaster.init = function()
