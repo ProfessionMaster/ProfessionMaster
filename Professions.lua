@@ -189,7 +189,7 @@ ProfessionMaster.latest_guide_revisions = {
 
 ProfessionMaster.check_for_guide_updates = function()
     for _, profession in pairs(ProfessionMaster.professions) do
-        if ProfessionMaster.latest_guide_revisions[profession.list.id] then
+        if profession.list and ProfessionMaster.latest_guide_revisions[profession.list.id] then
             if ProfessionMaster.latest_guide_revisions[profession.list.id] > profession.list.revision then
                 ProfessionMaster.print("Your guide for |cFFFF8000" .. profession.list.name .. "|r is out of date.")
             end

@@ -10,7 +10,7 @@ end
 
 ProfessionMaster.init_profession_frames = function()
     if not ProfessionMaster.profession_frame and TradeSkillFrame then
-        local frame = CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame, "ButtonFrameTemplate")
+        local frame = ProfessionMaster.UILib.CreateFrame("Frame", "ProfessionMasterProfessionFrame", TradeSkillFrame, "ButtonFrameTemplate", 70, 16, 16, 16)
 
         frame:SetPoint("TOPLEFT", TradeSkillFrame, "TOPRIGHT", 0, -13)
         frame:SetPoint("BOTTOMLEFT", TradeSkillFrame, "BOTTOMRIGHT", 0, 72)
@@ -34,35 +34,13 @@ ProfessionMaster.init_profession_frames = function()
         frame.profession_level:SetText("")
         frame.profession_level:SetPoint("TOP", frame, "TOP", 16, -44)
 
-        frame.best_recipe = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.best_recipe:SetText("")
-        frame.best_recipe:SetJustifyH("LEFT")
-        frame.best_recipe:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -70)
+        frame.best_recipe = frame:AddText("", 1, 0)
+        frame.best_recipe_price_per_craft = frame:AddText("", 1, 0)
+        frame.best_recipe_crafts_per_level = frame:AddText("", 1, 0)
+        frame.best_recipe_fetched_at = frame:AddText("", 1, 0)
 
-        frame.best_recipe_price_per_craft = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.best_recipe_price_per_craft:SetText("")
-        frame.best_recipe_price_per_craft:SetJustifyH("LEFT")
-        frame.best_recipe_price_per_craft:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -84)
-
-        frame.best_recipe_crafts_per_level = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.best_recipe_crafts_per_level:SetText("")
-        frame.best_recipe_crafts_per_level:SetJustifyH("LEFT")
-        frame.best_recipe_crafts_per_level:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -98)
-
-        frame.best_recipe_fetched_at = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.best_recipe_fetched_at:SetText("")
-        frame.best_recipe_fetched_at:SetJustifyH("LEFT")
-        frame.best_recipe_fetched_at:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -112)
-
-        frame.reagents = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.reagents:SetText("Reagents:")
-        frame.reagents:SetPoint("TOP", frame, "TOP", 0, -128)
-
-        frame.reagents_list = frame:CreateFontString(nil, nil, "GameFontNormal")
-        frame.reagents_list:SetText("")
-        frame.reagents_list:SetJustifyH("LEFT")
-        frame.reagents_list:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -142)
-        frame.reagents_list:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -16, -142)
+        frame.reagents = frame:AddText("Reagents:", 4, 0, 1)
+        frame.reagents_list = frame:AddFrame("Frame", nil, nil, 1, 0)
 
         ProfessionMaster.profession_frame = frame
 
@@ -123,25 +101,27 @@ end
 
 -- todo: consider every profession learned by this character
 ProfessionMaster.list_reagents = function(recipe)
-    if not recipe then return "" end
+    if not recipe then return { } end
 
-    local reagents = ""
+    local reagents = { }
 
     for _, material in ipairs(recipe.materials) do
         local _, link = GetItemInfo(material.item_id)
-        reagents = reagents .. material.amount .. "x " .. (link or PM.items[material.item_id].name or "|cFFFF0000unknown") .. " |r|cFFFFFFFF- "
+        reagent = material.amount .. "x " .. (link or PM.items[material.item_id].name or "|cFFFF0000unknown") .. " |r|cFFFFFFFF- "
 
         local count = GetItemCount(material.item_id, true)
         local craftable = ProfessionMaster.get_number_of_possible_crafts(material.item_id)
         if count < material.amount then
             if count + craftable < material.amount then
-                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF - can make: |r|cFFFF0000" .. craftable
+                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF (can make: |r|cFFFF0000" .. craftable .. "|r|cFFFFFFFF)"
             else
-                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF - can make: |r|cFF00FF00" .. craftable
+                count = "|r|cFFFF0000" .. count .. "|r|cFFFFFFFF (can make: |r|cFF00FF00" .. craftable .. "|r|cFFFFFFFF)"
             end
         end
 
-        reagents = reagents .. "have: |r|cFF00FF00" .. count .. "|r\n"
+        reagent = reagent .. "have: |r|cFF00FF00" .. count .. "|r"
+
+        table.insert(reagents, reagent)
     end
 
     return reagents
@@ -176,12 +156,15 @@ ProfessionMaster.update_profession_frames = function()
     frame.profession_title:SetText(profession_name)
     frame.profession_level:SetText("|cFFFFFFFF" .. ProfessionMaster.check_for_levelups(profession))
     
-    frame.best_recipe:SetText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
-    frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice per craft: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
-    frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per level up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(profession, best_recipe, current_level) or "|cFFFF0000unknown"))
-    frame.best_recipe_fetched_at:SetText("|cFFFFFFFFLast updated: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
+    frame.best_recipe:UpdateText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
+    frame.best_recipe_price_per_craft:UpdateText("|cFFFFFFFFPrice per craft: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
+    frame.best_recipe_crafts_per_level:UpdateText("|cFFFFFFFFAverage crafts per level up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(profession, best_recipe, current_level) or "|cFFFF0000unknown"))
+    frame.best_recipe_fetched_at:UpdateText("|cFFFFFFFFLast updated: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
 
-    frame.reagents_list:SetText(ProfessionMaster.list_reagents(best_recipe))
+    frame.reagents_list:DeleteAllText()
+    for _, reagent in ipairs(ProfessionMaster.list_reagents(best_recipe)) do
+        frame.reagents_list:AddText(reagent, 1, 0)
+    end
 end
 
 ProfessionMaster.trade_skill_frames_initializer = function()

@@ -12,6 +12,7 @@ ProfessionMaster.create_item_frame = function()
 
         frame:SetPoint("CENTER")
         frame:SetWidth(320)
+        frame:SetFrameStrata("HIGH")
 
         frame.title = frame:CreateFontString(nil, nil, "GameFontNormal")
         frame.title:SetText("|cFFFFFFFFProfessionMaster")

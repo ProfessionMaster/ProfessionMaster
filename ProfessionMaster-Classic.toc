@@ -19,6 +19,7 @@ FreeProfessions/Classic/Leatherworking.lua
 FreeProfessions/Classic/Tailoring.lua
 FreeProfessions/Classic/Mining.lua
 
+UILib.lua
 Professions.lua
 Encoding.lua
 Synchronization.lua

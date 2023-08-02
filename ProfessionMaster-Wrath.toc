@@ -21,6 +21,7 @@ FreeProfessions/WoTLK/Leatherworking.lua
 FreeProfessions/WoTLK/Tailoring.lua
 FreeProfessions/WoTLK/Mining.lua
 
+UILib.lua
 Professions.lua
 Encoding.lua
 Synchronization.lua
