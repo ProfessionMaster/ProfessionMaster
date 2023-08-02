@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_engineering"] = {
+    racial_bonuses = {
+        ["Gnome"] = 15
+    },
     items = {
         [774] = {
             name = "Malachite",

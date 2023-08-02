@@ -6,8 +6,10 @@
 -- Do not edit!
 -- This file has been automatically generated, and should not be modified directly.
 --
-
 _G["PM_FREE_engineering"] = {
+    racial_bonuses = {
+        ["Gnome"] = 15
+    },
     items = {
         [774] = {
             name = "Malachite",

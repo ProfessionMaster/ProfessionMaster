@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_enchanting"] = {
+    racial_bonuses = {
+        ["BloodElf"] = 10
+    },
     items = {
         [3371] = {
             name = "Empty Vial",

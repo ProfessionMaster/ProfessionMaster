@@ -178,7 +178,7 @@ ProfessionMaster.update_profession_frames = function()
     
     frame.best_recipe:SetText("|cFFFFFFFFBest recipe for this level: |r" .. (best_recipe and GetSpellLink(best_recipe.spell_id) or "|cFFFF0000unknown |cFFFFFFFF(scan auction house!)"))
     frame.best_recipe_price_per_craft:SetText("|cFFFFFFFFPrice per craft: " .. (best_recipe and ProfessionMaster.format_price(ProfessionMaster.fetch_recipe_price(best_recipe)) or "|cFFFF0000unknown"))
-    frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per level up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(best_recipe, current_level) or "|cFFFF0000unknown"))
+    frame.best_recipe_crafts_per_level:SetText("|cFFFFFFFFAverage crafts per level up: " .. (best_recipe and ProfessionMaster.get_skill_up_chance(profession, best_recipe, current_level) or "|cFFFF0000unknown"))
     frame.best_recipe_fetched_at:SetText("|cFFFFFFFFLast updated: " .. ProfessionMaster.format_timestamp(ProfessionMaster.get_fetch_timestamp(best_recipe)))
 
     frame.reagents_list:SetText(ProfessionMaster.list_reagents(best_recipe))

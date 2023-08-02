@@ -8,6 +8,9 @@
 --
 
 _G["PM_FREE_jewelcrafting"] = {
+    racial_bonuses = {
+        ["Draenei"] = 5
+    },
     items = {
         [774] = {
             name = "Malachite",
