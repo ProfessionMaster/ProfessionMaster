@@ -77,7 +77,7 @@ ProfessionMaster.auction_house_is_ready = function()
 end
 
 ProfessionMaster.fetch_recipes = function(profession)
-    if profession == nil then
+    if profession == nil or profession.list == nil then
         ProfessionMaster.print("This profession does not exist!")
         return
     end
