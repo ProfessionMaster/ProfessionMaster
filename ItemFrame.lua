@@ -112,7 +112,11 @@ ProfessionMaster.get_item_sources = function(item_id)
     return recipes, nodes
 end
 
-ProfessionMaster.update_item_frame = function(item_id)
+ProfessionMaster.update_item_frame = function(item_id, is_node)
+    if is_node then
+        return -- todo!
+    end
+
     if not ProfessionMaster.item_frame then
         ProfessionMaster.create_item_frame()
     end
@@ -155,7 +159,15 @@ ProfessionMaster.update_item_frame = function(item_id)
                             frame.content:AddText("|T" .. profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession) .. profession.name, 6, 0)
                         end
 
-                        frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession)) .. recipe.name .. "|r", 1, 0)
+                        local text = frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession)) .. recipe.name .. "|r", 1, 0)
+
+                        text:OnClick(function()
+                            if recipe.product_id then ProfessionMaster.update_item_frame(recipe.product_id) end
+                        end)
+
+                        text:AddTooltip(function()
+                            ProfessionMaster.set_recipe_tooltip(recipe)
+                        end)
                     end
                 end
             end
@@ -171,7 +183,15 @@ ProfessionMaster.update_item_frame = function(item_id)
             frame.content:AddText("|T" .. profession_recipes.profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession_recipes.profession) .. profession_recipes.profession.name, 6, 0)
 
             for _, recipe in pairs(profession_recipes.recipes) do
-                frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession_recipes.profession)) .. recipe.name .. "|r", 1, 0)
+                local text = frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession_recipes.profession)) .. recipe.name .. "|r", 1, 0)
+
+                text:OnClick(function()
+                    if recipe.product_id then ProfessionMaster.update_item_frame(recipe.product_id) end
+                end)
+
+                text:AddTooltip(function()
+                    ProfessionMaster.set_recipe_tooltip(recipe)
+                end)
             end
         end    
     end
@@ -183,7 +203,15 @@ ProfessionMaster.update_item_frame = function(item_id)
             frame.content:AddText("|T" .. profession_nodes.profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession_nodes.profession) .. profession_nodes.profession.name, 6, 0)
 
             for _, node in pairs(profession_nodes.nodes) do
-                frame.content:AddText(ProfessionMaster.get_node_colors(node, ProfessionMaster.get_profession_level(profession_nodes.profession)) .. node.name .. "|r", 1, 0)
+                local text = frame.content:AddText(ProfessionMaster.get_node_colors(node, ProfessionMaster.get_profession_level(profession_nodes.profession)) .. node.name .. "|r", 1, 0)
+
+                text:OnClick(function()
+                    if node.node_id then ProfessionMaster.update_item_frame(node.node_id, true) end
+                end)
+
+                text:AddTooltip(function()
+                    ProfessionMaster.set_node_tooltip(node)
+                end)
             end
         end
     end
@@ -194,10 +222,20 @@ end
 
 ProfessionMaster.item_initializer = function()
     hooksecurefunc("ContainerFrameItemButton_OnModifiedClick", function(self, button) 
-        if IsControlKeyDown() and button == "RightButton" and self:GetParent():GetID() <= 5 then 
-            local item_id = GetContainerItemID(self:GetParent():GetID(), self:GetID())
-            if PM.items[item_id] then
-                ProfessionMaster.update_item_frame(item_id)
+        if IsControlKeyDown() and button == "RightButton" and self:GetParent():GetID() <= 5 then
+            local item_id = 0
+
+            if select(4, GetBuildInfo()) > 30000 then
+                item_id = C_Container.GetContainerItemID(self:GetParent():GetID(), self:GetID())
+            else
+                item_id = GetContainerItemID(self:GetParent():GetID(), self:GetID())
+            end
+
+            for _, profession in pairs(ProfessionMaster.professions) do
+                if profession.list and profession.list.items and profession.list.items[item_id] then
+                    ProfessionMaster.update_item_frame(item_id)
+                    return
+                end
             end
         end 
     end)

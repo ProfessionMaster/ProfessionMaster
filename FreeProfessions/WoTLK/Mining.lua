@@ -65,6 +65,7 @@ _G["PM_FREE_mining"] = {
         [2840] = {
             [1] = {
                 name = "Smelt Copper",
+                product_id = 2840,
                 spell_id = 2657,
                 levels = { 1, 25, 70 },
                 taught_by_trainer = true,
@@ -81,32 +82,33 @@ _G["PM_FREE_mining"] = {
     nodes = {
         [1731] = {
             name = "Copper Vein",
+            node_id = 1731,
             min_level = 1,
             min_build = 0,
             levels = { 1, 25, 100 },
             items = {
                 [2770] = {
-                    odds = 1.0,
+                    odds = 1.000,
                     min = 1,
                     max = 1
                 },
                 [2835] = {
-                    odds = 0.5,
+                    odds = 0.450,
                     min = 1,
                     max = 2
                 },
                 [1210] = {
-                    odds = 0.0,
+                    odds = 0.010,
                     min = 1,
                     max = 1
                 },
                 [818] = {
-                    odds = 0.0,
+                    odds = 0.010,
                     min = 1,
                     max = 1
                 },
                 [774] = {
-                    odds = 0.0,
+                    odds = 0.009,
                     min = 1,
                     max = 1
                 }

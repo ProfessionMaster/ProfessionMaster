@@ -118,6 +118,16 @@ ProfessionMaster.check_for_levelups = function(profession)
     return "Current level: " .. skill_level .. " / " .. skill_max_level .. " (" .. ProfessionMaster.profession_level_names[math.floor(skill_max_level / 75)] .. ")"
 end
 
+ProfessionMaster.get_item_name_instant = function(item_id)
+    for _, profession in pairs(ProfessionMaster.professions) do
+        if profession.list and profession.list.items and profession.list.items[item_id] then
+            return profession.list.items[item_id].name
+        end
+    end
+
+    return ""
+end
+
 ProfessionMaster.init = function()
     ProfessionMaster.frame_initializer()
     ProfessionMaster.trade_skill_frames_initializer()

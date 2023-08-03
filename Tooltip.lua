@@ -101,8 +101,6 @@ ProfessionMaster.setup_tooltip = function(tooltip)
             best_price = PM.items[item_id].price
         end
 
-        tooltip:AddLine(" ")
-
         if best_price ~= -1 then tooltip:AddDoubleLine("|cFFFFFFFFBest price:", ProfessionMaster.format_price(best_price) .. " |cFFFFFFFF(" .. best_source .. "|cFFFFFFFF)") end
 
         if has_uses then
@@ -111,6 +109,149 @@ ProfessionMaster.setup_tooltip = function(tooltip)
         end
 
         tooltip:AddLine(" ")
+    end
+end
+
+-- todo: make this work with recipes that produce many items (i.e. only propspecting as far as I can think of right now)
+ProfessionMaster.set_recipe_tooltip = function(recipe)
+    local cached = true
+    local uncached = { }
+
+    GameTooltip:SetText(recipe.name, 1, 1, 1)
+    
+    GameTooltip:AddLine(" ")
+
+    local amount = "|cFFFFFFFF" .. recipe.min_product
+    if recipe.max_product ~= recipe.min_product then amount = amount .. " - " .. recipe.max_product end
+    amount = amount .. "x "
+    
+    local texture = select(10, GetItemInfo(recipe.product_id))
+
+    if not texture then
+        table.insert(uncached, recipe.product_id)
+
+        texture = ""
+        cached = false
+    else
+        texture = "|T" .. texture .. ":13|t "
+    end
+
+    local name = select(2, GetItemInfo(recipe.product_id))
+
+    if not name then
+        if cached then table.insert(uncached, recipe.product_id) end
+
+        name = ProfessionMaster.get_item_name_instant(recipe.product_id)
+    end
+    
+    GameTooltip:AddLine("|cFFFFFFFFCreates:")
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(amount .. texture .. name)
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("|cFFFFFFFFReagents:")
+    GameTooltip:AddLine(" ")
+
+    for _, material in ipairs(recipe.materials) do
+        cached = true
+        texture = select(10, GetItemInfo(material.item_id))
+
+        if not texture then
+            table.insert(uncached, material.item_id)
+
+            texture = ""
+            cached = false
+        else
+            texture = "|T" .. texture .. ":13|t "
+        end
+
+        name = select(2, GetItemInfo(material.item_id))
+
+        if not name then
+            if cached then table.insert(uncached, material.item_id) end
+
+            name = ProfessionMaster.get_item_name_instant(material.item_id)
+        end
+
+        GameTooltip:AddLine("|cFFFFFFFF" .. material.amount .. "x " .. texture .. name)
+    end
+
+    if #uncached > 0 then
+        local owner, anchor = GameTooltip:GetOwner(), GameTooltip:GetAnchorType()
+        ProfessionMaster.enqueue({
+            condition = function()
+                for _, item_id in ipairs(uncached) do
+                    if not select(2, GetItemInfo(item_id)) or not select(10, GetItemInfo(item_id)) then return false end
+                end
+
+                return true
+            end,
+            execute = function()
+                GameTooltip:Hide()
+                GameTooltip:SetOwner(owner, anchor)
+                ProfessionMaster.set_recipe_tooltip(recipe)
+                GameTooltip:Show()
+            end
+        }, true)
+    end
+end
+
+ProfessionMaster.set_node_tooltip = function(node)
+    local uncached = { }
+
+    GameTooltip:SetText(node.name, 1, 1, 1)
+
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("|cFFFFFFFFDrops:")
+    GameTooltip:AddLine(" ")
+
+    for item_id, amounts in pairs(node.items) do
+        local cached = true
+
+        local amount = (amounts.odds * 100) .. "% " .. amounts.min
+
+        if amounts.max ~= amounts.min then amount = amount .. " - " .. amounts.max end
+
+        amount = amount .. "x "
+
+        local texture = select(10, GetItemInfo(item_id))
+
+        if not texture then
+            table.insert(uncached, item_id)
+
+            texture = ""
+            cached = false
+        else
+            texture = "|T" .. texture .. ":13|t "
+        end
+
+        local name = select(2, GetItemInfo(item_id))
+
+        if not name then
+            if cached then table.insert(uncached, item_id) end
+
+            name = ProfessionMaster.get_item_name_instant(item_id)
+        end
+
+        GameTooltip:AddLine("|cFFFFFFFF" .. amount .. texture .. name)
+    end
+
+    if #uncached > 0 then
+        local owner, anchor = GameTooltip:GetOwner(), GameTooltip:GetAnchorType()
+        ProfessionMaster.enqueue({
+            condition = function()
+                for _, item_id in ipairs(uncached) do
+                    if not select(2, GetItemInfo(item_id)) or not select(10, GetItemInfo(item_id)) then return false end
+                end
+
+                return true
+            end,
+            execute = function()
+                GameTooltip:Hide()
+                GameTooltip:SetOwner(owner, anchor)
+                ProfessionMaster.set_node_tooltip(node)
+                GameTooltip:Show()
+            end
+        }, true)
     end
 end
 

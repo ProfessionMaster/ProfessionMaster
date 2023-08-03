@@ -42,6 +42,11 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
     
                 self:SetPoint("TOPLEFT",  self.parent, "TOPLEFT",   self.parent.ml + self.ml, -self.parent.mt - self.mt - cur_mt)
                 self:SetPoint("TOPRIGHT", self.parent, "TOPRIGHT", -self.parent.mr - self.mr, -self.parent.mt - self.mt - cur_mt)
+
+                if self.frame then
+                    self.frame:SetPoint("TOPLEFT",     self.parent, "TOPLEFT",   self.parent.ml + self.ml, -self.parent.mt - self.mt - cur_mt)
+                    self.frame:SetPoint("BOTTOMRIGHT", self.parent, "TOPRIGHT", -self.parent.mr - self.mr, -self.parent.mt - self.mt - cur_mt - self:GetHeight())
+                end
             end
     
             function text:UpdateText(str)
@@ -58,6 +63,9 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
             function text:DeleteText()
                 self:Hide()
                 self:SetText("")
+
+                self.click_handler = nil
+                self.tooltip_hidden = true
                 
                 for _, t in pairs(self.parent.children) do
                     if t.index > self.index then
@@ -85,7 +93,48 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
     
                 self.index = #self.parent.deleted_rows + 1
                 self.parent.deleted_rows[self.index] = self
-            end    
+            end
+
+            function text:TryCreateFrame()
+                if not self.frame then
+                    local text_obj = self
+
+                    self.frame = CreateFrame("Frame", nil, self.parent)
+                    self.frame:SetFrameStrata("TOOLTIP")
+                    self.frame:SetScript("OnMouseDown", function()
+                        if text_obj.click_handler then
+                            text_obj.click_handler()
+                        end
+                    end)
+                    self.frame:SetScript("OnEnter", function()
+                        if text_obj.tooltip and not text_obj.tooltip_hidden then
+                            GameTooltip:SetOwner(text_obj.frame, "ANCHOR_CURSOR")
+                            text_obj.tooltip()
+                            GameTooltip:Show()
+                        end
+                    end)
+                    self.frame:SetScript("OnLeave", function()
+                        if text_obj.tooltip and not text_obj.tooltip_hidden then
+                            GameTooltip:SetOwner(UIParent, "ANCHOR_NONE")
+                            GameTooltip:Hide()
+                        end
+                    end)
+
+                    self:UpdatePosition()
+                end
+            end
+
+            function text:OnClick(func)
+                self.click_handler = func
+                self:TryCreateFrame()
+            end
+
+            function text:AddTooltip(func)
+                self.tooltip_hidden = false
+                self:TryCreateFrame()
+
+                self.tooltip = func
+            end
         end
 
         text.index = #self.children + 1

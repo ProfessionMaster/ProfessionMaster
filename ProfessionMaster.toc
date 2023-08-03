@@ -1,7 +1,7 @@
 ## Interface: 11403
 ## Title: ProfessionMaster
 ## Author: Bryan Morabito
-## Version: 0.2.3b
+## Version: 0.2.4b
 ## Notes: Profession Leveling, Completionism, and Gold-Making utility
 ## SavedVariablesPerCharacter: PM
 ## SavedVariables: PMGuides
