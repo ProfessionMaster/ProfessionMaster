@@ -65,14 +65,16 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
                     end
                 end
     
-                for i = self.index, #self.parent.children do
+                for i = self.index, #self.parent.children - 1 do
                     self.parent.children[i] = self.parent.children[i + 1]
+                    self.parent.children[i].index = i
                 end
     
                 self.parent.children[#self.parent.children] = nil
                 
-                for i = self.row_index, #self.parent.rows do
+                for i = self.row_index, #self.parent.rows - 1 do
                     self.parent.rows[i] = self.parent.rows[i + 1]
+                    self.parent.rows[i].row_index = i
                 end
     
                 self.parent.rows[#self.parent.rows] = nil
@@ -110,16 +112,6 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
 
         child.index = #self.children + 1
         child.parent = self
-        
-        function child:GetBorderBoxHeight()
-            local content_height = 0
-
-            for _, c in pairs(self.children) do
-                content_height = content_height + c:GetBorderBoxHeight()
-            end
-
-            return content_height + self.mt + self.mb
-        end
 
         function child:UpdatePosition()
             local cur_mt = 0
@@ -133,17 +125,27 @@ UILib.CreateFrame = function(frame_type, name, parent, template, mt, mr, mb, ml)
             self:SetPoint("BOTTOMRIGHT", self.parent, "BOTTOMRIGHT", -self.parent.mr - self.mr,  self.parent.mb + self.mb)
         end
 
-        function child:DeleteAllText()
-            while #self.rows > 0 do
-                self.rows[1]:DeleteText()
-            end
-        end
-
         child:UpdatePosition()
 
         self.children[child.index] = child
 
         return child
+    end
+
+    function frame:GetBorderBoxHeight()
+        local content_height = 0
+
+        for _, c in pairs(self.children) do
+            content_height = content_height + c:GetBorderBoxHeight()
+        end
+
+        return content_height + self.mt + self.mb
+    end
+
+    function frame:DeleteAllText()
+        while #self.rows > 0 do
+            self.rows[1]:DeleteText()
+        end
     end
 
     table.insert(UILib.frames, frame)

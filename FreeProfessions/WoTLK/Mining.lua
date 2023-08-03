@@ -83,6 +83,7 @@ _G["PM_FREE_mining"] = {
             name = "Copper Vein",
             min_level = 1,
             min_build = 0,
+            levels = { 1, 25, 100 },
             items = {
                 [2770] = {
                     odds = 1.0,

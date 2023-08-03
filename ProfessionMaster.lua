@@ -80,6 +80,17 @@ ProfessionMaster.profession_level_names = {
     "Grand Master"
 }
 
+ProfessionMaster.get_profession_level = function(profession)
+    for index = 1, GetNumSkillLines() do
+        local name, _, _, level = GetSkillLineInfo(index)
+        if name == profession.name then
+            return level
+        end
+    end
+
+    return 0
+end
+
 ProfessionMaster.check_for_levelups = function(profession)
     local skill_level, skill_max_level = 0, 0
     local min_levels = ProfessionMaster.min_level_for_professions.crafting

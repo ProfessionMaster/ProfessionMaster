@@ -178,7 +178,7 @@ _G["PM_FREE_engineering"] = {
         },
         [4359] = {
             [1] = {
-                name = "Rough Copper Bomb",
+                name = "Handful of Copper Bolts",
                 spell_id = 3922,
                 levels = { 30, 45, 60 },
                 taught_by_trainer = true,

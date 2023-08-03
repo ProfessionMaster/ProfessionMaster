@@ -6,6 +6,42 @@ ProfessionMaster = ProfessionMaster or { }
 PM = PM or { }
 PM.items = PM.items or { }
 
+ProfessionMaster.recipe_colors = {
+    orange     = "|cFFFF8040",
+    yellow     = "|cFFFFFF00",
+    green      = "|cFF40BF40",
+    gray       = "|cFF808080",
+    can_train  = "|cFFFF0000",
+    cant_train = "|cFF800000"
+}
+
+ProfessionMaster.get_recipe_colors = function(recipe, level)
+    if level <  recipe.levels[1]                                             then return ProfessionMaster.recipe_colors["cant_train"] end
+    if not (IsSpellKnown(recipe.spell_id) or IsPlayerSpell(recipe.spell_id)) then return ProfessionMaster.recipe_colors[ "can_train"] end
+    if level <  recipe.levels[2]                                             then return ProfessionMaster.recipe_colors[    "orange"] end
+    if level < (recipe.levels[2] + recipe.levels[3]) / 2                     then return ProfessionMaster.recipe_colors[    "yellow"] end
+    if level <  recipe.levels[3]                                             then return ProfessionMaster.recipe_colors[     "green"] end
+                                                                                  return ProfessionMaster.recipe_colors[      "gray"]
+end
+
+ProfessionMaster.get_node_colors = function(node, level)
+    if level <  node.levels[1]                       then return ProfessionMaster.recipe_colors["cant_train"] end
+    if level <  node.levels[2]                       then return ProfessionMaster.recipe_colors[    "orange"] end
+    if level < (node.levels[2] + node.levels[3]) / 2 then return ProfessionMaster.recipe_colors[    "yellow"] end
+    if level <  node.levels[3]                       then return ProfessionMaster.recipe_colors[     "green"] end
+                                                          return ProfessionMaster.recipe_colors[      "gray"]
+end
+
+ProfessionMaster.profession_colors = {
+    trained   = "|cFFFFFF00",
+    untrained = "|cFF808000"
+}
+
+ProfessionMaster.get_profession_color = function(profession)
+    if ProfessionMaster.get_profession_level(profession) == 0 then return ProfessionMaster.profession_colors["untrained"] end
+                                                                   return ProfessionMaster.profession_colors[  "trained"]
+end
+
 ProfessionMaster.create_item_frame = function()
     if not ProfessionMaster.item_frame then
         local frame = CreateFrame("Frame", "ProfessionMasterItemFrame", UIParent, "ButtonFrameTemplate")
@@ -32,16 +68,10 @@ ProfessionMaster.create_item_frame = function()
         frame.inner_frame:SetPoint("TOPLEFT", frame, "TOPLEFT", 16, -70)
         frame.inner_frame:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -36, 32)
 
-        frame.content = CreateFrame("FRAME", nil, frame.inner_frame)
+        frame.content = ProfessionMaster.UILib.CreateFrame("FRAME", nil, frame.inner_frame, nil, 0)
         frame.content:SetPoint("TOPLEFT", frame.inner_frame, "TOPLEFT", 0, 0)
         frame.content:SetWidth(frame.inner_frame:GetWidth() - 10)
         frame.content:SetHeight(1)
-
-        frame.text = frame.content:CreateFontString(nil, nil, "GameFontNormal")
-        frame.text:SetText("")
-        frame.text:SetJustifyH("LEFT")
-        frame.text:SetPoint("TOPLEFT", frame.content, "TOPLEFT", 0, 0)
-        frame.text:SetPoint("TOPRIGHT", frame.content, "TOPRIGHT", 0, 0)
 
         frame.inner_frame:SetScrollChild(frame.content)
         ProfessionMaster.item_frame = frame
@@ -89,6 +119,9 @@ ProfessionMaster.update_item_frame = function(item_id)
 
     local frame = ProfessionMaster.item_frame
 
+    frame.content:DeleteAllText()
+    frame.content:SetHeight(1)
+
     if frame.item_id ~= item_id then
         SetPortraitToTexture(frame.corner.tex, select(10, GetItemInfo(item_id)))
         frame.item_id = item_id
@@ -96,7 +129,7 @@ ProfessionMaster.update_item_frame = function(item_id)
 
     frame:Show()
 
-    local text = "Used for:\n"
+    frame.content:AddText("Used for:", 0, 0, 6, 0)
 
     local professions = ProfessionMaster.get_item_professions(item_id)
         
@@ -119,10 +152,10 @@ ProfessionMaster.update_item_frame = function(item_id)
                         if not has_use then
                             has_use = true
 
-                            text = text .. "\n|T" .. profession.texture .. ":13|t " .. profession.name .. "\n"
+                            frame.content:AddText("|T" .. profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession) .. profession.name, 6, 0)
                         end
 
-                        text = text .. "|cFFFFFFFF" .. recipe.name .. "|r\n"
+                        frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession)) .. recipe.name .. "|r", 1, 0)
                     end
                 end
             end
@@ -132,31 +165,30 @@ ProfessionMaster.update_item_frame = function(item_id)
     local recipes, nodes = ProfessionMaster.get_item_sources(item_id)
     
     if #recipes > 0 then
-        text = text .. "\n\nCrafted from:\n"
+        frame.content:AddText("Crafted from:", 6, 0)
 
         for _, profession_recipes in ipairs(recipes) do
-            text = text .. "\n|T" .. profession_recipes.profession.texture .. ":13|t " .. profession_recipes.profession.name .. "\n"
+            frame.content:AddText("|T" .. profession_recipes.profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession_recipes.profession) .. profession_recipes.profession.name, 6, 0)
 
             for _, recipe in pairs(profession_recipes.recipes) do
-                text = text .. "|cFFFFFFFF" .. recipe.name .. "|r\n"
+                frame.content:AddText(ProfessionMaster.get_recipe_colors(recipe, ProfessionMaster.get_profession_level(profession_recipes.profession)) .. recipe.name .. "|r", 1, 0)
             end
         end    
     end
 
     if #nodes > 0 then
-        text = text .. "\n\nGathered from:\n"
+        frame.content:AddText("Gathered from:", 6, 0)
 
         for _, profession_nodes in ipairs(nodes) do
-            text = text .. "\n|T" .. profession_nodes.profession.texture .. ":13|t " .. profession_nodes.profession.name .. "\n"
+            frame.content:AddText("|T" .. profession_nodes.profession.texture .. ":13|t " .. ProfessionMaster.get_profession_color(profession_nodes.profession) .. profession_nodes.profession.name, 6, 0)
 
             for _, node in pairs(profession_nodes.nodes) do
-                text = text .. "|cFFFFFFFF" .. node.name .. "|r\n"
+                frame.content:AddText(ProfessionMaster.get_node_colors(node, ProfessionMaster.get_profession_level(profession_nodes.profession)) .. node.name .. "|r", 1, 0)
             end
         end
     end
 
-    frame.text:SetText(text)
-
+    frame.content:SetHeight(frame.content:GetBorderBoxHeight())
     frame.item_title:SetText(select(1, GetItemInfo(item_id)))
 end
 
